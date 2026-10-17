@@ -67,7 +67,7 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 | UI | ui-designer, design-system-architect, accessibility-expert | wshobson (ui-design) | inherits all |
 | UX | ux-researcher | VoltAgent | read-only + web |
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
-| Quality | code-reviewer, debugger, test-automator | wshobson | inherits all |
+| Quality | code-reviewer, debugger | wshobson | inherits all |
 | Trading | quant-researcher, repo-researcher | own (Trading-app) | Read, Grep, Glob, WebFetch, WebSearch |
 | Trading | strategy-engineer, risk-engineer, qa-test-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell; edit scope limited by instructions |
 | Trading | exchange-integration-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell, WebFetch; no real orders |
@@ -110,6 +110,9 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 Removed from `.claude/` (vendor copies remain for reference); restore only after a new review.
 - `react-specialist` (VoltAgent): duplicate of `frontend-developer` plus the `vercel-react-best-practices` and
   `react-state-management` skills; its workflow relied on a non-existent "context manager" agent.
+- `test-automator` (wshobson): enterprise-generic (self-healing/AI test platforms, CI/CD); for the actual stack
+  `qa-test-engineer` plus `python-testing-patterns` cover it, and its proactive auto-delegation with all tools
+  could take trading test work away from the scoped `qa-test-engineer` (edits `backend/tests/` only).
 
 ## Updating
 `git -C vendor/<repo> pull`, review the diff (`git diff HEAD@{1}`), copy back only what was reviewed,

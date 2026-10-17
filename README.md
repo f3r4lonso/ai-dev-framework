@@ -71,7 +71,7 @@ This repository holds no credentials: each contributor signs in with their own C
 
 ## Agents
 
-21 subagents in `.claude/agents/`, grouped by area.
+20 subagents in `.claude/agents/`, grouped by area.
 
 **How to invoke an agent**
 - **By name:** "Use the code-reviewer agent to review this branch."
@@ -107,7 +107,6 @@ This repository holds no credentials: each contributor signs in with their own C
 |---|---|---|
 | `code-reviewer` | Reviews code | Bugs, security vulnerabilities, performance and reliability issues. |
 | `debugger` | Fixes problems | Investigates errors, failing tests and unexpected behavior. |
-| `test-automator` | Builds automated tests | Test strategy, test suites, CI integration. |
 
 ### UI (visual design)
 | Agent | Purpose | Responsibilities |
@@ -144,8 +143,7 @@ Built for the Trading-app project; they assume the project root as working direc
 | `general-purpose` | Multi-step research and tasks |
 | `claude-code-guide` | Questions about Claude Code itself |
 
-Known overlaps (candidates for consolidation): `test-automator` / `qa-test-engineer`,
-`code-reviewer` / `security-reviewer`. Retired components and why: `ai-infra/README.md` § Retired.
+Known overlap, kept on purpose: `code-reviewer` (general code quality) / `security-reviewer` (trading security, read-only). Retired components and why: `ai-infra/README.md` § Retired.
 
 ## Conventions
 kebab-case, lowercase, English names for files and folders; technical content in English.
