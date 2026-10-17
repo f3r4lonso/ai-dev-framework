@@ -1,0 +1,78 @@
+#!/bin/sh
+# Pre-commit secret guard (versioned, dependency-free).
+# Enable once per clone:   git config core.hooksPath .githooks
+#
+# 1. If gitleaks is installed, it scans the staged changes with .gitleaks.toml.
+# 2. Otherwise a basic built-in check blocks commits that stage secret-looking
+#    files or add lines matching high-confidence credential patterns.
+# Findings show file and line only, never the matched value.
+# False positive? Add "gitleaks:allow" to that line, or (only after checking)
+# bypass once with: git commit --no-verify
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --pre-commit --staged --redact --verbose
+  status=$?
+  if [ "$status" -ne 0 ]; then
+    echo "pre-commit: gitleaks found possible secrets (values redacted). Commit blocked." >&2
+    echo "See SECURITY.md for what to do." >&2
+  fi
+  exit "$status"
+fi
+
+echo "pre-commit: gitleaks not found; running the basic built-in secret check." >&2
+found=0
+
+# --- 1. Secret-looking file names -------------------------------------------
+files=$(git diff --cached --name-only --diff-filter=ACMR)
+bad_files=$(printf '%s\n' "$files" | grep -E \
+  -e '(^|/)\.env$' \
+  -e '(^|/)\.env\.[^/]+$' \
+  -e '\.(pem|key|p12|pfx|jks|keystore|ppk|kdbx|token)$' \
+  -e '(^|/)id_(rsa|dsa|ecdsa|ed25519)$' \
+  -e '(^|/)(\.credentials\.json|credentials[^/]*\.json|[^/]*service-account[^/]*\.json)$' \
+  -e '(^|/)(\.git-credentials|\.netrc|_netrc|\.npmrc|\.pypirc|\.pgpass|\.claude\.json|settings\.local\.json)$' \
+  -e '(^|/)\.(ssh|aws)/' \
+  | grep -v -E '(^|/)\.env\.(example|sample|template)$')
+if [ -n "$bad_files" ]; then
+  echo "pre-commit: these staged files look like secrets or personal config:" >&2
+  printf '%s\n' "$bad_files" | sed 's/^/  /' >&2
+  found=1
+fi
+
+# --- 2. Credential patterns in added lines ----------------------------------
+# Emits "file:line<TAB>content" for every added line of the staged diff.
+added=$(git diff --cached -U0 --no-color --no-ext-diff --diff-filter=ACMR | awk '
+  /^\+\+\+ b\// { file = substr($0, 7); next }
+  /^@@ / { split($3, a, ","); line = substr(a[1], 2) + 0; next }
+  /^\+/ { print file ":" line "\t" substr($0, 2); line++ }
+' | grep -v 'gitleaks:allow')
+
+check() { # $1 = rule name, $2 = extended regex, $3 = optional grep flag
+  hits=$(printf '%s\n' "$added" | grep -E $3 -e "$2" | cut -f1)
+  if [ -n "$hits" ]; then
+    printf '%s\n' "$hits" | sed "s/^/  /; s/\$/  [$1]/" >&2
+    found=1
+  fi
+}
+
+if [ -n "$added" ]; then
+  check private-key        '-----BEGIN ([A-Z0-9]+ )*PRIVATE KEY( BLOCK)?-----'
+  check aws-access-key     '(AKIA|ASIA)[0-9A-Z]{16}'
+  check anthropic-api-key  'sk-ant-[A-Za-z0-9_-]{20,}'
+  check openai-api-key     'sk-(proj-)?[A-Za-z0-9_-]{32,}'
+  check github-token       '(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{30,}'
+  check github-fine-pat    'github_pat_[A-Za-z0-9_]{22,}'
+  check slack-token        'xox[abprs]-[A-Za-z0-9-]{10,}'
+  check google-api-key     'AIza[0-9A-Za-z_-]{35}'
+  check stripe-live-key    '[rs]k_live_[0-9A-Za-z]{20,}'
+  check url-credentials    '[A-Za-z][A-Za-z0-9+.-]*://[^/[:space:]:@]+:[^/[:space:]:@]+@'
+  check generic-secret     '(api[_-]?key|secret|passw(or)?d|token)["'"'"']?[[:space:]]*[:=][[:space:]]*["'"'"'][A-Za-z0-9_/+=.-]{16,}["'"'"']' -i
+fi
+
+if [ "$found" -ne 0 ]; then
+  echo "pre-commit: possible secrets found (values not shown). Commit blocked." >&2
+  echo "Remove them (use environment variables or a git-ignored .env), then commit again." >&2
+  echo "See SECURITY.md. Install gitleaks for a more accurate scan." >&2
+  exit 1
+fi
+exit 0

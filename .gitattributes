@@ -1,0 +1,4 @@
+# Git hooks are POSIX shell scripts: keep LF endings so they run under
+# Git for Windows (even with core.autocrlf=true), macOS and Linux.
+.githooks/** text eol=lf
+*.sh text eol=lf

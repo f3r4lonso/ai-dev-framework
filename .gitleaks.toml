@@ -1,0 +1,22 @@
+# gitleaks configuration (requires gitleaks v8.25 or later for [[allowlists]]).
+# Used by .githooks/pre-commit, .pre-commit-config.yaml and the CI workflow.
+title = "ai-dev-framework"
+
+[extend]
+# Start from gitleaks' built-in rules; only allowlists are added here.
+useDefault = true
+
+[[allowlists]]
+description = "Obvious placeholders in docs and templates (never real values)"
+regexes = [
+  '''^<[^>]+>$''',
+  '''(?i)^(your|my)[-_]?[a-z_-]*(key|token|secret|password)[a-z_-]*$''',
+  '''(?i)^(changeme|placeholder|redacted|dummy|example)[a-z0-9_-]*$''',
+  '''^x{8,}$''',
+]
+
+[[allowlists]]
+description = "Untracked third-party clones, scanned only by 'gitleaks dir' on the workspace"
+paths = [
+  '''(^|/)ai-infra/vendor/''',
+]
