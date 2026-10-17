@@ -5,9 +5,9 @@
   works on a real codebase.
 - **Stage:** local POC / MVP (Inference from its agents and skills: backtesting and paper trading, demo execution
   planned). Functionality is frozen for now; only infrastructure, naming and English changes.
-- **Repository:** private repository, on disk at `projects/applications/Trading-app/`.
+- **Repository:** private repository, on disk at `%USERPROFILE%\Repos\projects\applications\Trading-app\`.
 - **Start a session:**
-  - Claude Code: run `start-claude.bat` in the project root (it adds the workspace root with `--add-dir`).
+  - Claude Code: run `start-claude.bat` in the project root (it adds the ai-infra repository with `--add-dir`).
   - Codex CLI: start in the project root after `codex-adapter.py link-skills --user`; shared skills load, shared
     agents do not (Unverified, see [codex-cli §2](../../../clients/codex-cli/README.md#2-start-up-directory)).
 - **Shared resources it uses:** the 8 trading agents in the [agent catalogue](../../catalogues/agents.md) and the
@@ -18,7 +18,7 @@
 ## Verification checklist (read-only; changes nothing in the project)
 
 Run in a new session and record pass/fail with the date in
-[ai-architecture.md §10](../../../../docs/ai-architecture.md#10-validation-status-2026-10-17).
+[ai-architecture.md §10](../../../docs/ai-architecture.md#10-validation-status-2026-10-17).
 
 | # | Check | Claude Code | Codex CLI |
 |---|---|---|---|

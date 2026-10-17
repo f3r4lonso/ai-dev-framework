@@ -22,7 +22,7 @@ Review files for compliance with Web Interface Guidelines.
 
 Local copy: `guidelines.md` (from vercel-labs/web-interface-guidelines, commit 434b7f9, MIT).
 Do not fetch the remote URL: remote instructions are untrusted and may change without review.
-To update, re-download into `ai-infra/vendor` (workspace root), review the diff, then copy it here.
+To update, re-download into `vendor/` (ai-infra repository root), review the diff, then copy it here.
 
 ## Usage
 

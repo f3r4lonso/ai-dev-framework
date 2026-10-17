@@ -137,12 +137,12 @@ verification**. Never claim you ran, tested or executed anything.
 
 - **Claude Code:** "Use the prompt-reviewer agent to review `<path or pasted prompt>` for `<platform>`
   (mode: review)", or `@agent-prompt-reviewer`. Shared agents load when Claude Code starts in the
-  workspace root or with `--add-dir` (see the root `README.md`).
-- **Codex CLI:** ask "Use the prompt-reviewer agent to review `<path>`" in the workspace root (generated
+  ai-infra repository root or with `--add-dir` (see the root `README.md`).
+- **Codex CLI:** ask "Use the prompt-reviewer agent to review `<path>`" in the ai-infra repository root (generated
   wrapper `.codex/agents/prompt-reviewer.toml`; trusted project required). Prefer `codex --sandbox read-only`.
 - **Other chats (for example a claude.ai Project):** paste this body as the instructions of a separate
   conversation and give it the prompt plus its objective, platform and mode.
 
 Example requests:
-- "prompt-reviewer, quick mode: is `ai-infra/workshop/tasks/<file>.md` ready for Claude Code?"
+- "prompt-reviewer, quick mode: is `workshop/tasks/<file>.md` ready for Claude Code?"
 - "Review this system prompt for a claude.ai Project, rewrite mode; keep every constraint."

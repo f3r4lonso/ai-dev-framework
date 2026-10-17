@@ -18,5 +18,5 @@ regexes = [
 [[allowlists]]
 description = "Untracked third-party clones, scanned only by 'gitleaks dir' on the workspace"
 paths = [
-  '''(^|/)ai-infra/vendor/''',
+  '''(^|/)vendor/''',
 ]

@@ -1,6 +1,6 @@
 # Third-party notices
 
-This repository redistributes agents and skills copied (and in some cases locally modified, see `ai-infra/README.md` § Local modifications) from the projects below. Their original licenses apply to those files.
+This repository redistributes agents and skills copied (and in some cases locally modified, see `docs/inventory.md` § Local modifications) from the projects below. Their original licenses apply to those files.
 
 ## wshobson/agents
 

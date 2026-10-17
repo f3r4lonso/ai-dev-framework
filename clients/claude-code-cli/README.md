@@ -1,18 +1,18 @@
 # Client guide: Claude Code CLI
 
 How Claude Code finds and uses this workspace's shared resources. Install, sign-in and credential storage are in
-one place only: [onboarding §1](../../../docs/onboarding.md#1-claude-code-cli).
+one place only: [onboarding §1](../../docs/onboarding.md#1-claude-code-cli).
 
 Evidence labels: **Observed** (seen in the maintainer's environment, Claude Code 2.1.302, 2026-10-17),
 **Documented** (official docs checked 2026-10-17, linked in onboarding and in
-[ai-architecture.md](../../../docs/ai-architecture.md)), **Unverified**.
+[ai-architecture.md](../../docs/ai-architecture.md)), **Unverified**.
 
 ## 1. From a fresh clone to a working session
 
-1. Install Claude Code and sign in with **your own** account: [onboarding §1](../../../docs/onboarding.md#1-claude-code-cli).
+1. Install Claude Code and sign in with **your own** account: [onboarding §1](../../docs/onboarding.md#1-claude-code-cli).
    - **Subscription vs API:** a Pro, Max, Team or Enterprise login bills your plan; a Claude Console login or an
      `ANTHROPIC_API_KEY` bills API usage. A stray `ANTHROPIC_API_KEY` overrides your subscription
-     ([details](../../../docs/onboarding.md#environment-variables-all-optional)).
+     ([details](../../docs/onboarding.md#environment-variables-all-optional)).
    - **Check the active account:** inside Claude Code run `/status` (login method, organization, e-mail).
 2. Enable the secret guard once: `git config core.hooksPath .githooks`.
 3. Start Claude Code in the right folder (section 2).
@@ -22,10 +22,10 @@ Evidence labels: **Observed** (seen in the maintainer's environment, Claude Code
 
 | Where you work | Command | What loads |
 |---|---|---|
-| Workspace root (this repo) | `claude` | Shared rules, all agents and skills (Observed) |
-| An application repo, Windows PowerShell | `claude --add-dir "$env:USERPROFILE\Repos"` | Project rules + shared agents and skills (Documented) |
-| An application repo, Bash (Git Bash, macOS, Linux) | `claude --add-dir ~/Repos` | Same |
-| Trading-app | `start-claude.bat` in the project root | Same; it adds the workspace root two levels up |
+| This repository (`%USERPROFILE%\Repos\ai-infra`) | `claude` | Shared rules, all agents and skills (Observed) |
+| An application repo, Windows PowerShell | `claude --add-dir "$env:USERPROFILE\Repos\ai-infra"` | Project rules + shared agents and skills (Documented) |
+| An application repo, Bash (Git Bash, macOS, Linux) | `claude --add-dir ~/Repos/ai-infra` | Same |
+| Trading-app | `start-claude.bat` in the project root | Same; it adds `..\..\ai-infra` |
 
 Without `--add-dir`, Claude Code inside a project repo stops at that repo's root and sees none of the shared
 resources (Documented).
@@ -49,7 +49,7 @@ required (Documented).
 - **Agent:** ask by name ("Use the code-reviewer agent to review this branch"), type `@agent-<name>` to force it,
   or let Claude delegate when a request matches the description. `/agents` lists and manages them.
 - **Skill:** type `/<skill-name>` or let Claude load it when the request matches its description.
-- **Task prompt:** "Run the task in `ai-infra/workshop/tasks/<file>.md`" (check its status in the
+- **Task prompt:** "Run the task in `workshop/tasks/<file>.md`" (check its status in the
   [task catalogue](../../workshop/catalogues/tasks.md) first).
 - Built-in agents (`Explore`, `Plan`, `general-purpose`, `claude-code-guide`) are always available.
 
@@ -58,7 +58,7 @@ required (Documented).
 1. `/status`: your own account and the expected login method.
 2. `/memory`: lists the workspace `CLAUDE.md` (and through it `AGENTS.md`).
 3. `/agents`: lists the 20 shared agents (for example `code-reviewer`, `prompt-reviewer`).
-4. Ask: "Use the prompt-reviewer agent in quick mode on `ai-infra/workshop/tasks/README.md`." It should return a
+4. Ask: "Use the prompt-reviewer agent in quick mode on `workshop/tasks/README.md`." It should return a
    scored review and change no file.
 
 ## 6. Permissions
@@ -66,16 +66,16 @@ required (Documented).
 - Permission modes and allow/deny rules live in `settings.json` (shared) and `settings.local.json` (personal,
   ignored by git here). This repo ships neither (Observed).
 - Agent `tools:` lists and `disallowedTools` **are enforced** per agent (Documented); read-only agents cannot edit.
-- To block reading secret files, add `Read(...)` deny rules ([SECURITY.md](../../../SECURITY.md#claude-code-safety-in-this-workspace)).
+- To block reading secret files, add `Read(...)` deny rules ([SECURITY.md](../../SECURITY.md#claude-code-safety-in-this-workspace)).
 
 ## 7. Limitations
 
 - New or renamed agents appear only after a restart (`exit`, then `claude` again).
 - Trading agents and skills assume the Trading-app root as the working directory.
 - Claude-only features used here: agent `tools`/`model`/`color` fields, `${CLAUDE_SKILL_DIR}`, `@agent-` mentions,
-  `--add-dir`. Codex equivalents: [compatibility matrix](../../../docs/ai-architecture.md#4-compatibility-matrix).
+  `--add-dir`. Codex equivalents: [compatibility matrix](../../docs/ai-architecture.md#4-compatibility-matrix).
 
 ## 8. Troubleshooting
 
-[Onboarding troubleshooting](../../../docs/onboarding.md#troubleshooting). Most common: agents missing → you started
-outside the workspace root without `--add-dir`, or the agent was added after the session started.
+[Onboarding troubleshooting](../../docs/onboarding.md#troubleshooting). Most common: agents missing → you started
+outside the repository root without `--add-dir`, or the agent was added after the session started.

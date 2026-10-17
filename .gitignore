@@ -1,5 +1,5 @@
 # Whitelist: only the shared AI infrastructure is versioned here.
-# Projects are separate git repos; ai-infra/vendor/ holds external clones.
+# Projects are separate git repos next to this folder; vendor/ holds external clones.
 /*
 !/.gitignore
 !/.gitattributes
@@ -9,6 +9,7 @@
 !/AGENTS.md
 !/README.md
 !/SECURITY.md
+!/THIRD_PARTY_NOTICES.md
 !/.editorconfig
 !/.claude/
 !/.codex/
@@ -17,14 +18,10 @@
 !/.githooks/
 !/.github/
 !/docs/
-!/ai-infra/
-/ai-infra/*
-!/ai-infra/README.md
-!/ai-infra/THIRD_PARTY_NOTICES.md
-!/ai-infra/prompts/
-!/ai-infra/scripts/
-!/ai-infra/clients/
-!/ai-infra/workshop/
+!/clients/
+!/workshop/
+!/prompts/
+!/scripts/
 
 # --- Defense in depth: secrets and machine-specific files -------------------
 # The whitelist above re-includes whole folders (.claude/, docs/, ...). These
@@ -74,5 +71,5 @@ settings.local.json
 auth.json
 .codex-log/
 
-# Python bytecode from ai-infra/scripts
+# Python bytecode from scripts/
 __pycache__/

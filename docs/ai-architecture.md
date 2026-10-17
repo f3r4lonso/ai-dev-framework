@@ -1,16 +1,16 @@
 # AI engineering infrastructure: architecture and client compatibility
 
 Principle: **share what is common; separate what is platform-specific.** This repository is the shared
-infrastructure; application projects under `projects/applications/` are separate repositories and are never changed by it.
+infrastructure; application projects in `%USERPROFILE%\Repos\projects\applications\` (next to this repository) are separate repositories and are never changed by it.
 
 Vendor facts below were checked against official documentation on 2026-10-17. Evidence labels:
 **Observed** (seen working in the maintainer's environment), **Documented** (official docs, not observed
 locally), **Inference** (reasoned from evidence), **Proposed** (designed here, not yet validated),
 **Unsupported/Unverified**.
 
-The infrastructure separates four concerns: **AI clients** (`ai-infra/clients/`), **client-native resources**
-(`.claude/`, `.codex/agents/`, `.agents/skills/`), the shared **Workshop** (`ai-infra/workshop/`) and **project
-workspaces** (`projects/applications/`, one public entry page each in `ai-infra/workshop/projects/`).
+The infrastructure separates four concerns: **AI clients** (`clients/`), **client-native resources**
+(`.claude/`, `.codex/agents/`, `.agents/skills/`), the shared **Workshop** (`workshop/`) and **project
+workspaces** (`..\projects\applications\`, one public entry page each in `workshop/projects/`).
 
 ## 1. Layers and source of truth
 
@@ -22,12 +22,12 @@ workspaces** (`projects/applications/`, one public entry page each in `ai-infra/
 | Codex agent wrappers | `.codex/agents/<name>.toml` | **generated**, versioned | Codex CLI |
 | Skills | `.claude/skills/<name>/SKILL.md` (+ `references/`, `scripts/`) | canonical (Agent Skills format) | Claude Code natively |
 | Codex skill links | `.agents/skills/<name>` → `.claude/skills/<name>` | **generated locally**, not versioned | Codex CLI |
-| Generator | `ai-infra/scripts/codex-adapter.py` | canonical | maintainer, CI (`adapter-check.yml`) |
-| Inventory, licenses | `ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md` | canonical | humans, auditor agent |
+| Generator | `scripts/codex-adapter.py` | canonical | maintainer, CI (`adapter-check.yml`) |
+| Inventory, licenses | `docs/inventory.md`, `THIRD_PARTY_NOTICES.md` | canonical | humans, auditor agent |
 | Security, onboarding (install, auth, troubleshooting for every client) | `SECURITY.md`, `docs/onboarding.md` | canonical | humans |
-| Client guides (start-up, discovery, permissions, limits) | `ai-infra/clients/<client-id>/README.md` | canonical; link to onboarding for install/auth | humans |
-| Workshop: task prompts, catalogues, manuals, project entries | `ai-infra/workshop/` | catalogues **link to** canonical files; no copied bodies | humans; clients on request |
-| claude.ai Project prompts | `ai-infra/prompts/personal-assistants/` | canonical | pasted into claude.ai Projects |
+| Client guides (start-up, discovery, permissions, limits) | `clients/<client-id>/README.md` | canonical; link to onboarding for install/auth | humans |
+| Workshop: task prompts, catalogues, manuals, project entries | `workshop/` | catalogues **link to** canonical files; no copied bodies | humans; clients on request |
+| claude.ai Project prompts | `prompts/personal-assistants/` | canonical | pasted into claude.ai Projects |
 
 Nothing is copied by hand: a Codex wrapper is a short pointer to the canonical agent file plus a translation of
 its Claude-only fields, and a Codex skill is a link to the canonical folder.
@@ -35,26 +35,24 @@ its Claude-only fields, and a Codex skill is a link to the canonical folder.
 ## 2. Directory tree
 
 ```text
-Repos/                          shared infrastructure repo (whitelist .gitignore)
-├── AGENTS.md                   shared rules (all clients)
-├── CLAUDE.md                   @AGENTS.md + Claude-only notes
-├── README.md  SECURITY.md      entry point; security policy
-├── .claude/agents/<area>/      20 canonical agents
-├── .claude/skills/<name>/      23 canonical skills
-├── .codex/agents/              generated Codex wrappers (20 .toml); other .codex/ content is ignored
-├── .agents/skills/             local links for Codex (ignored by git; created by the script)
-├── ai-infra/
-│   ├── README.md               inventory, sources, local modifications, retired items
-│   ├── THIRD_PARTY_NOTICES.md
+Repos/                          workspace folder (not a repository)
+├── ai-infra/                   shared infrastructure repo (whitelist .gitignore) — work here
+│   ├── AGENTS.md               shared rules (all clients)
+│   ├── CLAUDE.md               @AGENTS.md + Claude-only notes
+│   ├── README.md  SECURITY.md  THIRD_PARTY_NOTICES.md
+│   ├── .claude/agents/<area>/  20 canonical agents
+│   ├── .claude/skills/<name>/  23 canonical skills
+│   ├── .codex/agents/          generated Codex wrappers (20 .toml); other .codex/ content is ignored
+│   ├── .agents/skills/         local links for Codex (ignored by git; created by the script)
 │   ├── clients/                claude-code-cli/README.md, codex-cli/README.md
 │   ├── workshop/               README.md, tasks/, catalogues/, manuals/, projects/
 │   ├── prompts/personal-assistants/   claude.ai Project prompts (not loaded by any CLI)
 │   ├── scripts/codex-adapter.py
+│   ├── docs/                   ai-architecture.md (this file), inventory.md, onboarding.md,
+│   │                           prompt-engineering-review.md, ai-infrastructure-handover.md
+│   ├── .githooks/ .github/ .gitleaks.toml .pre-commit-config.yaml   secret scan + adapter drift check
 │   └── vendor/                 untrusted upstream copies (not versioned)
-├── docs/                       ai-architecture.md (this file), onboarding.md, prompt-engineering-review.md,
-│                               ai-infrastructure-handover.md
-├── .githooks/ .github/ .gitleaks.toml .pre-commit-config.yaml   secret scan + adapter drift check
-└── projects/applications/<id>/ separate git repos (e.g. Trading-app), not versioned here
+└── projects/applications/<id>/ separate git repos (e.g. Trading-app), outside this repository
 ```
 
 ## 3. Instruction precedence
@@ -99,15 +97,15 @@ Claude-only features kept out of the shared core: agent tool allow/deny lists, `
 
 Native resources stay where each client loads them; nothing client-native was moved into the Workshop.
 Start-up directory, discovery, invocation, permissions, limits and verification steps per client:
-[Claude Code CLI](../ai-infra/clients/claude-code-cli/README.md) · [Codex CLI](../ai-infra/clients/codex-cli/README.md).
+[Claude Code CLI](../clients/claude-code-cli/README.md) · [Codex CLI](../clients/codex-cli/README.md).
 Install and authentication: [onboarding.md](onboarding.md). Choosing a task or resource:
-[Workshop tasks](../ai-infra/workshop/tasks/README.md).
+[Workshop tasks](../workshop/tasks/README.md).
 
 ## 6. Maintaining
 
 Step-by-step procedures (add, change or retire an agent, skill, task, client or project; regenerate the Codex
 adapter; register in the inventory; checks before committing):
-[contributor guide](../ai-infra/workshop/manuals/contributor-guide.md). Keep `AGENTS.md` short: it is loaded into
+[contributor guide](../workshop/manuals/contributor-guide.md). Keep `AGENTS.md` short: it is loaded into
 every session of both clients.
 
 ## 7. Token and cost strategy
@@ -115,7 +113,7 @@ every session of both clients.
 Implemented: one short always-loaded rule file (about 2 KB for `AGENTS.md` + `CLAUDE.md`); skills and agents
 load by description only (progressive disclosure), with long material in `references/`; the generic
 `engineering-lifecycle` skill keeps its checklists out of the main file; agents are used only for distinct roles
-(retired duplicates are listed in `ai-infra/README.md`); a standard short work-report contract.
+(retired duplicates are listed in `docs/inventory.md`); a standard short work-report contract.
 The Workshop, client guides and catalogues are never loaded automatically: they cost tokens only when a
 person or task opens them (`AGENTS.md` gained one pointer line to them, about 150 bytes, 2026-10-17).
 
@@ -131,7 +129,7 @@ stronger for design) is set per agent in Claude (`model:`) and globally for Code
 2. Map: shared rules → its instruction file (prefer reading `AGENTS.md` or importing it); skills → its skill
    mechanism or a link to `.claude/skills/`; agents → its agent format, generated by a new subcommand of
    `codex-adapter.py` (or a sibling script) from `.claude/agents/`.
-3. Add `ai-infra/clients/<client-id>/README.md` (start-up, discovery, permissions, limits) and its install and
+3. Add `clients/<client-id>/README.md` (start-up, discovery, permissions, limits) and its install and
    authentication section in `docs/onboarding.md`. Put provider configuration in its own folder; never share credentials; add its auth/config files to
    `.gitignore`, `.gitleaks.toml` checks and `SECURITY.md`.
 4. Record unsupported and provider-only features in the matrix above.
@@ -153,9 +151,9 @@ contributor guide is followed):
 | Agent catalogue | frontmatter of `.claude/agents/<area>/<name>.md` | `name`, `description`, `tools`, `model`; area = parent folder |
 | Skill catalogue | frontmatter of `.claude/skills/<name>/SKILL.md` | `name`, `description` |
 | Codex availability | `.codex/agents/<name>.toml` exists and `codex-adapter.py agents --check` passes | boolean per agent |
-| Task catalogue | `ai-infra/workshop/tasks/*.md` (except `README.md`) | title = first `# ` line; `Status:` line (active / completed / superseded by) |
-| Client list | `ai-infra/clients/<client-id>/README.md` | client id = folder name |
-| Project list | `ai-infra/workshop/projects/<project-id>/README.md` | Purpose, Stage, Repository bullets |
+| Task catalogue | `workshop/tasks/*.md` (except `README.md`) | title = first `# ` line; `Status:` line (active / completed / superseded by) |
+| Client list | `clients/<client-id>/README.md` | client id = folder name |
+| Project list | `workshop/projects/<project-id>/README.md` | Purpose, Stage, Repository bullets |
 | Support status | §4 matrix | evidence label per resource and client |
 
 A future app would build its catalogue from these, dispatch a task to one or both CLIs as subprocesses, and keep
@@ -167,25 +165,27 @@ required; cancellation and error semantics; rate limits. Nothing here combines a
 
 | Check | Result |
 |---|---|
-| Claude Code loads shared rules, agents and skills in the workspace root | Observed (this session) |
+| Claude Code loads shared rules, agents and skills in the repository root | Observed (this session) |
 | Claude Code picks up the new `engineering-lifecycle` skill | Observed |
 | Generated Codex agent files parse as TOML and contain only `name`, `description`, `developer_instructions` | Ran: 19/19 pass; re-run after adding `prompt-reviewer`: 20/20 pass |
 | Drift check detects out-of-date wrappers | Ran: detected 2 changed files, then 0 after regeneration |
 | `link-skills` is idempotent and skips non-link entries | Ran |
-| Codex discovers `AGENTS.md`, skills and agents | **Not run**: Codex CLI is not installed on the maintainer's machine (re-checked 2026-10-17); manual steps in [codex-cli §5](../ai-infra/clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) |
+| Codex discovers `AGENTS.md`, skills and agents | **Not run**: Codex CLI is not installed on the maintainer's machine (re-checked 2026-10-17); manual steps in [codex-cli §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) |
 | Codex follows Windows directory junctions in `.agents/skills/` | **Not run**; documented support covers symlinks, junctions are not mentioned (re-checked 2026-10-17). Fallback: replace each junction with a directory symlink (`mklink /D`, needs Developer Mode or Administrator) |
-| `prompt-reviewer` agent discovered by Claude Code | **Observed** 2026-10-17: listed in the agent registry of a new session started in the workspace root |
+| `prompt-reviewer` agent discovered by Claude Code | **Observed** 2026-10-17: listed in the agent registry of a new session started in the repository root |
 | Workshop reorganization (clients/, workshop/) keeps Claude discovery of `.claude/` | Agent and skill locations unchanged; manual re-check after restart: `claude` in the root, `/agents` |
-| Trading-app demonstration checklist | **Not run**; steps in [the Trading-app entry](../ai-infra/workshop/projects/trading-app/README.md) |
+| Trading-app demonstration checklist | **Not run**; steps in [the Trading-app entry](../workshop/projects/trading-app/README.md) |
 
 Prompt-engineering review (Homero v1.1, `prompt-reviewer`, target prompt revision 2): `docs/prompt-engineering-review.md`.
 
-Results of the reorganization task: [ai-infrastructure-handover.md](ai-infrastructure-handover.md).
+Results of the reorganization task: [ai-infrastructure-handover.md](ai-infrastructure-handover.md). On
+2026-10-17 the repository root then moved from `%USERPROFILE%\Repos` to `%USERPROFILE%\Repos\ai-infra` (history kept;
+backup bundle and tag `pre-root-move` made first); projects stay in `%USERPROFILE%\Repos\projects\`.
 
 **Open items:**
 1. Install Codex CLI (needs authorization) and run the manual checks in the Codex client guide.
 2. Confirm that Codex follows Windows directory junctions in `.agents/skills/`.
-3. Commit the infrastructure changes when the user approves.
+3. Push the commits when the user approves (committed locally 2026-10-17, not pushed).
 4. An untracked installer binary sits inside the Trading-app repository; reported to the owner, not touched.
 5. Run the Trading-app demonstration checklist in both clients.
 6. Enable the secret guard in each clone (`git config core.hooksPath .githooks`); it was off in the maintainer's clone.

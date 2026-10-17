@@ -18,7 +18,7 @@ Review:
 - **Real execution**: `REAL_TRADING_ENABLED` is still `False`; no order endpoints exist
   (`/fapi/v1/order`, `/api/v3/order`, `batchOrders`) outside an authorized execution service.
 - **Risk engine**: no path creates orders or positions without going through `backend/algo/risk.py`.
-- **Agents and skills** in the project `.claude/` and in the shared workspace root `.claude/` (loaded with `--add-dir`): minimum permissions, no broad `allowed-tools`, no agent with `Agent`,
+- **Agents and skills** in the project `.claude/` and in the shared `ai-infra/.claude/` (loaded with `--add-dir`): minimum permissions, no broad `allowed-tools`, no agent with `Agent`,
   instructions that do not contradict `CLAUDE.md`.
 - **Supply chain**: dependencies in `backend/requirements.txt` and `frontend/package.json`, licenses,
   install scripts and external sources.

@@ -1,6 +1,10 @@
 # AI infrastructure reorganization: handover report
 
-Task: [ai-infrastructure-unification-and-workshop](../ai-infra/workshop/tasks/ai-infrastructure-unification-and-workshop.md)
+> **Note (2026-10-17, later the same day):** the repository root was then moved from `Repos/` to `Repos/ai-infra/`.
+> Paths in this report predate that move: drop the `ai-infra/` prefix, and `ai-infra/README.md` is now
+> `docs/inventory.md`. Links below were updated. The two commits listed as pending were made (`af78db2`, `384cffc`).
+
+Task: [ai-infrastructure-unification-and-workshop](../workshop/tasks/ai-infrastructure-unification-and-workshop.md)
 (revision 2). Run on 2026-10-17 with Claude Code 2.1.302. Gates: A (checkpoint) declined by the maintainer, who
 accepted the risk; B (plan) approved; C (commits) **pending**. All changes are uncommitted.
 
@@ -67,8 +71,8 @@ No new agent or skill was created: the inventory showed no material, repeatable 
 
 | Client | Guide | Install and authentication | Status |
 |---|---|---|---|
-| Claude Code CLI | [claude-code-cli](../ai-infra/clients/claude-code-cli/README.md) | [onboarding §1](onboarding.md#1-claude-code-cli) | Observed (2.1.302) |
-| OpenAI Codex CLI | [codex-cli](../ai-infra/clients/codex-cli/README.md) | [onboarding §2](onboarding.md#2-codex-cli) | statically checked against Documented format; **not verified** (not installed) |
+| Claude Code CLI | [claude-code-cli](../clients/claude-code-cli/README.md) | [onboarding §1](onboarding.md#1-claude-code-cli) | Observed (2.1.302) |
+| OpenAI Codex CLI | [codex-cli](../clients/codex-cli/README.md) | [onboarding §2](onboarding.md#2-codex-cli) | statically checked against Documented format; **not verified** (not installed) |
 | Claude Desktop (optional) | — | [onboarding §3](onboarding.md#3-claude-desktop) | Documented |
 
 ## 4. Discovery rules
@@ -78,9 +82,9 @@ No new agent or skill was created: the inventory showed no material, repeatable 
 | Rules | `CLAUDE.md` → `@AGENTS.md`, session start (Observed) | `AGENTS.md` git root → cwd (Documented) |
 | Agents | `.claude/agents/**`, session start only (Observed) | `.codex/agents/*.toml`, trusted project only (Documented) |
 | Skills | `.claude/skills/` (Observed) | `.agents/skills/` links, cwd → repo root, `~/.agents/skills/` (Documented, https://learn.chatgpt.com/docs/build-skills, 2026-10-17; junctions Unverified) |
-| Task prompts | not discovered; open by path from [Workshop tasks](../ai-infra/workshop/tasks/README.md) | same |
-| Catalogues, manuals | not discovered; [Workshop](../ai-infra/workshop/README.md) | same |
-| Projects | separate repos; Claude with `--add-dir`; entry pages in [Workshop projects](../ai-infra/workshop/projects/README.md) | project `AGENTS.md` only; shared skills via `link-skills --user`; shared agents not available |
+| Task prompts | not discovered; open by path from [Workshop tasks](../workshop/tasks/README.md) | same |
+| Catalogues, manuals | not discovered; [Workshop](../workshop/README.md) | same |
+| Projects | separate repos; Claude with `--add-dir`; entry pages in [Workshop projects](../workshop/projects/README.md) | project `AGENTS.md` only; shared skills via `link-skills --user`; shared agents not available |
 
 ## 5. Compatibility matrix
 
@@ -114,7 +118,7 @@ reduce exploratory file reads when choosing a resource (compare `/context` on 3 
 | # | Item | Result |
 |---|---|---|
 | 1 | One canonical location; catalogues link only | **Pass**: catalogues hold one-line purposes plus links; setup and agent tables de-duplicated |
-| 2 | Client guides cover decision-5 topics, platform-labelled commands, fresh clone → own account → verified resource | **Pass** for Claude Code; Codex guide written but **Not run** live (Codex not installed). Steps: [codex-cli §5](../ai-infra/clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) |
+| 2 | Client guides cover decision-5 topics, platform-labelled commands, fresh clone → own account → verified resource | **Pass** for Claude Code; Codex guide written but **Not run** live (Codex not installed). Steps: [codex-cli §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) |
 | 3 | Client-native files where clients load them; Claude `/agents` still works | **Pass** (no client-native file moved; 20 agents listed at the start of this session). Manual re-check: start `claude` in the root, run `/agents` |
 | 4 | `codex-adapter.py agents --check` | **Pass**: 20 agents, 0 out of date, 0 stale |
 | 5 | Workshop tasks README | **Pass** |
@@ -129,9 +133,9 @@ reduce exploratory file reads when choosing a resource (compare `/context` on 3 
 ## 9. Open items and next steps
 
 1. **Gate C:** approve the commit plan below. No push.
-2. Install Codex CLI (your authorization), run [codex-cli §5](../ai-infra/clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support),
+2. Install Codex CLI (your authorization), run [codex-cli §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support),
    including whether Windows junctions work.
-3. Run the [Trading-app demonstration checklist](../ai-infra/workshop/projects/trading-app/README.md) in both clients.
+3. Run the [Trading-app demonstration checklist](../workshop/projects/trading-app/README.md) in both clients.
 4. Enable the secret guard; optionally install gitleaks and run `gitleaks dir . --config .gitleaks.toml`.
 5. An untracked installer binary inside the Trading-app repository: the owner decides (not touched).
 6. Backlog, deferred: generate the catalogues from frontmatter with a `--check` mode, to prevent catalogue drift.

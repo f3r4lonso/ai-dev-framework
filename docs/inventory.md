@@ -1,4 +1,4 @@
-# AI infrastructure — %USERPROFILE%\Repos
+# AI infrastructure inventory — %USERPROFILE%\Repos\ai-infra
 
 Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work,
 plus own trading agents and skills (moved from the Trading-app project).
@@ -6,43 +6,43 @@ All external content is treated as **untrusted**: it was reviewed before copying
 (`install.sh`, `npx skills add`, plugin scripts).
 
 ## Layout
+All paths are relative to the repository root (`ai-infra/`).
 - `vendor/` — full copies (`git clone --depth 1`) of the source repositories. Read-only, untrusted, not versioned.
 - `clients/` — one guide per AI client (`claude-code-cli/`, `codex-cli/`): start-up directory, discovery,
-  permissions and limits; links to `../docs/onboarding.md` for install and authentication.
+  permissions and limits; links to `docs/onboarding.md` for install and authentication.
 - `workshop/` — client-neutral navigation layer: `tasks/` (task prompts and how to choose one), `catalogues/`
   (agents, skills, tasks; links only), `manuals/` (contributor guide), `projects/` (new-project convention and
   entry pages). Not loaded by any client; read by people or on request.
 - `prompts/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
-  Homero hands complex prompts to the `prompt-reviewer` agent (`../.claude/agents/ai/`) for an independent review.
+  Homero hands complex prompts to the `prompt-reviewer` agent (`.claude/agents/ai/`) for an independent review.
 - `scripts/codex-adapter.py` — builds the Codex adapter from the canonical `.claude/` resources: `agents`
-  (generates `../.codex/agents/*.toml`, `--check` for drift; CI: `.github/workflows/adapter-check.yml`) and
-  `link-skills` (links skills into `../.agents/skills/`, or `~/.agents/skills/` with `--user`). Standard library only.
+  (generates `.codex/agents/*.toml`, `--check` for drift; CI: `.github/workflows/adapter-check.yml`) and
+  `link-skills` (links skills into `.agents/skills/`, or `~/.agents/skills/` with `--user`). Standard library only.
   Keep it at this depth: it finds the repository root from its own location.
-- `../AGENTS.md` — shared rules for all clients; `../CLAUDE.md` imports it and adds Claude-only notes.
-  Architecture and compatibility: `../docs/ai-architecture.md`.
-- `../.claude/agents/` — installed agents (`ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`).
-- `../.claude/skills/` — installed skills.
-- `../projects/applications/` — application projects, each its own git repo (e.g. `Trading-app`), not versioned
-  here. Application code, data, tests, spec prompts and settings stay inside each project.
-- `../SECURITY.md`, `../docs/onboarding.md` — security policy, leak response and per-user account/authentication setup.
-- `../.githooks/pre-commit`, `../.gitleaks.toml`, `../.pre-commit-config.yaml`, `../.github/workflows/secret-scan.yml`,
-  `../.gitattributes` — secret scanning: local hook (gitleaks if installed, built-in fallback; enable per clone with
+- `AGENTS.md` — shared rules for all clients; `CLAUDE.md` imports it and adds Claude-only notes.
+  Architecture and compatibility: `docs/ai-architecture.md`.
+- `.claude/agents/` — installed agents (`ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`).
+- `.claude/skills/` — installed skills.
+- `%USERPROFILE%\Repos\projects\applications\` (next to this repository) — application projects, each its own git
+  repo (e.g. `Trading-app`). Application code, data, tests, spec prompts and settings stay inside each project.
+- `SECURITY.md`, `docs/onboarding.md` — security policy, leak response and per-user account/authentication setup.
+- `.githooks/pre-commit`, `.gitleaks.toml`, `.pre-commit-config.yaml`, `.github/workflows/secret-scan.yml`,
+  `.gitattributes` — secret scanning: local hook (gitleaks if installed, built-in fallback; enable per clone with
   `git config core.hooksPath .githooks`), optional pre-commit framework config, CI scan, LF endings for hooks.
 
-The root is a git repo (public on GitHub) with a whitelist `.gitignore`: only `README.md`, `AGENTS.md`, `CLAUDE.md`, `SECURITY.md`,
-`.claude/`, `.codex/agents/`, `docs/`, `.githooks/`, `.github/`, `.gitattributes`, `.gitleaks.toml`, `.pre-commit-config.yaml`,
-`ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md`, `ai-infra/prompts/`, `ai-infra/scripts/`, `ai-infra/clients/` and
-`ai-infra/workshop/` are versioned, and a deny block after the whitelist keeps secret and personal files out even inside
-those folders. A new top-level folder or a new folder under `ai-infra/` stays ignored until it is added to the whitelist.
-Projects are separate repos; `vendor/` is not versioned here.
+The repository (public on GitHub) has a whitelist `.gitignore`: only `README.md`, `AGENTS.md`, `CLAUDE.md`, `SECURITY.md`,
+`THIRD_PARTY_NOTICES.md`, `.claude/`, `.codex/agents/`, `docs/`, `clients/`, `workshop/`, `prompts/`, `scripts/`,
+`.githooks/`, `.github/`, `.gitattributes`, `.gitleaks.toml` and `.pre-commit-config.yaml` are versioned, and a deny
+block after the whitelist keeps secret and personal files out even inside those folders. A new top-level folder stays
+ignored until it is added to the whitelist. `vendor/` is not versioned.
 
-Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. Inside a project repo
+Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos\ai-infra`. Inside a project repo
 (e.g. Trading-app) Claude only walks up to that repo's root, so start it with
-`claude --add-dir %USERPROFILE%\Repos` (Trading-app ships `start-claude.bat` for this) or from the root folder.
+`claude --add-dir %USERPROFILE%\Repos\ai-infra` (Trading-app ships `start-claude.bat` for this).
 Codex details: `clients/codex-cli/README.md`.
 
 ## Conventions
-- **Naming:** kebab-case, lowercase, ASCII, English for every file and folder under `.claude/`, `.codex/` and `ai-infra/`
+- **Naming:** kebab-case, lowercase, ASCII, English for every file and folder in this repository
   (except `vendor/`). Tool-mandated names keep their form (`CLAUDE.md`, `SKILL.md`, `README.md`, `AGENTS.md`,
   `LICENSE.txt`). Agent and skill identity comes from the `name` frontmatter field; folder names should match it.
 - **Language:** technical content in English, and Claude always replies to the user in English (outcome terms).
@@ -88,7 +88,7 @@ Codex details: `clients/codex-cli/README.md`.
 | Trading | exchange-integration-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell, WebFetch; no real orders |
 | Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
 | Trading | security-reviewer | own (Trading-app) | Read, Grep, Glob |
-| AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `ai-infra/clients/`, `ai-infra/workshop/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
+| AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `clients/`, `workshop/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
 | AI | prompt-reviewer | own (2026-10-17) | Read, Grep, Glob (read-only); reviews and scores one prompt, never executes it; companion of the Homero prompt (`prompts/personal-assistants/`); example path updated to `workshop/tasks/` |
 | DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 (paths updated to `projects/applications/` and the new `ai-infra/` folders the same day) | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
 

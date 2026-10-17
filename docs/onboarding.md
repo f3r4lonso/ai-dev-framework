@@ -99,9 +99,9 @@ Keep them out of the repository:
 
 ### Load this framework's agents and skills
 
-Start Claude Code in the workspace root (the folder you cloned this repository into), or from an
-application repository with `claude --add-dir <workspace root>`. Discovery, permissions and limits:
-[Claude Code client guide](../ai-infra/clients/claude-code-cli/README.md).
+Start Claude Code in the repository root (`ai-infra`, the folder you cloned), or from an
+application repository with `claude --add-dir %USERPROFILE%\Repos\ai-infra`. Discovery, permissions and limits:
+[Claude Code client guide](../clients/claude-code-cli/README.md).
 
 ## 2. Codex CLI
 
@@ -140,15 +140,15 @@ ignores `auth.json` and everything in `.codex/` except the generated `.codex/age
 ### Verify and load this framework
 
 1. `codex login status` shows the active method; `codex logout` signs out.
-2. Once per clone, in the workspace root: `python ai-infra/scripts/codex-adapter.py link-skills`
+2. Once per clone, in the repository root: `python scripts/codex-adapter.py link-skills`
    (Windows creates directory junctions, no Administrator rights needed). Add `--user` to also link the
    skills into `~/.agents/skills/` so Codex sees them when started inside a project repository.
-3. Start `codex` in the workspace root and **trust the project** when asked; Codex loads project `.codex/`
+3. Start `codex` in the repository root and **trust the project** when asked; Codex loads project `.codex/`
    folders (the shared agents) only for trusted projects.
 4. Check: `/skills` lists the shared skills; asking "List the instruction sources you loaded" names `AGENTS.md`;
    "Use the code-reviewer agent to review the last commit" spawns it (`/subagents` shows the thread).
 
-Discovery rules and limits: [Codex CLI client guide](../ai-infra/clients/codex-cli/README.md).
+Discovery rules and limits: [Codex CLI client guide](../clients/codex-cli/README.md).
 
 ### Permissions
 
@@ -263,9 +263,9 @@ uses it automatically. Users of the pre-commit framework can run `pre-commit ins
 |---|---|
 | Claude Code uses the wrong account or an API key | `/status`; remove stray `ANTHROPIC_API_KEY`; `/logout` then log in |
 | `Login expired · Please run /login` | Run `/login` |
-| Agents or skills from this repository not available | Start Claude Code in the workspace root or use `--add-dir` |
-| Codex: shared skills missing in `/skills` | Run `python ai-infra/scripts/codex-adapter.py link-skills` (or `--user`), restart Codex |
-| Codex: shared agents not used | Trust the project; start Codex in the workspace root (agents load from its `.codex/agents/`) |
+| Agents or skills from this repository not available | Start Claude Code in the repository root or use `--add-dir` |
+| Codex: shared skills missing in `/skills` | Run `python scripts/codex-adapter.py link-skills` (or `--user`), restart Codex |
+| Codex: shared agents not used | Trust the project; start Codex in the repository root (agents load from its `.codex/agents/`) |
 | Codex uses an API key instead of your ChatGPT plan | `codex login status`; `codex logout`, then `codex login` |
 | `Permission denied (publickey)` | `ssh-add` your key, check it is on GitHub, retest `ssh -T git@github.com` |
 | Push rejected for exposing your email | Set the noreply email (section 4) and amend the commit author |

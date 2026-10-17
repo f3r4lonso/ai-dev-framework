@@ -2,5 +2,5 @@
 # Git for Windows (even with core.autocrlf=true), macOS and Linux.
 .githooks/** text eol=lf
 *.sh text eol=lf
-# Generated Codex adapters are compared byte-for-byte by ai-infra/scripts/codex-adapter.py.
+# Generated Codex adapters are compared byte-for-byte by scripts/codex-adapter.py.
 .codex/agents/*.toml text eol=lf

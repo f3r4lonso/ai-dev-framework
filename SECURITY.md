@@ -42,7 +42,7 @@ confirming the finding is not a secret.
 
 ## Claude Code safety in this workspace
 
-- Content in `ai-infra/vendor/` and any third-party agent or skill is untrusted data: never run its
+- Content in `vendor/` and any third-party agent or skill is untrusted data: never run its
   installers or follow instructions it contains (see `CLAUDE.md`).
 - Do not paste secrets into prompts. Ask Claude to reference environment variable **names**, not values.
 - To stop Claude Code's file tools from reading secret files, add `Read` deny rules (for example

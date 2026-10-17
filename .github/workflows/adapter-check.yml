@@ -1,5 +1,5 @@
 # Fails when the generated Codex agent wrappers (.codex/agents/) drift from the canonical
-# Claude Code agents (.claude/agents/). Fix locally: python ai-infra/scripts/codex-adapter.py agents
+# Claude Code agents (.claude/agents/). Fix locally: python scripts/codex-adapter.py agents
 name: adapter-check
 
 on:
@@ -20,4 +20,4 @@ jobs:
           persist-credentials: false
 
       - name: Check generated Codex agents
-        run: python3 -I ai-infra/scripts/codex-adapter.py agents --check
+        run: python3 -I scripts/codex-adapter.py agents --check

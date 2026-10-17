@@ -10,5 +10,5 @@ Task prompts are briefs you hand to a client to run a whole piece of work. They 
 | [unified-ai-engineering-infrastructure-prompt](../tasks/unified-ai-engineering-infrastructure-prompt.md) | superseded | First-run brief for the shared Claude/Codex infrastructure | — | do not run |
 | [unified-ai-client-workshop-reorganization](../tasks/unified-ai-client-workshop-reorganization.md) | superseded | Earlier draft of the client/Workshop reorganization | — | do not run |
 
-Results of completed runs: [ai-infrastructure-handover.md](../../../docs/ai-infrastructure-handover.md),
-[prompt-engineering-review.md](../../../docs/prompt-engineering-review.md).
+Results of completed runs: [ai-infrastructure-handover.md](../../docs/ai-infrastructure-handover.md),
+[prompt-engineering-review.md](../../docs/prompt-engineering-review.md).

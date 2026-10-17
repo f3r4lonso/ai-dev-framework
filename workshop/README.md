@@ -15,7 +15,7 @@ their client to open a file here.
 ## Quick start
 
 1. Set up one client: [Claude Code CLI](../clients/claude-code-cli/README.md) or [Codex CLI](../clients/codex-cli/README.md).
-2. Start it in the workspace root and run the client guide's verification steps.
+2. Start it in the repository root and run the client guide's verification steps.
 3. Pick a task, agent or skill: [tasks/README.md](tasks/README.md).
 4. Work on a project through its entry page in [projects/](projects/README.md).
 5. Add something new: [contributor guide](manuals/contributor-guide.md).
