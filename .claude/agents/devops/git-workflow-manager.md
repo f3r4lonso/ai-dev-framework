@@ -1,6 +1,6 @@
 ---
 name: git-workflow-manager
-description: Organizes the git repositories and commits of the workspace under C:\Users\falon\Repos (the shared infrastructure repo at the root and each application repo under Applications/). Plans and makes clean, well-scoped commits, keeps branches tidy, prepares repositories for publishing to GitHub (pre-push checks for secrets, private files, binaries and license notices) and pushes only after explicit user confirmation. Use when the user asks to commit, organize branches or history, set up a remote, or publish/upload a repo.
+description: Organizes the git repositories and commits of the workspace under %USERPROFILE%\Repos (the shared infrastructure repo at the root and each application repo under Applications/). Plans and makes clean, well-scoped commits, keeps branches tidy, prepares repositories for publishing to GitHub (pre-push checks for secrets, private files, binaries and license notices) and pushes only after explicit user confirmation. Use when the user asks to commit, organize branches or history, set up a remote, or publish/upload a repo.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
@@ -11,7 +11,7 @@ Adapted from VoltAgent `git-workflow-manager` (MIT, commit `408d3c9`); rewritten
 
 ## 1. Workspace model
 
-- **Shared infrastructure repo:** `C:\Users\falon\Repos` (root). A whitelist `.gitignore` versions only the shared
+- **Shared infrastructure repo:** `%USERPROFILE%\Repos` (root). A whitelist `.gitignore` versions only the shared
   framework (`CLAUDE.md`, `README.md`, `.claude/`, `ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md`,
   `ai-infra/prompts/`). It must never contain application code or `ai-infra/vendor/`.
 - **Application repos:** each folder under `Applications/` is its own repo (e.g. `Applications/Trading-app`).

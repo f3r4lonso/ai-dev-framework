@@ -1,4 +1,4 @@
-# AI infrastructure — C:\Users\falon\Repos
+# AI infrastructure — %USERPROFILE%\Repos
 
 Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work,
 plus own trading agents and skills (moved from the Trading-app project).
@@ -10,15 +10,15 @@ All external content is treated as **untrusted**: it was reviewed before copying
 - `prompts/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
 - `../.claude/agents/` — installed agents (`ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`).
 - `../.claude/skills/` — installed skills.
-- `../CLAUDE.md` — shared rules for every session started under `C:\Users\falon\Repos`.
+- `../CLAUDE.md` — shared rules for every session started under `%USERPROFILE%\Repos`.
 - `../Applications/` — application projects, each its own git repo (e.g. `Trading-app`). Application code, data, tests, spec prompts and settings stay inside each project.
 
 The root is a local git repo with a whitelist `.gitignore`: only `README.md`, `CLAUDE.md`, `.claude/`, `ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md`
 and `ai-infra/prompts/` are versioned. Projects are separate repos; `vendor/` is not versioned here.
 
-Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`. Inside a project repo
+Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. Inside a project repo
 (e.g. Trading-app) Claude only walks up to that repo's root, so start it with
-`claude --add-dir C:\Users\falon\Repos` (Trading-app ships `start-claude.bat` for this) or from the root folder.
+`claude --add-dir %USERPROFILE%\Repos` (Trading-app ships `start-claude.bat` for this) or from the root folder.
 
 ## Conventions
 - **Naming:** kebab-case, lowercase, ASCII, English for every file and folder under `.claude/` and `ai-infra/`
