@@ -9,12 +9,20 @@ shared agents, skills and instructions used across my application projects.
 - `.claude/skills/` — on-demand skills (UI/UX, frontend, backend, trading).
 - `ai-infra/README.md` — inventory: sources, commits, licenses, local modifications and conventions.
 - `ai-infra/THIRD_PARTY_NOTICES.md` — licenses of the third-party agents and skills included here.
+- `SECURITY.md`, `docs/` — security policy and onboarding guide.
+- `.githooks/`, `.gitleaks.toml`, `.pre-commit-config.yaml`, `.github/workflows/` — secret scanning (local hook and CI).
 
 Application projects live in `Applications/` as separate repositories and are not part of this repo.
 
 ## Usage
 Clone into the workspace root (e.g. `C:\Users\<you>\Repos`) and start Claude Code there, or from an application
 repo with `claude --add-dir <workspace root>` so the shared agents and skills load.
+
+## Security and onboarding
+This repository holds no credentials: each contributor signs in with their own Claude, Git and GitHub accounts.
+- [docs/onboarding.md](docs/onboarding.md): set up Claude Code / Claude Desktop authentication, Git identity and GitHub access.
+- [SECURITY.md](SECURITY.md): what must never be committed, built-in protections, how to report issues and what to do if a secret leaks.
+- After cloning, enable the secret guard once: `git config core.hooksPath .githooks`.
 
 ## Agents
 

@@ -13,8 +13,15 @@ All external content is treated as **untrusted**: it was reviewed before copying
 - `../CLAUDE.md` — shared rules for every session started under `%USERPROFILE%\Repos`.
 - `../Applications/` — application projects, each its own git repo (e.g. `Trading-app`). Application code, data, tests, spec prompts and settings stay inside each project.
 
-The root is a local git repo with a whitelist `.gitignore`: only `README.md`, `CLAUDE.md`, `.claude/`, `ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md`
-and `ai-infra/prompts/` are versioned. Projects are separate repos; `vendor/` is not versioned here.
+- `../SECURITY.md`, `../docs/onboarding.md` — security policy, leak response and per-user account/authentication setup.
+- `../.githooks/pre-commit`, `../.gitleaks.toml`, `../.pre-commit-config.yaml`, `../.github/workflows/secret-scan.yml`,
+  `../.gitattributes` — secret scanning: local hook (gitleaks if installed, built-in fallback; enable per clone with
+  `git config core.hooksPath .githooks`), optional pre-commit framework config, CI scan, LF endings for hooks.
+
+The root is a git repo (public on GitHub) with a whitelist `.gitignore`: only `README.md`, `CLAUDE.md`, `SECURITY.md`,
+`.claude/`, `docs/`, `.githooks/`, `.github/`, `.gitattributes`, `.gitleaks.toml`, `.pre-commit-config.yaml`,
+`ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md` and `ai-infra/prompts/` are versioned, and a deny block after
+the whitelist keeps secret and personal files out even inside those folders. Projects are separate repos; `vendor/` is not versioned here.
 
 Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. Inside a project repo
 (e.g. Trading-app) Claude only walks up to that repo's root, so start it with
@@ -43,6 +50,13 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 | [anthropics/skills](https://github.com/anthropics/skills) | 181,691 / 21,524 | `dbd4588` | Apache 2.0 (frontend-design) |
 | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 32,549 / 2,842 | `063bee9` | MIT (README and SKILL) |
 | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | 996 / 69 | `434b7f9` | MIT |
+
+## CI and tooling dependencies (not installed locally; reviewed 2026-10-17)
+| Dependency | Used by | Pin | License |
+|---|---|---|---|
+| [actions/checkout](https://github.com/actions/checkout) | `secret-scan.yml` | v6.1.0 `d23441a48e516b6c34aea4fa41551a30e30af803` | MIT |
+| [gitleaks/gitleaks-action](https://github.com/gitleaks/gitleaks-action) | `secret-scan.yml` (no license key needed for personal-account repos) | v3.0.0 `e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e` | see repo |
+| [gitleaks/gitleaks](https://github.com/gitleaks/gitleaks) | CI (`GITLEAKS_VERSION`), `.pre-commit-config.yaml`, optional local install | v8.30.1 | MIT |
 
 ## Installed agents
 | Area | Agent | Source | Tools |
