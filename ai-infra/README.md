@@ -79,7 +79,7 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 ## Installed skills
 - UI/UX: `ui-ux-pro-max` (Python search scripts over local CSVs, standard library only, no network),
   `frontend-design`, `web-design-guidelines`, `interaction-design`, `design-system-patterns`,
-  `responsive-design`, `visual-design-foundations`, `wcag-audit-patterns`.
+  `responsive-design`, `wcag-audit-patterns`.
 - Frontend: `vercel-react-best-practices`, `react-state-management`.
 - Backend: `api-design-principles`, `python-testing-patterns`, `python-error-handling`.
 - Trading (own, from Trading-app; no `allowed-tools`): `strategy-specification`, `backtesting-audit`,
@@ -115,6 +115,8 @@ Removed from `.claude/` (vendor copies remain for reference); restore only after
   could take trading test work away from the scoped `qa-test-engineer` (edits `backend/tests/` only).
 - `design-system-architect` (wshobson): multi-brand / Figma token pipelines are out of scope for a single local
   dashboard; `ui-designer` plus the `design-system-patterns` skill cover tokens and theming.
+- `visual-design-foundations` skill (wshobson): typography, color, spacing and iconography are covered twice,
+  by `ui-ux-pro-max` (color, typography, google-fonts, icons domains, design-system output) and `design-system-patterns`.
 
 ## Updating
 `git -C vendor/<repo> pull`, review the diff (`git diff HEAD@{1}`), copy back only what was reviewed,
