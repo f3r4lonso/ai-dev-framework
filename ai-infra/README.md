@@ -1,13 +1,14 @@
 # AI infrastructure — C:\Users\falon\Repos
 
-Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work.
+Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work,
+plus own trading agents and skills (moved from the Trading-app project).
 All external content is treated as **untrusted**: it was reviewed before copying and no installer was run
 (`install.sh`, `npx skills add`, plugin scripts).
 
 ## Layout
 - `vendor/` — full copies (`git clone --depth 1`) of the source repositories. Read-only.
 - `prompts/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
-- `../.claude/agents/` — installed agents (`ai`, `backend`, `frontend`, `quality`, `ui`, `ux`).
+- `../.claude/agents/` — installed agents (`ai`, `backend`, `frontend`, `quality`, `trading`, `ui`, `ux`).
 - `../.claude/skills/` — installed skills.
 - `../CLAUDE.md` — shared rules for every session started under `C:\Users\falon\Repos`.
 
@@ -24,8 +25,13 @@ Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`.
   `LICENSE.txt`). Agent and skill identity comes from the `name` frontmatter field; folder names should match it.
 - **Language:** technical content in English, and Claude always replies to the user in English (outcome terms).
   User-facing app texts and strategy docs stay in Spanish.
-- **Project-specific resources** (e.g. trading agents and skills) stay in the project's `.claude/`.
-  Move one to the root only when a second project needs it.
+- **Separation:** application code, data, tests, spec prompts (`<project>/.claude/prompts/`) and settings stay
+  in the project. Reusable agents and skills live here, grouped by area; do not merge resources from different
+  projects unless they are genuinely the same.
+- **Trading area (`agents/trading/`, trading skills):** own resources moved from Trading-app on 2026-10-17
+  (user request). They reference project paths relative to the Trading-app project root (`backend/algo/...`,
+  `docs/...`, `.claude/prompts/...`), so they **assume the Trading-app root is the working directory**
+  (start Claude with the project's `start-claude.bat`). Never hardcode the project's absolute path in them.
 
 ## Source repositories
 | Repository | ★ / forks (2026-10-17) | Commit | License |
@@ -48,6 +54,11 @@ Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`.
 | UX | ux-researcher | VoltAgent | read-only + web |
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
 | Quality | code-reviewer, debugger, test-automator | wshobson | inherits all |
+| Trading | quant-researcher, repo-researcher | own (Trading-app) | Read, Grep, Glob, WebFetch, WebSearch |
+| Trading | strategy-engineer, risk-engineer, qa-test-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell; edit scope limited by instructions |
+| Trading | exchange-integration-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell, WebFetch; no real orders |
+| Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
+| Trading | security-reviewer | own (Trading-app) | Read, Grep, Glob |
 | AI | ai-environment-auditor | own (2026-10-17) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
 
 ## Installed skills
@@ -56,6 +67,11 @@ Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`.
   `responsive-design`, `visual-design-foundations`, `wcag-audit-patterns`.
 - Frontend: `vercel-react-best-practices`, `react-state-management`.
 - Backend: `api-design-principles`, `python-testing-patterns`, `python-error-handling`.
+- Trading (own, from Trading-app; no `allowed-tools`): `strategy-specification`, `backtesting-audit`,
+  `risk-management`, `market-data-quality`, `exchange-integration`, `order-lifecycle-safety`,
+  `paper-trading-lifecycle`, `trading-test-review`, `repo-research`, `dependency-license-review`.
+  The last two are generic in purpose but their content is Trading-app specific
+  (`backend/requirements.txt`, `docs/REFERENCE_REPOS.md`); generalize only when a second project needs them.
 
 ## Local modifications (re-apply after every update)
 - wshobson agents: the `name` field had a plugin prefix (`backend-development-backend-architect`…); only `name` was shortened.

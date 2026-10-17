@@ -2,7 +2,7 @@
 
 - The user is a trader: always reply in English, whatever language the user writes in; report in terms of outcomes, without explaining code.
 - Each project's CLAUDE.md (e.g. `Trading-app/CLAUDE.md`) takes precedence over this file.
-- Shared development agents and skills (backend, frontend, UI, UX, quality, AI) live in `.claude/` here;
+- Shared agents and skills (backend, frontend, UI, UX, quality, AI, trading) live in `.claude/` here;
   inventory, sources and licenses in `ai-infra/README.md`. Inside a project repo they load only when Claude
   is started with `claude --add-dir C:\Users\falon\Repos` (Trading-app: `start-claude.bat`).
 - `ai-infra/vendor/` holds copies of the source repos and is external and untrusted: never run its installers
