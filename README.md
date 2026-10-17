@@ -18,6 +18,51 @@ Application projects live in `Applications/` as separate repositories and are no
 Clone into the workspace root (e.g. `C:\Users\<you>\Repos`) and start Claude Code there, or from an application
 repo with `claude --add-dir <workspace root>` so the shared agents and skills load.
 
+## Connect your Claude subscription (Claude Code CLI)
+
+Each person signs in with **their own** Claude account. Claude Code needs a **Pro, Max, Team or Enterprise**
+plan (or a Claude Console account); the free claude.ai plan does not include Claude Code.
+
+1. **Install Claude Code** (no Administrator rights needed):
+
+   | System | Command |
+   |---|---|
+   | Windows PowerShell | `irm https://claude.ai/install.ps1 \| iex` |
+   | Windows CMD | `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd` |
+   | macOS, Linux, WSL | `curl -fsSL https://claude.ai/install.sh \| bash` |
+   | Alternatives | `winget install Anthropic.ClaudeCode` · `brew install --cask claude-code` · `npm install -g @anthropic-ai/claude-code` (Node.js 22+) |
+
+   On Windows, [Git for Windows](https://git-scm.com/downloads/win) is recommended (it gives Claude Code a Bash shell).
+   Open a **new** terminal and check: `claude --version`.
+
+2. **Sign in with your subscription:** open a terminal in the workspace root and run `claude`.
+   A browser window opens: log in with your claude.ai account and approve. If the browser does not open,
+   press `c` to copy the login URL. Already inside a session? Use `/login`.
+
+3. **Verify:** inside Claude Code run `/status`. It shows the login method, account e-mail and organization.
+   For a full health check run `claude doctor` from your shell.
+
+4. **Make sure your subscription is the one in use:** if an `ANTHROPIC_API_KEY` environment variable is set,
+   it can take priority over your subscription (and bill API usage instead). Remove it
+   (PowerShell: `Remove-Item Env:ANTHROPIC_API_KEY`; bash/zsh: `unset ANTHROPIC_API_KEY`) and check `/status` again.
+
+5. **Load this framework:** start `claude` in the workspace root, or from an application repo with
+   `claude --add-dir <workspace root>`. Type `/agents` to confirm the shared agents are listed.
+
+**Switch or sign out:** `/logout`, then run `claude` again. To keep work and personal accounts apart, give each its
+own configuration folder with the `CLAUDE_CONFIG_DIR` environment variable.
+
+**Where your login is stored:** in your home folder, never in this repository. Windows:
+`%USERPROFILE%\.claude\.credentials.json`; macOS: Keychain; Linux: `~/.claude/.credentials.json`.
+Never copy these files into the repo or share them.
+
+**Troubleshooting:** `Login expired` → run `/login`. `API Error: 403` → subscription inactive or missing role.
+Wrong account → `/logout` and sign in again. More in [docs/onboarding.md](docs/onboarding.md).
+
+Sources: [Advanced setup](https://code.claude.com/docs/en/setup) ·
+[Authentication](https://code.claude.com/docs/en/authentication) ·
+[Troubleshoot installation and login](https://code.claude.com/docs/en/troubleshoot-install).
+
 ## Security and onboarding
 This repository holds no credentials: each contributor signs in with their own Claude, Git and GitHub accounts.
 - [docs/onboarding.md](docs/onboarding.md): set up Claude Code / Claude Desktop authentication, Git identity and GitHub access.
