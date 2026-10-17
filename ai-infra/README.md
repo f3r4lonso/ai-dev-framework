@@ -64,7 +64,6 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 | Backend | backend-architect | wshobson (backend-development) | inherits all |
 | Backend | python-pro | wshobson (python-development) | inherits all, opus model |
 | Frontend | frontend-developer | wshobson (frontend-mobile-development) | inherits all |
-| Frontend | react-specialist | VoltAgent | Read, Write, Edit, Bash, Glob, Grep |
 | UI | ui-designer, design-system-architect, accessibility-expert | wshobson (ui-design) | inherits all |
 | UX | ux-researcher | VoltAgent | read-only + web |
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
@@ -106,6 +105,11 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
   that change global behavior; not specific to backend/frontend/UI/UX. Not downloaded.
 - Review performed: licenses, frontmatter and tools of each agent, search for rule-bypass instructions,
   destructive commands, downloads, secrets and network imports in scripts.
+
+## Retired (2026-10-17, audit)
+Removed from `.claude/` (vendor copies remain for reference); restore only after a new review.
+- `react-specialist` (VoltAgent): duplicate of `frontend-developer` plus the `vercel-react-best-practices` and
+  `react-state-management` skills; its workflow relied on a non-existent "context manager" agent.
 
 ## Updating
 `git -C vendor/<repo> pull`, review the diff (`git diff HEAD@{1}`), copy back only what was reviewed,

@@ -71,7 +71,7 @@ This repository holds no credentials: each contributor signs in with their own C
 
 ## Agents
 
-22 subagents in `.claude/agents/`, grouped by area.
+21 subagents in `.claude/agents/`, grouped by area.
 
 **How to invoke an agent**
 - **By name:** "Use the code-reviewer agent to review this branch."
@@ -101,7 +101,6 @@ This repository holds no credentials: each contributor signs in with their own C
 | Agent | Purpose | Responsibilities |
 |---|---|---|
 | `frontend-developer` | Builds user interfaces | React and Next.js components, responsive layouts, client-side state. |
-| `react-specialist` | Optimizes existing React apps | Performance, advanced React features, state management architecture. |
 
 ### Quality
 | Agent | Purpose | Responsibilities |
@@ -145,8 +144,8 @@ Built for the Trading-app project; they assume the project root as working direc
 | `general-purpose` | Multi-step research and tasks |
 | `claude-code-guide` | Questions about Claude Code itself |
 
-Known overlaps (candidates for consolidation): `frontend-developer` / `react-specialist`,
-`test-automator` / `qa-test-engineer`, `code-reviewer` / `security-reviewer`.
+Known overlaps (candidates for consolidation): `test-automator` / `qa-test-engineer`,
+`code-reviewer` / `security-reviewer`. Retired components and why: `ai-infra/README.md` § Retired.
 
 ## Conventions
 kebab-case, lowercase, English names for files and folders; technical content in English.
