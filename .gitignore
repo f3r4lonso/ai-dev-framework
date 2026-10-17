@@ -3,9 +3,11 @@
 /*
 !/.gitignore
 !/CLAUDE.md
+!/README.md
 !/.editorconfig
 !/.claude/
 !/ai-infra/
 /ai-infra/*
 !/ai-infra/README.md
+!/ai-infra/THIRD_PARTY_NOTICES.md
 !/ai-infra/prompts/

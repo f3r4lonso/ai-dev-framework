@@ -8,12 +8,12 @@ All external content is treated as **untrusted**: it was reviewed before copying
 ## Layout
 - `vendor/` — full copies (`git clone --depth 1`) of the source repositories. Read-only.
 - `prompts/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
-- `../.claude/agents/` — installed agents (`ai`, `backend`, `frontend`, `quality`, `trading`, `ui`, `ux`).
+- `../.claude/agents/` — installed agents (`ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`).
 - `../.claude/skills/` — installed skills.
 - `../CLAUDE.md` — shared rules for every session started under `C:\Users\falon\Repos`.
 - `../Applications/` — application projects, each its own git repo (e.g. `Trading-app`). Application code, data, tests, spec prompts and settings stay inside each project.
 
-The root is a local git repo with a whitelist `.gitignore`: only `CLAUDE.md`, `.claude/`, `ai-infra/README.md`
+The root is a local git repo with a whitelist `.gitignore`: only `README.md`, `CLAUDE.md`, `.claude/`, `ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md`
 and `ai-infra/prompts/` are versioned. Projects are separate repos; `vendor/` is not versioned here.
 
 Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`. Inside a project repo
@@ -61,6 +61,7 @@ Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`.
 | Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
 | Trading | security-reviewer | own (Trading-app) | Read, Grep, Glob |
 | AI | ai-environment-auditor | own (2026-10-17) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
+| DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
 
 ## Installed skills
 - UI/UX: `ui-ux-pro-max` (Python search scripts over local CSVs, standard library only, no network),
