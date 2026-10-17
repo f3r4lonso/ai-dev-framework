@@ -2,12 +2,63 @@
 # Projects are separate git repos; ai-infra/vendor/ holds external clones.
 /*
 !/.gitignore
+!/.gitattributes
+!/.gitleaks.toml
+!/.pre-commit-config.yaml
 !/CLAUDE.md
 !/README.md
+!/SECURITY.md
 !/.editorconfig
 !/.claude/
+!/.githooks/
+!/.github/
+!/docs/
 !/ai-infra/
 /ai-infra/*
 !/ai-infra/README.md
 !/ai-infra/THIRD_PARTY_NOTICES.md
 !/ai-infra/prompts/
+
+# --- Defense in depth: secrets and machine-specific files -------------------
+# The whitelist above re-includes whole folders (.claude/, docs/, ...). These
+# patterns are listed AFTER it so they still apply inside those folders.
+# Never commit credentials; see SECURITY.md.
+
+# Environment files (templates with placeholder names only are allowed)
+.env
+.env.*
+!.env.example
+
+# Private keys, certificates with keys, keystores, password databases
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.ppk
+*.kdbx
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+.ssh/
+
+# Tokens and credential files of common tools
+*.token
+.credentials.json
+credentials*.json
+*service-account*.json
+.git-credentials
+.netrc
+_netrc
+.npmrc
+.pypirc
+.pgpass
+.aws/
+.docker/config.json
+
+# Claude Code personal / machine-specific state (shared settings.json is allowed)
+.claude.json
+settings.local.json
+.claude/worktrees/
