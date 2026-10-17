@@ -1,0 +1,9 @@
+# Optional: for contributors who use the pre-commit framework (https://pre-commit.com).
+# Install it yourself, then run `pre-commit install`. Otherwise use the
+# dependency-free hook instead: `git config core.hooksPath .githooks`.
+# Use one or the other: `pre-commit install` refuses to run while core.hooksPath is set.
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
