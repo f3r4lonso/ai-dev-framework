@@ -1,61 +1,80 @@
-# Infraestructura de IA — C:\Users\falon\Repos
+# AI infrastructure — C:\Users\falon\Repos
 
-Fecha: 17-10-2026. Agentes y skills de terceros para desarrollo backend, frontend, UI y UX.
-Todo el contenido externo se trata como **no confiable**: se revisó antes de copiarlo y no se ejecutó
-ningún instalador (`install.sh`, `npx skills add`, scripts de plugins).
+Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work.
+All external content is treated as **untrusted**: it was reviewed before copying and no installer was run
+(`install.sh`, `npx skills add`, plugin scripts).
 
-## Estructura
-- `vendor/` — copias completas (git clone --depth 1) de los repositorios de origen. Solo lectura.
-- `../.claude/agents/` — agentes instalados (backend, frontend, ui, ux, quality, ai).
-- `../.claude/skills/` — skills instaladas.
+## Layout
+- `vendor/` — full copies (`git clone --depth 1`) of the source repositories. Read-only.
+- `prompts/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
+- `../.claude/agents/` — installed agents (`ai`, `backend`, `frontend`, `quality`, `ui`, `ux`).
+- `../.claude/skills/` — installed skills.
+- `../CLAUDE.md` — shared rules for every session started under `C:\Users\falon\Repos`.
 
-Se cargan cuando Claude Code se arranca en `C:\Users\falon\Repos`. Dentro de un repo git (p. ej. Trading-app)
-Claude solo sube hasta la raíz de ese repo, así que allí hay que usar `claude --add-dir C:\Users\falon\Repos`
-o arrancar desde `C:\Users\falon\Repos`.
+The root is a local git repo with a whitelist `.gitignore`: only `CLAUDE.md`, `.claude/`, `ai-infra/README.md`
+and `ai-infra/prompts/` are versioned. Projects are separate repos; `vendor/` is not versioned here.
 
-## Repositorios de origen
-| Repositorio | ★ / forks (17-10-2026) | Commit | Licencia |
+Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`. Inside a project repo
+(e.g. Trading-app) Claude only walks up to that repo's root, so start it with
+`claude --add-dir C:\Users\falon\Repos` (Trading-app ships `start-claude.bat` for this) or from the root folder.
+
+## Conventions
+- **Naming:** kebab-case, lowercase, ASCII, English for every file and folder under `.claude/` and `ai-infra/`
+  (except `vendor/`). Tool-mandated names keep their form (`CLAUDE.md`, `SKILL.md`, `README.md`, `AGENTS.md`,
+  `LICENSE.txt`). Agent and skill identity comes from the `name` frontmatter field; folder names should match it.
+- **Language:** technical content in English. The rule "reply to the user in Spanish, in outcome terms"
+  is preserved in every CLAUDE.md. User-facing texts and strategy docs stay in Spanish.
+- **Project-specific resources** (e.g. trading agents and skills) stay in the project's `.claude/`.
+  Move one to the root only when a second project needs it.
+
+## Source repositories
+| Repository | ★ / forks (2026-10-17) | Commit | License |
 |---|---|---|---|
-| [wshobson/agents](https://github.com/wshobson/agents) | 40.951 / 4.345 | `044b4b2` | MIT |
-| [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents) | 25.778 / 3.009 | `408d3c9` | MIT |
-| [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 136.722 / 14.533 | `56ea9cf` | MIT |
-| [anthropics/skills](https://github.com/anthropics/skills) | 181.691 / 21.524 | `dbd4588` | Apache 2.0 (frontend-design) |
-| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 32.549 / 2.842 | `063bee9` | MIT (README y SKILL) |
+| [wshobson/agents](https://github.com/wshobson/agents) | 40,951 / 4,345 | `044b4b2` | MIT |
+| [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents) | 25,778 / 3,009 | `408d3c9` | MIT |
+| [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 136,722 / 14,533 | `56ea9cf` | MIT |
+| [anthropics/skills](https://github.com/anthropics/skills) | 181,691 / 21,524 | `dbd4588` | Apache 2.0 (frontend-design) |
+| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 32,549 / 2,842 | `063bee9` | MIT (README and SKILL) |
 | [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | 996 / 69 | `434b7f9` | MIT |
 
-## Agentes instalados
-| Área | Agente | Origen | Herramientas |
+## Installed agents
+| Area | Agent | Source | Tools |
 |---|---|---|---|
-| Backend | backend-architect | wshobson (backend-development) | hereda todas |
-| Backend | python-pro | wshobson (python-development) | hereda todas, modelo opus |
-| Frontend | frontend-developer | wshobson (frontend-mobile-development) | hereda todas |
+| Backend | backend-architect | wshobson (backend-development) | inherits all |
+| Backend | python-pro | wshobson (python-development) | inherits all, opus model |
+| Frontend | frontend-developer | wshobson (frontend-mobile-development) | inherits all |
 | Frontend | react-specialist | VoltAgent | Read, Write, Edit, Bash, Glob, Grep |
-| UI | ui-designer, design-system-architect, accessibility-expert | wshobson (ui-design) | hereda todas |
-| UX | ux-researcher | VoltAgent | solo lectura + web |
-| UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, web, navegador |
-| Quality | code-reviewer, debugger, test-automator | wshobson | hereda todas |
-| AI | ai-environment-auditor | propio (17-10-2026) | auditoría de solo lectura + modo apply que edita solo archivos de infraestructura (nunca código, settings ni vendor); autoauditoría; modelo opus |
+| UI | ui-designer, design-system-architect, accessibility-expert | wshobson (ui-design) | inherits all |
+| UX | ux-researcher | VoltAgent | read-only + web |
+| UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
+| Quality | code-reviewer, debugger, test-automator | wshobson | inherits all |
+| AI | ai-environment-auditor | own (2026-10-17) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
 
-Cambio local: los agentes de wshobson tenían el nombre con prefijo de plugin
-(`backend-development-backend-architect`…); se acortó solo el campo `name`.
-
-## Skills instaladas
-- UI/UX: `ui-ux-pro-max` (scripts Python de búsqueda en CSV locales, solo librería estándar, sin red),
+## Installed skills
+- UI/UX: `ui-ux-pro-max` (Python search scripts over local CSVs, standard library only, no network),
   `frontend-design`, `web-design-guidelines`, `interaction-design`, `design-system-patterns`,
   `responsive-design`, `visual-design-foundations`, `wcag-audit-patterns`.
 - Frontend: `vercel-react-best-practices`, `react-state-management`.
 - Backend: `api-design-principles`, `python-testing-patterns`, `python-error-handling`.
 
-Cambio local: `web-design-guidelines` descargaba sus reglas de GitHub en cada uso; ahora lee
-`guidelines.md` (copia revisada) para no ejecutar instrucciones remotas sin revisar.
+## Local modifications (re-apply after every update)
+- wshobson agents: the `name` field had a plugin prefix (`backend-development-backend-architect`…); only `name` was shortened.
+- `web-design-guidelines`: fetched its rules from GitHub on every use; it now reads `guidelines.md`
+  (reviewed copy) so remote instructions are never run unreviewed.
+- `ui-ux-pro-max`: script paths changed from `${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/`
+  (only substituted in plugin skills) to `${CLAUDE_SKILL_DIR}/scripts/`; the upstream `scripts/tests/` folder
+  was removed (it validates the upstream repo layout and is not needed to use the skill).
+- `ui-ux-tester`: removed the invalid tool names `chrome-mcp` and `computer-use` from `tools`.
+- Folder `skills/react-best-practices` renamed to `vercel-react-best-practices` to match its `name`.
 
-## Descartado / pendiente
-- `anthropics/skills/webapp-testing`: requiere instalar Playwright y navegadores (dependencia nueva) y pide
-  no leer su código. Descargado en `vendor/`, no instalado.
-- `obra/superpowers` (300k★) y `affaan-m/ECC` (282k★): marcos generales con hooks y metodología propia que
-  cambian el comportamiento global; no son específicos de back/front/UI/UX. No descargados.
-- Revisión realizada: licencias, frontmatter y herramientas de cada agente, búsqueda de instrucciones de
-  saltarse reglas, comandos destructivos, descargas, secretos e imports de red en scripts.
+## Rejected / pending
+- `anthropics/skills/webapp-testing`: requires installing Playwright and browsers (new dependency) and asks
+  not to read its code. Downloaded to `vendor/`, not installed.
+- `obra/superpowers` (300k★) and `affaan-m/ECC` (282k★): general frameworks with hooks and their own methodology
+  that change global behavior; not specific to backend/frontend/UI/UX. Not downloaded.
+- Review performed: licenses, frontmatter and tools of each agent, search for rule-bypass instructions,
+  destructive commands, downloads, secrets and network imports in scripts.
 
-## Actualizar
-`git -C vendor/<repo> pull`, revisar el diff (`git diff HEAD@{1}`) y volver a copiar solo lo revisado.
+## Updating
+`git -C vendor/<repo> pull`, review the diff (`git diff HEAD@{1}`), copy back only what was reviewed,
+re-apply the local modifications above and update this file.
