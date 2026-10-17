@@ -6,7 +6,7 @@ ningún instalador (`install.sh`, `npx skills add`, scripts de plugins).
 
 ## Estructura
 - `vendor/` — copias completas (git clone --depth 1) de los repositorios de origen. Solo lectura.
-- `../.claude/agents/` — agentes instalados (backend, frontend, ui, ux, calidad, ia).
+- `../.claude/agents/` — agentes instalados (backend, frontend, ui, ux, calidad, ai).
 - `../.claude/skills/` — skills instaladas.
 
 Se cargan cuando Claude Code se arranca en `C:\Users\falon\Repos`. Dentro de un repo git (p. ej. Trading-app)
@@ -35,7 +35,7 @@ o arrancar desde `C:\Users\falon\Repos`.
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, web, navegador |
 | Calidad | code-reviewer, debugger, test-automator | wshobson | hereda todas |
 
-| IA | ai-environment-auditor | propio (17-10-2026) | solo lectura + Bash de consulta + web, modelo opus |
+| AI | ai-environment-auditor | propio (17-10-2026) | auditoría de solo lectura + modo apply que edita solo archivos de infraestructura (nunca código, settings ni vendor); autoauditoría; modelo opus |
 
 Cambio local: los agentes de wshobson tenían el nombre con prefijo de plugin
 (`backend-development-backend-architect`…); se acortó solo el campo `name`.
