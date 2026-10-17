@@ -61,13 +61,14 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 ## Installed agents
 | Area | Agent | Source | Tools |
 |---|---|---|---|
-| Backend | backend-architect | wshobson (backend-development) | inherits all |
-| Backend | python-pro | wshobson (python-development) | inherits all, opus model |
-| Frontend | frontend-developer | wshobson (frontend-mobile-development) | inherits all |
-| UI | ui-designer, accessibility-expert | wshobson (ui-design) | inherits all |
+| Backend | backend-architect | wshobson (backend-development) | Read, Write, Edit, Glob, Grep |
+| Backend | python-pro | wshobson (python-development) | Read, Write, Edit, Bash, Glob, Grep; opus model |
+| Frontend | frontend-developer | wshobson (frontend-mobile-development) | Read, Write, Edit, Bash, Glob, Grep |
+| UI | ui-designer, accessibility-expert | wshobson (ui-design) | Read, Write, Edit, Glob, Grep |
 | UX | ux-researcher | VoltAgent | read-only + web |
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
-| Quality | code-reviewer, debugger | wshobson | inherits all |
+| Quality | code-reviewer | wshobson | Read, Grep, Glob (read-only); opus model |
+| Quality | debugger | wshobson | Read, Write, Edit, Bash, Glob, Grep |
 | Trading | quant-researcher, repo-researcher | own (Trading-app) | Read, Grep, Glob, WebFetch, WebSearch |
 | Trading | strategy-engineer, risk-engineer, qa-test-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell; edit scope limited by instructions |
 | Trading | exchange-integration-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell, WebFetch; no real orders |
@@ -90,6 +91,10 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 
 ## Local modifications (re-apply after every update)
 - wshobson agents: the `name` field had a plugin prefix (`backend-development-backend-architect`…); only `name` was shortened.
+- wshobson agents: upstream omits `tools`, which inherits every tool (including `Agent`, MCP tools and claude.ai
+  publishing tools). An explicit `tools:` line was added (2026-10-17): implementers `Read, Write, Edit, Bash, Glob, Grep`
+  (python-pro, frontend-developer, debugger), design roles without shell (backend-architect, ui-designer,
+  accessibility-expert: `Read, Write, Edit, Glob, Grep`), and `code-reviewer` read-only (`Read, Grep, Glob`).
 - `web-design-guidelines`: fetched its rules from GitHub on every use; it now reads `guidelines.md`
   (reviewed copy) so remote instructions are never run unreviewed.
 - `ui-ux-pro-max`: script paths changed from `${CLAUDE_PLUGIN_ROOT}/.claude/skills/ui-ux-pro-max/scripts/`
