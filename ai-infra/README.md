@@ -64,7 +64,7 @@ Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos`. 
 | Backend | backend-architect | wshobson (backend-development) | inherits all |
 | Backend | python-pro | wshobson (python-development) | inherits all, opus model |
 | Frontend | frontend-developer | wshobson (frontend-mobile-development) | inherits all |
-| UI | ui-designer, design-system-architect, accessibility-expert | wshobson (ui-design) | inherits all |
+| UI | ui-designer, accessibility-expert | wshobson (ui-design) | inherits all |
 | UX | ux-researcher | VoltAgent | read-only + web |
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
 | Quality | code-reviewer, debugger | wshobson | inherits all |
@@ -113,6 +113,8 @@ Removed from `.claude/` (vendor copies remain for reference); restore only after
 - `test-automator` (wshobson): enterprise-generic (self-healing/AI test platforms, CI/CD); for the actual stack
   `qa-test-engineer` plus `python-testing-patterns` cover it, and its proactive auto-delegation with all tools
   could take trading test work away from the scoped `qa-test-engineer` (edits `backend/tests/` only).
+- `design-system-architect` (wshobson): multi-brand / Figma token pipelines are out of scope for a single local
+  dashboard; `ui-designer` plus the `design-system-patterns` skill cover tokens and theming.
 
 ## Updating
 `git -C vendor/<repo> pull`, review the diff (`git diff HEAD@{1}`), copy back only what was reviewed,

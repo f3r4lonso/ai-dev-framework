@@ -71,7 +71,7 @@ This repository holds no credentials: each contributor signs in with their own C
 
 ## Agents
 
-20 subagents in `.claude/agents/`, grouped by area.
+19 subagents in `.claude/agents/`, grouped by area.
 
 **How to invoke an agent**
 - **By name:** "Use the code-reviewer agent to review this branch."
@@ -112,7 +112,6 @@ This repository holds no credentials: each contributor signs in with their own C
 | Agent | Purpose | Responsibilities |
 |---|---|---|
 | `ui-designer` | Visual design | Components, layouts, mockups. |
-| `design-system-architect` | Design systems | Design tokens, theming, reusable component libraries. |
 | `accessibility-expert` | Accessibility | Keyboard and screen-reader support, WCAG compliance. |
 
 ### UX (user experience)
