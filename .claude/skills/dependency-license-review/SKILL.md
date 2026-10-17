@@ -14,7 +14,10 @@ Current dependencies: `backend/requirements.txt` (Flask, pandas, numpy, requests
 3. **Compatibility**: MIT / BSD / Apache-2.0 → reusable with attribution. GPL / AGPL → do not copy code (it would force
    licensing the app the same way). LGPL → only as an unmodified library. Commons Clause → not sellable. No license → do not use.
 4. **Maintenance**: latest release, known security issues, whether it is archived.
-5. **Transitive dependencies** and size (`pip install --dry-run`, `npm view <pkg> dependencies`) without installing.
+5. **Transitive dependencies** and size from metadata only, without installing or building anything:
+   PyPI JSON API (`https://pypi.org/pypi/<pkg>/<version>/json`, field `requires_dist`) and `npm view <pkg> dependencies`.
+   Do not use `pip install --dry-run` on its own: for source-only packages pip runs the package's build backend
+   (arbitrary code) to read metadata. If a resolver run is really needed, add `--only-binary=:all:` and ask first.
 6. **Install scripts**: `setup.py`, `postinstall` hooks, downloaded binaries, telemetry.
 7. **Permissions and network**: does it make external calls or need keys?
 
