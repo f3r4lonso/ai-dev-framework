@@ -10,8 +10,8 @@
   - Claude Code: run `start-claude.bat` in the project root (it adds the infra repository with `--add-dir`).
   - Codex CLI: start in the project root after `codex-adapter.py link-skills --user`; shared skills load, shared
     agents do not (Unverified, see [codex-cli §2](../../../clients/codex-cli/README.md#2-start-up-directory)).
-- **Shared resources it uses:** the 8 trading agents in the [agent catalogue](../../catalogues/agents.md) and the
-  10 trading skills in the [skill catalogue](../../catalogues/skills.md), plus `code-reviewer`, `python-pro`,
+- **Shared resources it uses:** the 7 trading agents in the [agent catalogue](../../catalogues/agents.md) and the
+  10 trading skills in the [skill catalogue](../../catalogues/skills.md), plus `security-reviewer`, `code-reviewer`, `python-pro`,
   `frontend-developer`, `engineering-lifecycle` and the UI/UX skills.
 - **Project-specific resources:** in the project repository.
 

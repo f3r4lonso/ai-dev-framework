@@ -84,12 +84,12 @@ Codex details: `clients/codex-cli/README.md`.
 | UX | ui-ux-tester | VoltAgent | Read, Write, Edit, Bash, Glob, Grep, WebSearch |
 | Quality | code-reviewer | wshobson | Read, Grep, Glob (read-only); opus model |
 | Quality | debugger | wshobson | Read, Write, Edit, Bash, Glob, Grep |
+| Quality | security-reviewer | own (from Trading-app; generalized 2026-10-17 to any project, trading checks kept as a profile) | Read, Grep, Glob |
 | Trading | quant-researcher, repo-researcher | own (Trading-app) | Read, Grep, Glob, WebFetch, WebSearch |
 | Trading | strategy-engineer, risk-engineer, qa-test-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell; edit scope limited by instructions |
 | Trading | exchange-integration-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell, WebFetch; no real orders |
 | Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
-| Trading | security-reviewer | own (Trading-app) | Read, Grep, Glob |
-| AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `clients/`, `workshop/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
+| AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `clients/`, `tasks/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
 | AI | prompt-reviewer | own (2026-10-17) | Read, Grep, Glob (read-only); reviews and scores one prompt, never executes it; companion of the Homero prompt (`agents/personal-assistants/`); example path updated to `tasks/` |
 | DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 (paths updated to `applications/` and the new `infra/` folders the same day) | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
 

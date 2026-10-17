@@ -17,6 +17,7 @@ has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool li
 | Frontend | [frontend-developer](../../agents/frontend/frontend-developer.md) | Build React/Next.js components, layouts, client state | Edit |
 | Quality | [code-reviewer](../../agents/quality/code-reviewer.md) | Review code for bugs, security, performance | RO |
 | Quality | [debugger](../../agents/quality/debugger.md) | Investigate errors, failing tests, unexpected behavior | Edit |
+| Quality | [security-reviewer](../../agents/quality/security-reviewer.md) | Security review of any project or this repo: secrets, public-repo hygiene, data flow and handoffs, permissions, dependencies, licenses; trading safety checks in Trading-app | RO |
 | UI | [ui-designer](../../agents/ui/ui-designer.md) | Visual design: components, layouts, mockups | Edit |
 | UI | [accessibility-expert](../../agents/ui/accessibility-expert.md) | WCAG, keyboard and screen-reader support | Edit |
 | UX | [ui-ux-tester](../../agents/ux/ui-ux-tester.md) | Test every documented user flow and report defects | Edit |
@@ -27,14 +28,13 @@ has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool li
 | Trading | [backtesting-auditor](../../agents/trading/backtesting-auditor.md) | Independently audit a backtest | RO |
 | Trading | [qa-test-engineer](../../agents/trading/qa-test-engineer.md) | Unit, integration and regression tests | Edit (tests) |
 | Trading | [exchange-integration-engineer](../../agents/trading/exchange-integration-engineer.md) | Exchange data and demo-execution adapters; never production trading | Edit |
-| Trading | [security-reviewer](../../agents/trading/security-reviewer.md) | Secrets, dependencies, licenses, agent permissions, trading safety | RO |
 | Trading | [repo-researcher](../../agents/trading/repo-researcher.md) | Vet an external repo or package | RO |
 
 Trading agents assume the Trading-app root as the working directory (see
 [Trading-app entry](../projects/trading-app/README.md)).
 
-Known overlap, kept on purpose: `code-reviewer` (general code quality) and `security-reviewer` (trading security,
-read-only). Retired agents and why: [inventory](../../docs/inventory.md#retired-2026-10-17-audit).
+Known overlap, kept on purpose: `code-reviewer` (general code quality) and `security-reviewer` (workshop security rules,
+plus trading checks in Trading-app; read-only). Retired agents and why: [inventory](../../docs/inventory.md#retired-2026-10-17-audit).
 
 **Built into Claude Code** (not part of this repo): `Explore` (fast read-only search), `Plan` (implementation
 plans), `general-purpose` (multi-step research), `claude-code-guide` (questions about Claude Code).
