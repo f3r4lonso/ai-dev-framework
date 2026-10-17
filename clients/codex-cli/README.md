@@ -21,13 +21,14 @@ Everything below is **Documented** (official docs checked 2026-10-17, e.g.
    - Windows PowerShell: `python scripts/codex-adapter.py link-skills`
    - Bash (macOS, Linux, Git Bash): `python3 scripts/codex-adapter.py link-skills`
    - Add `--user` to also link them into `~/.agents/skills/` for Codex sessions started in a project repo.
-4. Start Codex in the repository root and **trust the project** when asked (section 2), then verify (section 5).
+4. Start Codex in `clients/` (where the generated `.codex/agents/` and `.agents/skills/` live) and **trust the
+   project** when asked (section 2), then verify (section 5). Unverified after the 2026-10-17 move to `clients/`.
 
 ## 2. Start-up directory
 
 | Where you work | What loads (Documented) |
 |---|---|
-| Repository root, trusted | `AGENTS.md`, skills in `.agents/skills/`, the 20 agents in `.codex/agents/` |
+| Repository root, trusted | `AGENTS.md`, skills in `clients/.agents/skills/`, the 20 agents in `clients/.codex/agents/` |
 | Repository root, not trusted | `AGENTS.md` and skills; **no** project `.codex/` config, so no shared agents |
 | An application repo | that repo's own `AGENTS.md` only (Codex stops at its git root); shared skills only if linked with `--user`; shared agents **not** available |
 
@@ -39,22 +40,22 @@ from the documented discovery rule; Unverified).
 | Resource | Where Codex looks | How it gets there | Status |
 |---|---|---|---|
 | Rules | `AGENTS.md` from the git root down to the working directory; `~/.codex/AGENTS.md` | the root `AGENTS.md` itself | Documented |
-| Skills | `.agents/skills/` in every folder from the working directory up to the repo root; `~/.agents/skills/` | local links to `.claude/skills/<name>` made by `link-skills` (not versioned) | Documented; Windows **junctions** are not mentioned in the docs (symlinks are) → Unverified |
-| Agents | `.codex/agents/*.toml` in a trusted project | generated wrappers pointing at `.claude/agents/<area>/<name>.md` (`codex-adapter.py agents`, CI drift check) | format Documented; wrappers parse as TOML (Observed); loading Unverified |
-| Task prompts, catalogues, manuals | not discovered; open by path from [the Workshop](../../workshop/tasks/README.md) | — | n/a |
+| Skills | `.agents/skills/` in every folder from the working directory up to the repo root; `~/.agents/skills/` | local links to `skills/<name>` made by `link-skills` (not versioned) | Documented; Windows **junctions** are not mentioned in the docs (symlinks are) → Unverified |
+| Agents | `.codex/agents/*.toml` in a trusted project | generated wrappers pointing at `agents/<area>/<name>.md` (`codex-adapter.py agents`, CI drift check) | format Documented; wrappers parse as TOML (Observed); loading Unverified |
+| Task prompts, catalogues, manuals | not discovered; open by path from [the Workshop](../../tasks/README.md) | — | n/a |
 | Hooks, MCP | none shipped by this repo | — | — |
 
 ## 4. Invoking shared resources
 
 - **Skill:** `/skills` to list, `$skill-name` to call, or automatic by description.
 - **Agent:** ask "Use the `<name>` agent to …"; `/subagents` shows and switches agent threads.
-- **Task prompt:** "Run the task in `workshop/tasks/<file>.md`".
+- **Task prompt:** "Run the task in `tasks/<file>.md`".
 - **Non-interactive:** `codex exec "<prompt>"` (read-only sandbox by default; `--json` for events).
 
 ## 5. Verify (manual; required before claiming support)
 
 1. `codex login status` shows your own account and method.
-2. `/skills` lists the 23 shared skills (if not, check that `.agents/skills/` links exist and restart; if junctions
+2. `/skills` lists the 23 shared skills (if not, check that `clients/.agents/skills/` links exist and restart; if junctions
    are ignored, replace them with directory symlinks: `mklink /D` needs Developer Mode or Administrator).
 3. Ask "List the instruction sources you loaded": it names `AGENTS.md`.
 4. Ask "Use the code-reviewer agent to review the last commit": `/subagents` shows the thread.

@@ -1,4 +1,4 @@
-# AI infrastructure inventory — %USERPROFILE%\Repos\ai-infra
+# AI infrastructure inventory — %USERPROFILE%\workshop\infra
 
 Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work,
 plus own trading agents and skills (moved from the Trading-app project).
@@ -6,24 +6,25 @@ All external content is treated as **untrusted**: it was reviewed before copying
 (`install.sh`, `npx skills add`, plugin scripts).
 
 ## Layout
-All paths are relative to the repository root (`ai-infra/`).
+All paths are relative to the repository root (`infra/`).
 - `vendor/` — full copies (`git clone --depth 1`) of the source repositories. Read-only, untrusted, not versioned.
 - `clients/` — one guide per AI client (`claude-code-cli/`, `codex-cli/`): start-up directory, discovery,
   permissions and limits; links to `docs/onboarding.md` for install and authentication.
 - `workshop/` — client-neutral navigation layer: `tasks/` (task prompts and how to choose one), `catalogues/`
   (agents, skills, tasks; links only), `manuals/` (contributor guide), `projects/` (new-project convention and
   entry pages). Not loaded by any client; read by people or on request.
-- `prompts/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
-  Homero hands complex prompts to the `prompt-reviewer` agent (`.claude/agents/ai/`) for an independent review.
-- `scripts/codex-adapter.py` — builds the Codex adapter from the canonical `.claude/` resources: `agents`
-  (generates `.codex/agents/*.toml`, `--check` for drift; CI: `.github/workflows/adapter-check.yml`) and
-  `link-skills` (links skills into `.agents/skills/`, or `~/.agents/skills/` with `--user`). Standard library only.
+- `agents/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
+  Homero hands complex prompts to the `prompt-reviewer` agent (`agents/ai/`) for an independent review.
+- `scripts/codex-adapter.py` — builds the client adapters from the canonical `agents/` and `skills/`: `link-claude`
+  (links `clients/.claude/agents` and `skills` for Claude Code), `agents`
+  (generates `clients/.codex/agents/*.toml`, `--check` for drift; CI: `.github/workflows/adapter-check.yml`) and
+  `link-skills` (links skills into `clients/.agents/skills/`, or `~/.agents/skills/` with `--user`). Standard library only.
   Keep it at this depth: it finds the repository root from its own location.
 - `AGENTS.md` — shared rules for all clients; `CLAUDE.md` imports it and adds Claude-only notes.
   Architecture and compatibility: `docs/ai-architecture.md`.
-- `.claude/agents/` — installed agents (`ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`).
-- `.claude/skills/` — installed skills.
-- `%USERPROFILE%\Repos\projects\applications\` (next to this repository) — application projects, each its own git
+- `agents/` — installed agents (`ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`).
+- `skills/` — installed skills.
+- `%USERPROFILE%\workshop\applications\` (next to this repository) — application projects, each its own git
   repo (e.g. `Trading-app`). Application code, data, tests, spec prompts and settings stay inside each project.
 - `SECURITY.md`, `docs/onboarding.md` — security policy, leak response and per-user account/authentication setup.
 - `.githooks/pre-commit`, `.gitleaks.toml`, `.pre-commit-config.yaml`, `.github/workflows/secret-scan.yml`,
@@ -31,14 +32,14 @@ All paths are relative to the repository root (`ai-infra/`).
   `git config core.hooksPath .githooks`), optional pre-commit framework config, CI scan, LF endings for hooks.
 
 The repository (public on GitHub) has a whitelist `.gitignore`: only `README.md`, `AGENTS.md`, `CLAUDE.md`, `SECURITY.md`,
-`THIRD_PARTY_NOTICES.md`, `.claude/`, `.codex/agents/`, `docs/`, `clients/`, `workshop/`, `prompts/`, `scripts/`,
+`THIRD_PARTY_NOTICES.md`, `agents/`, `skills/`, `tasks/`, `docs/`, `clients/` (without the local links), `scripts/`,
 `.githooks/`, `.github/`, `.gitattributes`, `.gitleaks.toml` and `.pre-commit-config.yaml` are versioned, and a deny
 block after the whitelist keeps secret and personal files out even inside those folders. A new top-level folder stays
 ignored until it is added to the whitelist. `vendor/` is not versioned.
 
-Shared agents and skills load when Claude Code starts in `%USERPROFILE%\Repos\ai-infra`. Inside a project repo
+Shared agents and skills load when Claude Code starts in `%USERPROFILE%\workshop\infra` with `--add-dir clients`. Inside a project repo
 (e.g. Trading-app) Claude only walks up to that repo's root, so start it with
-`claude --add-dir %USERPROFILE%\Repos\ai-infra` (Trading-app ships `start-claude.bat` for this).
+`claude --add-dir %USERPROFILE%\workshop\infra\clients` (Trading-app ships `start-claude.bat` for this).
 Codex details: `clients/codex-cli/README.md`.
 
 ## Conventions
@@ -89,8 +90,8 @@ Codex details: `clients/codex-cli/README.md`.
 | Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
 | Trading | security-reviewer | own (Trading-app) | Read, Grep, Glob |
 | AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `clients/`, `workshop/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
-| AI | prompt-reviewer | own (2026-10-17) | Read, Grep, Glob (read-only); reviews and scores one prompt, never executes it; companion of the Homero prompt (`prompts/personal-assistants/`); example path updated to `workshop/tasks/` |
-| DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 (paths updated to `projects/applications/` and the new `ai-infra/` folders the same day) | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
+| AI | prompt-reviewer | own (2026-10-17) | Read, Grep, Glob (read-only); reviews and scores one prompt, never executes it; companion of the Homero prompt (`agents/personal-assistants/`); example path updated to `tasks/` |
+| DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 (paths updated to `applications/` and the new `infra/` folders the same day) | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
 
 ## Installed skills
 - UI/UX: `ui-ux-pro-max` (Python search scripts over local CSVs, standard library only, no network),
@@ -131,7 +132,7 @@ Codex details: `clients/codex-cli/README.md`.
   destructive commands, downloads, secrets and network imports in scripts.
 
 ## Retired (2026-10-17, audit)
-Removed from `.claude/` (vendor copies remain for reference); restore only after a new review.
+Removed from `agents/` and `skills/` (vendor copies remain for reference); restore only after a new review.
 - `react-specialist` (VoltAgent): duplicate of `frontend-developer` plus the `vercel-react-best-practices` and
   `react-state-management` skills; its workflow relied on a non-existent "context manager" agent.
 - `test-automator` (wshobson): enterprise-generic (self-healing/AI test platforms, CI/CD); for the actual stack

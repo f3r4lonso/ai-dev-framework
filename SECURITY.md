@@ -17,7 +17,7 @@ otherwise open an issue that only asks the maintainer for a private contact.
 - Passwords, `.env` files with values, private keys (`id_rsa`, `id_ed25519`, `*.pem`, `*.key`),
   keystores (`*.p12`, `*.pfx`, `*.kdbx`).
 - Personal tool state: `~/.claude.json`, `~/.claude/.credentials.json`, `.claude/settings.local.json`,
-  `~/.codex/auth.json`, personal `config.toml` files (only the generated `.codex/agents/` is versioned),
+  `~/.codex/auth.json`, personal `config.toml` files (only the generated `clients/.codex/agents/` is versioned),
   `.netrc`, `.npmrc` / `.pypirc` with tokens, `.git-credentials`, `.aws/`, `.ssh/`.
 - Machine-specific paths and personal data (real names, personal emails, account IDs).
   Write `%USERPROFILE%`, `~` or `<you>` instead.
@@ -54,7 +54,7 @@ confirming the finding is not a secret.
 ## Codex CLI safety in this workspace
 
 - The same untrusted-content rule applies; `AGENTS.md` states it for Codex.
-- Codex does not enforce the per-agent tool limits of `.claude/agents/`: spawned agents inherit the session's
+- Codex does not enforce the per-agent tool limits of `agents/`: spawned agents inherit the session's
   sandbox and approvals. Use `codex --sandbox read-only` for review and audit roles, and keep approvals on
   for anything that writes, pushes or calls external services
   ([subagents](https://developers.openai.com/codex/agent-configuration/subagents)).

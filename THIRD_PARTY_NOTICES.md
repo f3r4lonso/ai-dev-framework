@@ -106,7 +106,7 @@ SOFTWARE.
 
 ## anthropics/skills (frontend-design)
 
-Apache License 2.0. Full text in `.claude/skills/frontend-design/LICENSE.txt`.
+Apache License 2.0. Full text in `skills/frontend-design/LICENSE.txt`.
 
 ## vercel-labs/agent-skills (vercel-react-best-practices)
 

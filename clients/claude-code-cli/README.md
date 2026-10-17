@@ -22,10 +22,10 @@ Evidence labels: **Observed** (seen in the maintainer's environment, Claude Code
 
 | Where you work | Command | What loads |
 |---|---|---|
-| This repository (`%USERPROFILE%\Repos\ai-infra`) | `claude` | Shared rules, all agents and skills (Observed) |
-| An application repo, Windows PowerShell | `claude --add-dir "$env:USERPROFILE\Repos\ai-infra"` | Project rules + shared agents and skills (Documented) |
-| An application repo, Bash (Git Bash, macOS, Linux) | `claude --add-dir ~/Repos/ai-infra` | Same |
-| Trading-app | `start-claude.bat` in the project root | Same; it adds `..\..\ai-infra` |
+| This repository (`%USERPROFILE%\workshop\infra`) | `claude --add-dir clients` | Shared rules, all agents and skills (Observed) |
+| An application repo, Windows PowerShell | `claude --add-dir "$env:USERPROFILE\workshop\infra\clients"` | Project rules + shared agents and skills (Documented) |
+| An application repo, Bash (Git Bash, macOS, Linux) | `claude --add-dir ~/workshop/infra/clients` | Same |
+| Trading-app | `start-claude.bat` in the project root | Same; it adds `..\..\infra\clients` |
 
 Without `--add-dir`, Claude Code inside a project repo stops at that repo's root and sees none of the shared
 resources (Documented).
@@ -37,7 +37,7 @@ resources (Documented).
 | Rules | `CLAUDE.md` from the working directory up to the repo root; this repo's `CLAUDE.md` imports `AGENTS.md` | session start | Observed |
 | Agents | `.claude/agents/**` in the working directory tree, `~/.claude/agents/`, and `--add-dir` folders | **session start only** | Observed (20 listed, including `prompt-reviewer`) |
 | Skills | `.claude/skills/<name>/SKILL.md`, same locations | session start; new skills can appear live | Observed |
-| Task prompts | not discovered; open them by path from [the Workshop](../../workshop/tasks/README.md) | on request | n/a |
+| Task prompts | not discovered; open them by path from [the Workshop](../../tasks/README.md) | on request | n/a |
 | Catalogues, manuals | not discovered; read on request | on request | n/a |
 | Hooks, commands, MCP | none are shipped by this repo | — | — |
 
@@ -49,8 +49,8 @@ required (Documented).
 - **Agent:** ask by name ("Use the code-reviewer agent to review this branch"), type `@agent-<name>` to force it,
   or let Claude delegate when a request matches the description. `/agents` lists and manages them.
 - **Skill:** type `/<skill-name>` or let Claude load it when the request matches its description.
-- **Task prompt:** "Run the task in `workshop/tasks/<file>.md`" (check its status in the
-  [task catalogue](../../workshop/catalogues/tasks.md) first).
+- **Task prompt:** "Run the task in `tasks/<file>.md`" (check its status in the
+  [task catalogue](../../docs/catalogues/tasks.md) first).
 - Built-in agents (`Explore`, `Plan`, `general-purpose`, `claude-code-guide`) are always available.
 
 ## 5. Verify (first verified shared resource)
@@ -58,7 +58,7 @@ required (Documented).
 1. `/status`: your own account and the expected login method.
 2. `/memory`: lists the workspace `CLAUDE.md` (and through it `AGENTS.md`).
 3. `/agents`: lists the 20 shared agents (for example `code-reviewer`, `prompt-reviewer`).
-4. Ask: "Use the prompt-reviewer agent in quick mode on `workshop/tasks/README.md`." It should return a
+4. Ask: "Use the prompt-reviewer agent in quick mode on `tasks/README.md`." It should return a
    scored review and change no file.
 
 ## 6. Permissions

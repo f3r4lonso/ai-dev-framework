@@ -99,8 +99,8 @@ Keep them out of the repository:
 
 ### Load this framework's agents and skills
 
-Start Claude Code in the repository root (`ai-infra`, the folder you cloned), or from an
-application repository with `claude --add-dir %USERPROFILE%\Repos\ai-infra`. Discovery, permissions and limits:
+Start Claude Code in the repository root (`infra`, the folder you cloned) with `claude --add-dir clients`, or from an
+application repository with `claude --add-dir %USERPROFILE%\workshop\infra\clients`. Discovery, permissions and limits:
 [Claude Code client guide](../clients/claude-code-cli/README.md).
 
 ## 2. Codex CLI
@@ -135,7 +135,7 @@ The same command updates Codex (Homebrew: `brew upgrade --cask codex`). Check wi
 `cli_auth_credentials_store` in `~/.codex/config.toml` decides: `file` (`~/.codex/auth.json`, or under
 `CODEX_HOME`), `keyring` (OS credential store), `auto` (keyring when available, else the file) or `ephemeral`
 (memory only). Treat `auth.json` like a password: never copy it into a repository or share it. This repository
-ignores `auth.json` and everything in `.codex/` except the generated `.codex/agents/`.
+ignores `auth.json` and everything in `.codex/` except the generated `clients/.codex/agents/`.
 
 ### Verify and load this framework
 
@@ -263,9 +263,9 @@ uses it automatically. Users of the pre-commit framework can run `pre-commit ins
 |---|---|
 | Claude Code uses the wrong account or an API key | `/status`; remove stray `ANTHROPIC_API_KEY`; `/logout` then log in |
 | `Login expired · Please run /login` | Run `/login` |
-| Agents or skills from this repository not available | Start Claude Code in the repository root or use `--add-dir` |
+| Agents or skills from this repository not available | Run `python scripts/codex-adapter.py link-claude`, then start Claude Code with `--add-dir` pointing at `clients` |
 | Codex: shared skills missing in `/skills` | Run `python scripts/codex-adapter.py link-skills` (or `--user`), restart Codex |
-| Codex: shared agents not used | Trust the project; start Codex in the repository root (agents load from its `.codex/agents/`) |
+| Codex: shared agents not used | Trust the project; start Codex in the repository root (agents load from its `clients/.codex/agents/`) |
 | Codex uses an API key instead of your ChatGPT plan | `codex login status`; `codex logout`, then `codex login` |
 | `Permission denied (publickey)` | `ssh-add` your key, check it is on GitHub, retest `ssh -T git@github.com` |
 | Push rejected for exposing your email | Set the noreply email (section 4) and amend the commit author |

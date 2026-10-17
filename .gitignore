@@ -1,5 +1,6 @@
 # Whitelist: only the shared AI infrastructure is versioned here.
-# Projects are separate git repos next to this folder; vendor/ holds external clones.
+# Projects are separate git repos in ..pplications; vendor/ holds external clones.
+# clients/.claude/ and clients/.agents/ are local links made by scripts/codex-adapter.py.
 /*
 !/.gitignore
 !/.gitattributes
@@ -11,16 +12,15 @@
 !/SECURITY.md
 !/THIRD_PARTY_NOTICES.md
 !/.editorconfig
-!/.claude/
-!/.codex/
-/.codex/*
-!/.codex/agents/
+!/agents/
+!/skills/
+!/tasks/
 !/.githooks/
 !/.github/
 !/docs/
 !/clients/
-!/workshop/
-!/prompts/
+/clients/.claude/
+/clients/.agents/
 !/scripts/
 
 # --- Defense in depth: secrets and machine-specific files -------------------
@@ -67,7 +67,7 @@ _netrc
 settings.local.json
 .claude/worktrees/
 
-# Codex CLI personal / machine-specific state (only generated .codex/agents/ is versioned)
+# Codex CLI personal / machine-specific state (only generated clients/.codex/agents/ is versioned)
 auth.json
 .codex-log/
 
