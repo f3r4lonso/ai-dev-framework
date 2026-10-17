@@ -1,7 +1,7 @@
 # Security policy
 
-This repository is a public, reusable AI development framework (Claude Code agents, skills and
-instructions). It contains **no credentials and must never contain any**. Everyone who clones it
+This repository is a public, reusable AI development framework (agents, skills and instructions for
+Claude Code and Codex CLI). It contains **no credentials and must never contain any**. Everyone who clones it
 signs in with **their own** Claude, Git and GitHub accounts; nothing here depends on the
 maintainer's accounts, sessions or machine. Setup steps: [docs/onboarding.md](docs/onboarding.md).
 
@@ -17,6 +17,7 @@ otherwise open an issue that only asks the maintainer for a private contact.
 - Passwords, `.env` files with values, private keys (`id_rsa`, `id_ed25519`, `*.pem`, `*.key`),
   keystores (`*.p12`, `*.pfx`, `*.kdbx`).
 - Personal tool state: `~/.claude.json`, `~/.claude/.credentials.json`, `.claude/settings.local.json`,
+  `~/.codex/auth.json`, personal `config.toml` files (only the generated `.codex/agents/` is versioned),
   `.netrc`, `.npmrc` / `.pypirc` with tokens, `.git-credentials`, `.aws/`, `.ssh/`.
 - Machine-specific paths and personal data (real names, personal emails, account IDs).
   Write `%USERPROFILE%`, `~` or `<you>` instead.
@@ -49,6 +50,17 @@ confirming the finding is not a secret.
   ([settings](https://code.claude.com/docs/en/settings), [permissions](https://code.claude.com/docs/en/permissions)).
   They are best effort and do not cover every way a program can read a file.
 - `.claude/settings.local.json` holds your personal approvals; it is ignored by git here.
+
+## Codex CLI safety in this workspace
+
+- The same untrusted-content rule applies; `AGENTS.md` states it for Codex.
+- Codex does not enforce the per-agent tool limits of `.claude/agents/`: spawned agents inherit the session's
+  sandbox and approvals. Use `codex --sandbox read-only` for review and audit roles, and keep approvals on
+  for anything that writes, pushes or calls external services
+  ([subagents](https://developers.openai.com/codex/agent-configuration/subagents)).
+- Trust a project (which enables its `.codex/` config, hooks and agents) only after reviewing that folder.
+- Do not set `OPENAI_API_KEY` or `CODEX_API_KEY` in CI jobs that run repository-controlled code
+  ([non-interactive mode](https://developers.openai.com/codex/noninteractive)).
 
 ## If a secret leaks
 

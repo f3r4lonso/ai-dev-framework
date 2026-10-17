@@ -36,7 +36,7 @@ For the full rule list per category (all 119 UX guidelines with rationale), read
 
 ## Running the search tool
 
-The search script lives inside this skill's own directory, not the project directory. Always invoke it by its full path — do not assume a particular working directory:
+The search script lives inside this skill's own directory, not the project directory. Always invoke it by its full path — do not assume a particular working directory. `${CLAUDE_SKILL_DIR}` is expanded only by Claude Code; in other clients (e.g. Codex) replace it with the absolute path of the folder containing this SKILL.md:
 
 ```bash
 python "${CLAUDE_SKILL_DIR}/scripts/search.py" "<query>" --domain <domain>
