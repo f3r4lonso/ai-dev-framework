@@ -11,6 +11,7 @@ All external content is treated as **untrusted**: it was reviewed before copying
 - `../.claude/agents/` — installed agents (`ai`, `backend`, `frontend`, `quality`, `trading`, `ui`, `ux`).
 - `../.claude/skills/` — installed skills.
 - `../CLAUDE.md` — shared rules for every session started under `C:\Users\falon\Repos`.
+- `../Applications/` — application projects, each its own git repo (e.g. `Trading-app`). Application code, data, tests, spec prompts and settings stay inside each project.
 
 The root is a local git repo with a whitelist `.gitignore`: only `CLAUDE.md`, `.claude/`, `ai-infra/README.md`
 and `ai-infra/prompts/` are versioned. Projects are separate repos; `vendor/` is not versioned here.

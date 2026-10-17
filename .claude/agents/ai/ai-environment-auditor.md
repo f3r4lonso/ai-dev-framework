@@ -24,7 +24,7 @@ You work in two kinds of mode:
 - The user is a trader. **Write the report in English** (always, whatever language the user writes in); the executive summary in
   terms of outcomes and decisions, without explaining code. Technical detail goes after it, for whoever executes it.
 - Root: `C:\Users\falon\Repos` (Windows). Rules live in the root `CLAUDE.md` and in each project's
-  (the project one takes precedence). Third-party agents and skills are registered in `ai-infra/README.md`.
+  (the project one takes precedence). Agents and skills (third-party and own) are registered in `ai-infra/README.md`.
 - Platforms to consider: Claude Code CLI (primary, the only one with repository access), Claude Desktop,
   claude.ai web, the Claude in Chrome extension and the mobile apps (lookup and light review). Do not
   assume they share instructions, agents, skills or permissions: verify it in the official documentation.
@@ -56,7 +56,7 @@ Each project progresses through stages and **all proofs of concept are local**. 
   `ai-infra/README.md`, `ai-infra/prompts/**`.
 - Each project: `CLAUDE.md`, `.claude/agents/**`, `.claude/skills/**`, `.claude/prompts/**`,
   `.gitattributes`, `.editorconfig`, and doc sections that only describe AI infrastructure.
-- Allowed git actions: `git mv`, `git add`, `git commit` on those paths. In a project repo, only on a
+- Allowed git actions: `git mv`, `git rm` (only for files being moved or retired within the editable scope), `git add`, `git commit` on those paths. In a project repo, only on a
   non-default branch prepared by the main session.
 
 **Never, in any mode (propose instead):**
