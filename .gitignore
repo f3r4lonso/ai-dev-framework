@@ -6,10 +6,14 @@
 !/.gitleaks.toml
 !/.pre-commit-config.yaml
 !/CLAUDE.md
+!/AGENTS.md
 !/README.md
 !/SECURITY.md
 !/.editorconfig
 !/.claude/
+!/.codex/
+/.codex/*
+!/.codex/agents/
 !/.githooks/
 !/.github/
 !/docs/
@@ -18,6 +22,9 @@
 !/ai-infra/README.md
 !/ai-infra/THIRD_PARTY_NOTICES.md
 !/ai-infra/prompts/
+!/ai-infra/scripts/
+!/ai-infra/clients/
+!/ai-infra/workshop/
 
 # --- Defense in depth: secrets and machine-specific files -------------------
 # The whitelist above re-includes whole folders (.claude/, docs/, ...). These
@@ -62,3 +69,10 @@ _netrc
 .claude.json
 settings.local.json
 .claude/worktrees/
+
+# Codex CLI personal / machine-specific state (only generated .codex/agents/ is versioned)
+auth.json
+.codex-log/
+
+# Python bytecode from ai-infra/scripts
+__pycache__/

@@ -1,6 +1,6 @@
 ---
 name: git-workflow-manager
-description: Organizes the git repositories and commits of the workspace under %USERPROFILE%\Repos (the shared infrastructure repo at the root and each application repo under Applications/). Plans and makes clean, well-scoped commits, keeps branches tidy, prepares repositories for publishing to GitHub (pre-push checks for secrets, private files, binaries and license notices) and pushes only after explicit user confirmation. Use when the user asks to commit, organize branches or history, set up a remote, or publish/upload a repo.
+description: Organizes the git repositories and commits of the workspace under %USERPROFILE%\Repos (the shared infrastructure repo at the root and each application repo under projects/applications/). Plans and makes clean, well-scoped commits, keeps branches tidy, prepares repositories for publishing to GitHub (pre-push checks for secrets, private files, binaries and license notices) and pushes only after explicit user confirmation. Use when the user asks to commit, organize branches or history, set up a remote, or publish/upload a repo.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
@@ -12,9 +12,10 @@ Adapted from VoltAgent `git-workflow-manager` (MIT, commit `408d3c9`); rewritten
 ## 1. Workspace model
 
 - **Shared infrastructure repo:** `%USERPROFILE%\Repos` (root). A whitelist `.gitignore` versions only the shared
-  framework (`CLAUDE.md`, `README.md`, `.claude/`, `ai-infra/README.md`, `ai-infra/THIRD_PARTY_NOTICES.md`,
-  `ai-infra/prompts/`). It must never contain application code or `ai-infra/vendor/`.
-- **Application repos:** each folder under `Applications/` is its own repo (e.g. `Applications/Trading-app`).
+  framework (`AGENTS.md`, `CLAUDE.md`, `README.md`, `SECURITY.md`, `.claude/`, `.codex/agents/`, `docs/`, `ai-infra/README.md`,
+  `ai-infra/THIRD_PARTY_NOTICES.md`, `ai-infra/prompts/`, `ai-infra/scripts/`, `ai-infra/clients/`, `ai-infra/workshop/`).
+  It must never contain application code, `projects/` or `ai-infra/vendor/`.
+- **Application repos:** each folder under `projects/applications/` is its own repo (e.g. `projects/applications/Trading-app`).
   Never mix commits, remotes or files between repos. Treat each repo separately and say which repo every action targets.
 - The user is a trader: report in English, in outcome terms, without explaining git internals unless asked.
 
@@ -44,7 +45,7 @@ Manager or `gh auth login`).
 ## 4. Pre-push checklist (mandatory before any first push or visibility change)
 
 Run and report each item; stop and ask if anything fails:
-1. **Scope:** `git ls-files` contains only intended paths. For the infrastructure repo: no `Applications/`,
+1. **Scope:** `git ls-files` contains only intended paths. For the infrastructure repo: no `projects/`,
    no `ai-infra/vendor/`, no project folders.
 2. **Secrets:** grep tracked files and full history (`git log -p`) for keys, tokens, passwords, private keys,
    `.env`, `*.pem`, `*.key`, credentials JSON. Report only path and type, never the value.
