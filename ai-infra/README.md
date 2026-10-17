@@ -22,8 +22,8 @@ Shared agents and skills load when Claude Code starts in `C:\Users\falon\Repos`.
 - **Naming:** kebab-case, lowercase, ASCII, English for every file and folder under `.claude/` and `ai-infra/`
   (except `vendor/`). Tool-mandated names keep their form (`CLAUDE.md`, `SKILL.md`, `README.md`, `AGENTS.md`,
   `LICENSE.txt`). Agent and skill identity comes from the `name` frontmatter field; folder names should match it.
-- **Language:** technical content in English. The rule "reply to the user in Spanish, in outcome terms"
-  is preserved in every CLAUDE.md. User-facing texts and strategy docs stay in Spanish.
+- **Language:** technical content in English, and Claude always replies to the user in English (outcome terms).
+  User-facing app texts and strategy docs stay in Spanish.
 - **Project-specific resources** (e.g. trading agents and skills) stay in the project's `.claude/`.
   Move one to the root only when a second project needs it.
 

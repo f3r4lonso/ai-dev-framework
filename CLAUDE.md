@@ -1,6 +1,6 @@
 # AI workspace root — C:\Users\falon\Repos
 
-- The user speaks Spanish and is a trader: always reply in Spanish, in terms of outcomes, without explaining code.
+- The user is a trader: always reply in English, whatever language the user writes in; report in terms of outcomes, without explaining code.
 - Each project's CLAUDE.md (e.g. `Trading-app/CLAUDE.md`) takes precedence over this file.
 - Shared development agents and skills (backend, frontend, UI, UX, quality, AI) live in `.claude/` here;
   inventory, sources and licenses in `ai-infra/README.md`. Inside a project repo they load only when Claude
