@@ -5,7 +5,9 @@ API metadata. **Nothing was installed, built or run.** Labels: **Verified** (rea
 **Inferred** (from naming, comments or docs, not traced end to end), **Requires verification** (not checked).
 Used by [workshop-ai-token-optimization-integration](../tasks/workshop-ai-token-optimization-integration.md).
 
-Workshop AI constraints applied (vision §17): Python standard library only (§17.8); state as Markdown or JSON files in
+Workshop AI constraints applied (vision §17): Python standard library only for the `wai` core (§17.8; since
+2026-10-18 the VS Code extension is TypeScript with no runtime npm dependencies, which these packages would also
+break); state as Markdown or JSON files in
 the project repository (§17.4); no scripted client runs before the §17.2 hard gate; user-level client configuration
 (`~/.claude`, `~/.claude.json`, `~/.codex`) is not changed by the product.
 

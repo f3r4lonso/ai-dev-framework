@@ -2,8 +2,11 @@
 
 **Document type:** Product vision and requirements baseline  
 **Status:** Baseline for Stage 1. Development is governed by the gates of
-[workshop-ai-product-foundation](../tasks/workshop-ai-product-foundation.md) (Gate B approves the Stage 1 build).  
-**Version:** 1.1 (2026-10-17); 1.0 was the unreviewed proposal  
+[workshop-ai-product-foundation](../tasks/workshop-ai-product-foundation.md) (Gate B approves the Stage 1 build).
+Version 1.2 adds the VS Code extension direction, decided at Gate A of
+[workshop-ai-vscode-extension-specification](../tasks/workshop-ai-vscode-extension-specification.md); its
+specification (proposed) lives in the product repository.  
+**Version:** 1.2 (2026-10-18); 1.1 (2026-10-17) was the Stage 1 baseline; 1.0 was the unreviewed proposal  
 **Language:** English
 
 Requirement keywords: **MUST** (required for the stated priority), **SHOULD** (expected unless a recorded reason
@@ -35,6 +38,10 @@ Version 1.1 reconciles the vision with the infrastructure that already exists in
 2026-10-17, §2.1), records the product-owner decisions (§17), and turns the requirements into testable statements.
 Workshop AI builds on that infrastructure; it does not redesign it.
 
+Version 1.2 (2026-10-18) records the product owner's decision to deliver Workshop AI through a **VS Code extension
+hub** over the `wai` command-line tool (§17.1, §17.10). It adds the gaps this opens (§2.1), a capability assessment
+(§2.2) and one open-decisions register (§17.11). §17.2 (including its hard gate) and §17.5 are unchanged.
+
 ### 2.1 Existing baseline
 
 What the infrastructure already provides, and what remains for Workshop AI. Stage = the roadmap stage (§16) that
@@ -43,10 +50,10 @@ a labelled main-session fallback because the agent could not be invoked in that 
 
 | Requirement | Existing asset | Remaining gap | Stage |
 |---|---|---|---|
-| FR-01 Client registry | [compatibility matrix](ai-architecture.md#4-compatibility-matrix), client list contract in [ai-architecture.md §9](ai-architecture.md#9-future-unified-ui-preparation-only--no-ui-is-built), [Claude Code guide](../clients/claude-code-cli/README.md), [Codex guide](../clients/codex-cli/README.md) | human-readable only; Codex rows Documented/Unverified | 2 |
+| FR-01 Client registry | [compatibility matrix](ai-architecture.md#4-compatibility-matrix), client list contract in [ai-architecture.md §9](ai-architecture.md#9-workshop-ai-consumer-of-these-contracts), [Claude Code guide](../clients/claude-code-cli/README.md), [Codex guide](../clients/codex-cli/README.md) | human-readable only; Codex rows Documented/Unverified | 2 |
 | FR-02 Client selection | [tasks/README.md §1](../tasks/README.md#1-choose-a-client) | no way to pick and record a client per task | 1 |
 | FR-03 Task contract | task-file convention ([tasks/README.md §5](../tasks/README.md#5-task-file-convention)); `engineering-lifecycle` templates ([templates](../skills/engineering-lifecycle/references/templates.md)); task approval gates | no per-task record with status, owner and next action | 1 |
-| FR-04 Resource catalogue | [agents](catalogues/agents.md), [skills](catalogues/skills.md), [tasks](catalogues/tasks.md) catalogues; catalogue contracts in [ai-architecture.md §9](ai-architecture.md#9-future-unified-ui-preparation-only--no-ui-is-built) | tool must read the existing contracts | 1 (read only) |
+| FR-04 Resource catalogue | [agents](catalogues/agents.md), [skills](catalogues/skills.md), [tasks](catalogues/tasks.md) catalogues; catalogue contracts in [ai-architecture.md §9](ai-architecture.md#9-workshop-ai-consumer-of-these-contracts) | tool must read the existing contracts | 1 (read only) |
 | FR-05 Handoffs | none | manual handoff package and its approval | 1 manual, 3 automated |
 | FR-06 Project continuity | none (handover reports are written by hand per task) | project-state file and resume | 1 |
 | FR-07 Context selection | progressive disclosure in the [token strategy](ai-architecture.md#7-token-and-cost-strategy) | per-task list of selected context | 1 |
@@ -67,8 +74,42 @@ a labelled main-session fallback because the agent could not be invoked in that 
 | NFR-07 Portability | plain files | documented formats | 1 |
 | NFR-08 Observability | none | run log | 2 |
 | §12 and §15.1 | [token strategy](ai-architecture.md#7-token-and-cost-strategy): no baseline, no saving claimed | the Stage 1 pilot is the first baseline | 1, 4 |
+| VS Code extension hub (§17.1) | the product repository's VS Code workspace (tasks that start the clients and a `wai` terminal by hand) | extension with client detection, infra setup, task view, approved client start, client switch | 2 |
+| Machine-readable `wai` output | text output only | a JSON output mode the extension can call per command | 2 |
+| Usage signals (§17.10 D5) | none in the tool; Claude Code status line and hooks expose usage (Documented, §2.2) | project-level Claude Code warning; manual "running low" trigger for every client | 2 warning, 3 automatic continuation |
+| Recap for a client switch (§17.10 D6) | Stage 1 handoff package | recap generated by `wai` from the saved state, without a model call | 2 |
 
 Because existing assets cover FR-01 and FR-04 as documents, both are P1, not P0 (§10).
+
+### 2.2 Capability assessment (2026-10-18)
+
+Each capability in the product owner's direction of 2026-10-18 and in this vision, with its decision. Evidence labels
+as in [ai-architecture.md](ai-architecture.md), plus **Verified** (read in the stable VS Code API typings) and
+**Requires verification**; sources in the
+[technology research note](vscode-extension-technology-research.md) unless a URL is given.
+
+| Capability | Source | Decision | Evidence | Reason |
+|---|---|---|---|---|
+| VS Code extension as the main hub | owner direction 1 | retain | Proposed; terminal, view, dialog and file-watch APIs are stable (Verified) | owner decision §17.1 |
+| Detect which clients are installed | owner direction 2 | retain: PATH lookup, user confirms | Inference (no credential or login needed) | detection never reads credentials |
+| Ask the user which clients they have | owner direction 2 | retain | Proposed | fallback when PATH lookup finds nothing |
+| Clone the infrastructure repository | owner direction 3 | refine: one shared clone, after approval, empty folder only, reuse an existing clone, fast-forward updates after approval | Observed: `wai` already reads infra from that location | public repository; network use limited to this (§17.10 D3) |
+| Component that opens and closes the clients | owner direction 4 | refine: the extension launches interactive client sessions in visible terminals after an approval, and closes them only after a saved checkpoint and the user's confirmation | Verified (terminal API) | owner decision §17.10 D4 |
+| Save context when a task finishes | owner direction 4 | retain: checkpoint plus recap | Observed (`wai checkpoint`, Stage 1) | already built |
+| Open a console for the next client | owner direction 4 | refine: the user chooses the client | owner answer 2026-10-18 | FR-02, §17.10 D9 |
+| Detect that a client is running low | owner direction 5 | retain for Claude Code (warning only); manual trigger for every client; defer automatic action to Stage 3 | Claude Code status line `rate_limits` and `context_window`, `StopFailure` hook with `rate_limit`: Documented (<https://code.claude.com/docs/en/statusline>, <https://code.claude.com/docs/en/hooks>, 2026-10-18); Codex `/status` and `/statusline`: display only, Documented (<https://learn.chatgpt.com/docs/developer-commands?surface=cli>, 2026-10-18) | Codex has no documented script-readable signal |
+| Save everything | owner direction 5 | refine: no transcripts, no client session files | FR-05 | privacy and token cost |
+| Continue in another client with a recap | owner direction 5 | retain with one approval per switch; defer unattended continuation to Stage 3 | §17.2 hard gate | provider terms |
+| Automatic routing | §17.5 | defer to Stage 4 | — | needs the §15 evaluation |
+| Writing, loading or managing agents in the extension | owner exclusion | reject (out of scope) | owner 2026-10-18 | the owner loads agents outside the product |
+| Publishing the extension (Marketplace, VSIX releases, signing) | owner exclusion | reject (out of scope) | owner 2026-10-18 | — |
+| Webview UI | research note | defer | Verified available | extra attack surface; native views suffice |
+| Reading client terminal output | research note | reject for now; investigate | Verified (shell integration), fragile | reads conversation content |
+| Codex app-server rate-limit read | research note | investigate after the §17.2 hard gate | Requires verification | programmatic interface |
+| Native approval dialog in the extension | §17.10 D7 | investigate (decided at the specification task's Gate B) | Requires verification | must not be answerable by another extension or an AI session |
+| Run log, registry and catalogue reading, knowledge promotion | §16 Stage 2 | retain | — | unchanged |
+| Parallel work | §9 Mode C | defer to Stage 3+ | — | §17.7 unchanged |
+| Additional providers | §16 Stage 5 | defer | — | unchanged |
 
 ## 3. Product Vision
 
@@ -162,7 +203,8 @@ what was done (FR-08, NFR-02).
 - An agent for every discipline or task.
 - Sharing all conversation history with all providers.
 - Adding providers before their value and compatibility are evaluated (Stage 5).
-- A workflow automation platform, IDE or cloud execution service without a separately approved requirement.
+- A workflow automation platform, an IDE of its own or a cloud execution service without a separately approved
+  requirement. The VS Code extension hub is an extension inside an existing IDE, approved in §17.1.
 - Unmeasured claims of savings (§15).
 
 ## 8. Core Product Concepts
@@ -183,6 +225,10 @@ what was done (FR-08, NFR-02).
 - **Handoff:** a controlled transfer of task state, selected context, artifacts and responsibility between clients
   or agents.
 - **Handoff package:** the files that carry a handoff (FR-05).
+- **Workshop AI extension:** the VS Code extension that is the product's main user interface; it calls `wai` for
+  state, scans and handoffs (§17.1, §17.10).
+- **Recap:** a short summary of a task's saved state, generated by `wai` without a model call, given to the next
+  client at a switch (§17.10 D6).
 - **Canonical shared resource:** the single authoritative definition from which clients consume or adapt a shared
   agent, skill, workflow or instruction ([ai-architecture.md §1](ai-architecture.md#1-layers-and-source-of-truth)).
 
@@ -258,7 +304,7 @@ tool reads it back without error.
 ### FR-04 — Shared resource catalogue (P1)
 
 The tool SHOULD list agents, skills and task prompts from the existing catalogue contracts
-([ai-architecture.md §9](ai-architecture.md#9-future-unified-ui-preparation-only--no-ui-is-built)), copying no bodies.  
+([ai-architecture.md §9](ai-architecture.md#9-workshop-ai-consumer-of-these-contracts)), copying no bodies.  
 P1 because the catalogues already exist (§2.1).  
 **Check:** the tool's resource list matches the rows of the agent, skill and task catalogues.
 
@@ -291,8 +337,10 @@ The tool MUST show which client acts and what it will do, respect client-native 
 widen permissions silently. Explicit user approval MUST be obtained before any action that is destructive,
 external, paid, sensitive, outside the approved workspace, or restricted by the rules in force (the governing task
 prompt and the project's `CLAUDE.md`/`AGENTS.md`), and before a handoff package is released to another client
-(§17.5). Approval MUST come from a person at a terminal; an AI session must not be able to give it. This section is
-the single statement of the approval rule; other sections refer to it.  
+(§17.5). Approval MUST come from a person at a terminal; an AI session must not be able to give it. In VS Code a
+terminal check alone does not prove a person answered, because other extensions and IDE agents can write to
+integrated terminals; the extension's approval path and any stronger check are open decisions (§17.11 R1, R2). This
+section is the single statement of the approval rule; other sections refer to it.  
 **Check:** a client start declined at the prompt launches nothing, and showing an unapproved handoff package is
 refused, both with an "approval required" message; neither can be approved from a non-terminal input.
 
@@ -386,6 +434,8 @@ Optimize useful outcome per unit of resource, not token count in isolation. Desi
   followed.
 - **State storage:** project state, task records, handoff packages and run logs live in the repository of the
   project they concern, or in a gitignored local folder. They never go in the public infrastructure repository.
+  The extension's clone of that repository is read-only for the product: cloned and updated (fast-forward only)
+  after user approval, never written to (§17.10 D3).
 - Provenance for decisions and outputs, with minimal retention of transcripts and sensitive data.
 - Retention, deletion, export and access-control behaviour are documented before any compliance or privacy guarantee
   is claimed.
@@ -492,22 +542,26 @@ Each stage has one exit criterion and one gate. A stage starts only after the pr
 |---|---|---|---|
 | 0 — Resolve product decisions | target user, operating mode, privacy policy, persistence, integration constraints, first success criteria | §17 decisions recorded with date | Gate A of the foundation task (**passed 2026-10-17**) |
 | 1 — Validate the single-client journey | choose client, create task, attach selected context, run, save verified state, resume, hand off manually (P0 set, §10) | journey, resume and manual handoff **Observed** on the sandbox project, pilot reported per §15.1, results committed after the foundation task's Gate D | Gate B of the foundation task (specification and build plan) |
-| 2 — Continuity and reusable resources | run log (FR-10), registry and catalogue reading (FR-01, FR-04), provenance, knowledge promotion | decisions recovered correctly on at least 3 resumed tasks | user approval of a Stage 2 task prompt |
-| 3 — Selective collaboration | smallest automated handoff between two clients, with ownership, boundaries, approval, errors and reconciliation; parallel work only with proven benefit | one automated sequential handoff Observed, with pilot data per §15.3 | user approval of a Stage 3 task prompt, which may be given only after the §17.2 hard gate is met |
+| 2 — Continuity and reusable resources | run log (FR-10), registry and catalogue reading (FR-01, FR-04), provenance, knowledge promotion; the project-local context store (token-optimization task); the **VS Code extension shell**: client detection, infra setup, tasks view, approved interactive client start, user-chosen client switch with recap, Claude Code usage warning and manual "running low" trigger (§17.10 D10) | decisions recovered correctly on at least 3 resumed tasks, and one client switch with recap Observed through the extension | user approval of a Stage 2 task prompt (one each for the context store and the extension build) |
+| 3 — Selective collaboration | smallest automated handoff between two clients, with ownership, boundaries, approval, errors and reconciliation; automatic usage-triggered continuation in another client; parallel work only with proven benefit | one automated sequential handoff Observed, with pilot data per §15.3 | user approval of a Stage 3 task prompt, which may be given only after the §17.2 hard gate is met |
 | 4 — Measure and optimize | compare single and collaborative flows, reduce duplication, adjust routing | comparison report per §15 with sample size and limitations | user review of the report |
 | 5 — Additional clients | add providers through FR-13 | new client passes step 5 of the add-a-provider procedure | user approval per provider |
 
 ## 17. Decisions
 
-Decided at Gate A of [workshop-ai-product-foundation](../tasks/workshop-ai-product-foundation.md) on **2026-10-17**
-by the product owner (the maintainer). Each decision may be reopened by a later gate.
+Items 1–9 were decided at Gate A of [workshop-ai-product-foundation](../tasks/workshop-ai-product-foundation.md) on
+**2026-10-17** by the product owner (the maintainer). Items 1 and 8 were rewritten, and item 10 added, at Gate A of
+[workshop-ai-vscode-extension-specification](../tasks/workshop-ai-vscode-extension-specification.md) on
+**2026-10-18**. Each decision may be reopened by a later gate. Open decisions are listed only in §17.11.
 
-1. **Product boundary:** a local command-line tool over the installed CLIs that reads this repository's catalogues.
-   No web or desktop UI.  
-   **Reopened 2026-10-18 by the product owner:** the product owner wants a Workshop AI **VS Code extension** as the
-   main hub (client detection, infrastructure setup, opening and closing client terminals, saving context and
-   continuing work in another client). Until the task that specifies it is approved and this decision is rewritten,
-   the line above stands; that task is listed in the [task catalogue](catalogues/tasks.md).
+1. **Product boundary** (rewritten 2026-10-18): a local tool in two parts over the installed CLIs. The `wai`
+   command-line tool owns task state, approvals, secret scans, recaps and handoff packages and reads this
+   repository's catalogues. A **Workshop AI VS Code extension** is the main user interface: client detection,
+   infrastructure setup, task views, opening and closing interactive client terminals, and switching to another
+   client with a saved recap (item 10). No web UI and no stand-alone desktop application. Writing, loading or
+   managing agents in the extension, and publishing the extension, are out of scope.  
+   Previous text (2026-10-17): "a local command-line tool over the installed CLIs that reads this repository's
+   catalogues. No web or desktop UI."
 2. **Invocation:** interactive client sessions plus a file-based manual handoff. Non-interactive modes (`claude -p`,
    `codex exec`) are **not** used by Workshop AI in Stage 1.  
    Provider terms checked 2026-10-17 (Documented; not legal advice):
@@ -526,22 +580,86 @@ by the product owner (the maintainer). Each decision may be reopened by a later 
    **Hard gate before Stage 3:** no automated or scripted client run is built until the user has re-confirmed, for
    each provider and plan, that the mechanism is allowed under the current terms, and that confirmation is recorded
    here with the source URL and date.
+
+   **Unchanged at Gate A of 2026-10-18**, including the hard gate. Reason: the extension starts clients only as
+   interactive sessions, after an approval, where the user types (item 10, D4). This is treated as the same
+   mechanism as the Stage 1 `wai start`, not as an automated or scripted run (Inference; whether it is ordinary use
+   under each provider's terms is §17.11 R4). Usage detection only warns; unattended detection-and-continuation is
+   Stage 3 and stays behind the hard gate.
 3. **Who runs the Stage 1 journey:** the user, from a step-by-step script; the agent then checks the resulting files.
 4. **State storage:** Markdown or JSON files inside the project's repository, inspectable and editable by hand
-   (rule in §13).
+   (rule in §13). Unchanged 2026-10-18: the extension's context storage is these files plus the Stage 2 store
+   (item 10, D6).
 5. **Cross-provider sharing:** denied by default; the user reviews and approves each handoff package before another
    client reads it (FR-08). **Collaboration policy:** user-selected single-client mode by default; automatic routing
-   only after evaluation (Stage 4).
+   only after evaluation (Stage 4).  
+   Unchanged 2026-10-18. Reason: every client switch in the extension still needs approval of its package, and the
+   user chooses the next client (item 10, D4 and D9).
 6. **Pilot success:** three representative tasks on the sandbox project, acceptance criteria written before the run;
    each task runs once as a plain client session and once with the tool. Recorded per run: acceptance-criteria
    pass/fail, wall-clock time to an accepted result, user interventions, and `/context` and `/cost` figures where
    the client exposes them (meaningfulness of `/cost` on Pro/Max is to be verified); unavailable figures are N/A.
 7. **Parallel conflicts:** independent work produces separate artifacts or branches first; one designated
    integrator reconciles, with user approval for consequential decisions. Not applicable before Stage 3.
-8. **Projects and language:** the tool at `%USERPROFILE%\workshop\applications\workshop-ai\` and a sandbox at
-   `%USERPROFILE%\workshop\applications\workshop-ai-sandbox\`, each its own git repository; Python standard library.
+8. **Projects and language** (rewritten 2026-10-18): the tool at `%USERPROFILE%\workshop\applications\workshop-ai\`
+   and a sandbox at `%USERPROFILE%\workshop\applications\workshop-ai-sandbox\`, each its own private git repository.
+   The core (`wai`) is Python standard library only. The VS Code extension is TypeScript on the VS Code extension
+   API, in a `vscode-extension/` folder of the product repository, with no runtime npm dependencies; development
+   tooling is approved one package at a time by the build task (item 10, D2).  
+   Previous text (2026-10-17): "each its own git repository; Python standard library."
 9. **Source files:** the v1.0 vision was moved from `tasks/` to this file; the unrevised reorganization draft was
    deleted (it was an untracked copy of a superseded task).
+10. **VS Code extension decisions** (Gate A of the extension specification task, 2026-10-18, product owner):
+    - **D1 Backend:** `wai` is the backend. The extension is a thin UI that calls `wai` once per command through a
+      machine-readable (JSON) output mode. No daemon, no HTTP server, no network listener.
+    - **D2 Language and location:** as item 8.
+    - **D3 Infrastructure clone:** the public infrastructure repository, URL supplied by the user (never guessed),
+      cloned to `%USERPROFILE%\workshop\infra` (`WORKSHOP_AI_INFRA` overrides). An existing clone is detected and
+      reused. Clone only after approval and never into a non-empty folder; update only by a user-approved
+      fast-forward pull; never write state into it. This is the product's only network use. "Where the extension
+      operates" means the project folder or folders open in VS Code, not the clone.
+    - **D4 Client launch (owner chose the alternative to the recommended default):** the extension launches client
+      sessions itself, in visible integrated terminals. Safeguards: interactive sessions only (never `claude -p` or
+      `codex exec`); one user approval per launch; it never types input into a client terminal; it closes a client
+      terminal only after the checkpoint is saved and the user confirms. `wai` keeps its own `start`/`resume`.
+      Codex is launched only once it is a supported executing client (§17.11 R8).
+    - **D5 Usage detection (owner chose the alternative):** the first increment warns automatically for Claude
+      Code, from a project-level status line or hook (never user-level client configuration; its own gate in the
+      build task). A manual "running low" trigger exists for every client and is the only path for Codex. The
+      specification separates context-window exhaustion (compact or start a fresh session with the same client)
+      from plan or rate-limit exhaustion (the case for switching provider).
+    - **D6 Saved context:** the task contract, project state, decisions, Stage 2 store items once they exist, and a
+      recap that `wai` generates deterministically from the saved state, without a model call. No transcripts by
+      default (FR-05); client session files are never read; Markdown or JSON only (item 4).
+    - **D7 Approvals:** candidate = a modal dialog opened by the extension itself, allowed only after the
+      specification and the security review show that no other extension and no AI session in VS Code can trigger
+      or answer it; until then each approval runs in `wai` in a visible integrated terminal. The extension never
+      writes to a terminal where an approval prompt is or may be shown.  
+      **Decided at Gate B, 2026-10-18** (product owner, after the `security-reviewer` review): modal dialog for
+      client launches and the extension's own approvals once its verification items pass, with the `wai start`
+      fallback until then; `wai` in an external console window outside VS Code for package release (A2) and
+      `verify` commands; integrated terminal for checkpoints (A3) as an interim; every approval recorded with its
+      channel.
+    - **D8 Timing:** documents updated while the foundation task is between its build and its pilot; the
+      foundation task's scope is not changed; `wai` from Stage 1 is kept as the backend.
+    - **D9 Next client:** the user chooses at every switch. A suggestion MAY be shown, labelled Proposed, with its
+      basis; without a user choice no client is opened. Automatic routing stays in Stage 4.
+    - **D10 Roadmap:** option (a), the extension fits inside the existing stages (§16).
+    - **D11 UI language (owner chose the alternative):** English user-facing strings. Documentation and code
+      comments are in English.
+11. **Open-decisions register.** The only list of open decisions in this vision.
+
+    | Id | Open decision | Owner | Recommended default | Decided at |
+    |---|---|---|---|---|
+    | R1 | ~~Extension approval path~~ — **decided 2026-10-18 at Gate B** (D7 in item 10); open part: whether the modal dialog passes its verification items, else the `wai start` fallback stays | build task | fallback launch path until the items pass | build task review gate |
+    | R2 | Strengthening the FR-08 check beyond "stdin and stdout are a terminal" | product owner, after the security review | yes: inside VS Code, approvals only through a channel other extensions and IDE agents cannot write to or answer, each approval recorded with its channel; the FR-08 check gains an injection test | build task gate after R1 |
+    | R3 | Claude Code usage signal: project status line (may replace the user's own status line in that project) or hook only | product owner | `StopFailure`/`rate_limit` hook plus the manual trigger; status line only after the user sees what it replaces | build task gate for project-level client configuration |
+    | R4 | Whether launching and closing interactive client sessions from an extension is ordinary use under each provider's current terms | product owner | treat as interactive use (Inference) and record a Documented check with URL and date before the launch feature ships | build task Gate A |
+    | R5 | A script-readable Codex usage signal | product owner | none; manual trigger only | Stage 3 task prompt |
+    | R6 | Whether the official Claude Code and Codex VS Code extensions expose an interface the hub could use | product owner | not used | build task Gate A |
+    | R7 | §17.2 hard gate: re-confirmation per provider and plan for any automated or scripted run | product owner | not met | Stage 3 task prompt approval |
+    | R8 | When Codex becomes a supported executing client that the extension or `wai` may launch, and the documented form of its start command with a first message | product owner | after the start form is Documented and the [Codex client guide §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) checks pass and are recorded | foundation Gate C results, then the build task |
+    | R9 | Whether Claude Code launched in a VS Code integrated terminal connects to its IDE integration and shares editor state beyond the selected context (FR-07), and how to turn that off for Workshop AI sessions | product owner | treat as on; state it as a residual risk to the user; verify before the launch feature ships | build task Gate A |
 
 ## 18. Acceptance Criteria for This Baseline
 

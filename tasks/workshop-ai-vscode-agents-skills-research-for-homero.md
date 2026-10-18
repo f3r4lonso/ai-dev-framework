@@ -1,5 +1,10 @@
 # Research Brief for Homero: VS Code Extension Engineering Agents, Skills, and Repositories
 
+Status: retired (2026-10-18); kept as a record, do not run. A research brief for the Homero assistant, not a
+client-run task; its `adoption-plan.md` deliverables are not in this repository. Related:
+`skills/vscode-extension-development/`. Renamed from `workshop_ai_vscode_agents_skills_research_for_homero.md`
+(kebab-case rule).
+
 **Prepared:** 18 October 2026  
 **Purpose:** Give Homero a structured research brief to evaluate reusable AI agents, skills, and technical references for building high-quality Visual Studio Code extensions, particularly for Workshop AI.
 

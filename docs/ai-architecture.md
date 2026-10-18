@@ -142,11 +142,12 @@ stronger for design) is set per agent in Claude (`model:`) and globally for Code
 5. Validate discovery, invocation, permission behavior and output quality on 2–3 real tasks; label results.
 6. Update `README.md`, the Workshop catalogues (a client column if support differs) and this file.
 
-## 9. Future unified UI (preparation only — no UI is built)
+## 9. Workshop AI: consumer of these contracts
 
-No UI was built and no provider beyond Claude Code and Codex CLI was implemented. The product that will consume
-these contracts, and its decision on the subscription question below, is Workshop AI:
-[product vision and requirements](workshop-ai-product-vision.md) (§17.2).
+The product that consumes these contracts is Workshop AI ([product vision](workshop-ai-product-vision.md)): the `wai`
+command-line tool plus a **VS Code extension** as its main user interface (vision §17.1, decided 2026-10-18). Neither
+is part of this repository, and no provider beyond Claude Code and Codex CLI is implemented. Its decision on the
+subscription question below is vision §17.2.
 
 Integration points that exist today (Documented): Claude Code `claude -p` (print mode, JSON output) and the
 Claude Agent SDK; Codex `codex exec --json` (JSONL events, `resume`), the Codex TypeScript SDK and App Server.
@@ -164,10 +165,13 @@ contributor guide is followed):
 | Project list | `docs/projects/<project-id>/README.md` | Purpose, Stage, Repository bullets |
 | Support status | §4 matrix | evidence label per resource and client |
 
-A future app would build its catalogue from these, dispatch a task to one or both CLIs as subprocesses, and keep
-each client's own authentication. Unknowns to resolve first: whether subscription logins (Claude Pro/Max, ChatGPT
-plans) may be driven by a third-party app under each provider's terms, or whether API keys (usage billing) are
-required; cancellation and error semantics; rate limits. Nothing here combines accounts.
+Workshop AI builds its catalogue from these and keeps each client's own authentication. It starts clients only as
+interactive sessions after a user approval, in a visible terminal; it does not run them as scripted subprocesses
+(vision §17.2 hard gate, §17.10 D4). Unknowns still open (tracked in the vision's open-decisions register, §17.11):
+whether launching interactive sessions from an extension is ordinary use under each provider's terms (R4); whether
+subscription logins (Claude Pro/Max, ChatGPT plans) may be driven by a third-party app for automated runs, or API keys
+(usage billing) are required (R7); a script-readable Codex usage signal (R5); cancellation and error semantics.
+Nothing here combines accounts.
 
 ## 10. Validation status (2026-10-17)
 

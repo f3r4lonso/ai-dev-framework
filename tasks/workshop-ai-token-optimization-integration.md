@@ -8,9 +8,15 @@ review (verdict Blocked, 2.4/5) and a source safety review of the four candidate
 
 ## 1. Role and objective
 
-You are a senior engineer working on **Workshop AI**, a local command-line tool that helps AI clients (Claude Code,
-Codex CLI) work better together: reusable knowledge, relevant context and less repeated work. The governing document is
-the [product vision](../docs/workshop-ai-product-vision.md); its §17 decisions bind this task.
+You are a senior engineer working on **Workshop AI**, a local tool that helps AI clients (Claude Code, Codex CLI) work
+better together: reusable knowledge, relevant context and less repeated work. It is the `wai` command-line tool plus a
+VS Code extension as its main hub (vision §17.1, 2026-10-18). The governing document is the
+[product vision](../docs/workshop-ai-product-vision.md); its §17 decisions bind this task.
+
+The knowledge store built here is the **context storage** the VS Code extension saves to at a client switch, and the
+source of the switch recap (vision §17.10 D6). Under vision §17.10 D10 (option a) this task is the Stage 2 context
+store; the extension shell is a separate Stage 2 build task. This task builds no extension code: it exposes the store
+and the recap through `wai` commands.
 
 Objective: build and measure the smallest Stage 2 proof of concept that shows **more accepted work per unit of
 effort** — not fewer tokens at any cost — from:
@@ -18,7 +24,9 @@ effort** — not fewer tokens at any cost — from:
 1. a scoped, project-local knowledge store (decisions, verified findings, conventions, handoff summaries);
 2. deterministic compression of high-volume tool output (logs, test output, large files);
 3. a compact review of repeated instructions;
-4. a manual cross-client handoff summary that reuses the store.
+4. a manual cross-client handoff summary that reuses the store;
+5. a recap for a client switch, generated deterministically from the saved state and the store, without a model call
+   (vision §17.10 D6).
 
 ## 2. Precondition — check first, stop if unmet
 
@@ -37,8 +45,8 @@ If either is unmet, report it and stop without changing anything.
 | Governing documents (public repository) | `%USERPROFILE%\workshop\infra\` |
 | Client that runs this task | Claude Code CLI (Observed) |
 | Handoff target | Codex CLI, only if foundation Gate C approved its install; otherwise its compatibility is **Unverified** |
-| Language and dependencies | Python standard library only (vision §17.8) |
-| State storage | Markdown or JSON files in the project repository (vision §17.4) |
+| Language and dependencies | Python standard library only for the `wai` core (vision §17.8); no extension code in this task |
+| State storage | Markdown or JSON files in the project repository (vision §17.4); this is the extension's context storage (vision §17.10 D6) |
 
 No other clients are in scope.
 
@@ -104,6 +112,7 @@ Stop at each gate, present the listed evidence and wait for the user's explicit 
 |---|---|---|
 | Design note with contracts, formats, trust boundaries, failure behaviour | product repo `docs/` | approved at Gate A |
 | POC code | product repo | every feature has an off switch; works with the store missing or corrupt (falls back to a plain session) |
+| Switch recap | product repo, a `wai` command with a machine-readable output | same input gives the same recap; no model call; no transcript text; passes the secret check; works when the store is missing |
 | Tests | product repo `tests/` | pass; cover: errors and paths survive compression, project isolation, invalidated/expired items not returned, lock contention, corrupt file fallback, secret refusal and redaction, no prompt contents in logs |
 | Benchmark plan, raw results, calculations | product repo `docs/` | every figure labelled Measured, Simulated or N/A; reproduction steps a reader can follow |
 | Developer guide (enable, disable, troubleshoot) | product repo `docs/` | followed once by the agent on the sandbox project |

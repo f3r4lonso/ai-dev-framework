@@ -1,6 +1,7 @@
 # TASK PROMPT — Workshop AI: Specify the VS Code Extension Hub and Realign the Product Documents
 
-Status: active (draft, rev. 2, reviewed 2026-10-18).
+Status: completed (2026-10-18); kept as a record, do not re-run. Results: vision v1.2 (§17.10, §17.11) and the
+product repository's `docs/vscode-extension-spec.md`.
 
 Revision 2 (2026-10-18). Revision 1 was written from the product owner's direction of 2026-10-18, which reopened
 vision §17.1. A `prompt-reviewer` review found it "Ready with revisions" (3.9/5). Revision 2 applies those findings
