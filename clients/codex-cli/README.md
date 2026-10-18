@@ -3,7 +3,8 @@
 How Codex CLI finds and uses this workspace's shared resources. Install, sign-in and credential storage are in
 one place only: [onboarding §2](../../docs/onboarding.md#2-codex-cli).
 
-**Status: not verified locally.** Codex CLI is not installed on the maintainer's machine (checked 2026-10-17).
+**Status: not verified locally.** Codex CLI 0.163.0 is installed on the maintainer's machine (Observed 2026-10-17); the section 5 checks have not
+been run yet.
 Everything below is **Documented** (official docs checked 2026-10-17, e.g.
 [skills](https://learn.chatgpt.com/docs/build-skills), [AGENTS.md](https://developers.openai.com/codex/guides/agents-md),
 [subagents](https://developers.openai.com/codex/agent-configuration/subagents)) or statically checked, never

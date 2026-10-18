@@ -1,6 +1,6 @@
 # TASK PROMPT — Unify the AI Engineering Infrastructure and Build the Shared Workshop
 
-Status: active.
+Status: completed (2026-10-17); kept as a record, do not re-run. Results: `docs/ai-infrastructure-handover.md`.
 
 Revision 2 (2026-10-17). Merges and supersedes `unified-ai-engineering-infrastructure-prompt.md` and
 `unified-ai-client-workshop-reorganization.md`. Run this task instead of either of them; do not run them in

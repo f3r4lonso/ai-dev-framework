@@ -7,6 +7,7 @@ is one public entry page per project, here.
 | Project | Role | Entry |
 |---|---|---|
 | Trading-app (AutoTrade) | Demonstration project: verifies that the shared infrastructure works on a real codebase | [trading-app/](trading-app/README.md) |
+| Workshop AI | Product: local tool for single-client tasks with saved state and manual handoff (Stage 1), plus its pilot sandbox | [workshop-ai/](workshop-ai/README.md) |
 
 ## Start a new project
 

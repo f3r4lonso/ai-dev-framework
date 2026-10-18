@@ -144,7 +144,9 @@ stronger for design) is set per agent in Claude (`model:`) and globally for Code
 
 ## 9. Future unified UI (preparation only — no UI is built)
 
-No UI was built and no provider beyond Claude Code and Codex CLI was implemented.
+No UI was built and no provider beyond Claude Code and Codex CLI was implemented. The product that will consume
+these contracts, and its decision on the subscription question below, is Workshop AI:
+[product vision and requirements](workshop-ai-product-vision.md) (§17.2).
 
 Integration points that exist today (Documented): Claude Code `claude -p` (print mode, JSON output) and the
 Claude Agent SDK; Codex `codex exec --json` (JSONL events, `resume`), the Codex TypeScript SDK and App Server.
@@ -176,7 +178,7 @@ required; cancellation and error semantics; rate limits. Nothing here combines a
 | Generated Codex agent files parse as TOML and contain only `name`, `description`, `developer_instructions` | Ran: 19/19 pass; re-run after adding `prompt-reviewer`: 20/20 pass |
 | Drift check detects out-of-date wrappers | Ran: detected 2 changed files, then 0 after regeneration |
 | `link-skills` is idempotent and skips non-link entries | Ran |
-| Codex discovers `AGENTS.md`, skills and agents | **Not run**: Codex CLI is not installed on the maintainer's machine (re-checked 2026-10-17); manual steps in [codex-cli §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) |
+| Codex discovers `AGENTS.md`, skills and agents | **Not run**: Codex CLI 0.163.0 found on PATH (Observed 2026-10-17, installed by the maintainer outside any task); checks scheduled in the Workshop AI pilot; manual steps in [codex-cli §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) |
 | Codex follows Windows directory junctions in `clients/.agents/skills/` | **Not run**; documented support covers symlinks, junctions are not mentioned (re-checked 2026-10-17). Fallback: replace each junction with a directory symlink (`mklink /D`, needs Developer Mode or Administrator) |
 | `prompt-reviewer` agent discovered by Claude Code | **Observed** 2026-10-17: listed in the agent registry of a new session started in the repository root |
 | Workshop reorganization (clients/, workshop/) keeps Claude discovery of `.claude/` | Agent and skill locations unchanged; manual re-check after restart: `claude` in the root, `/agents` |
@@ -189,10 +191,10 @@ Results of the reorganization task: [ai-infrastructure-handover.md](ai-infrastru
 backup bundle and tag `pre-root-move` made first). Later the same day the repository was copied (with its history) to
 `%USERPROFILE%\workshop\infra`: canonical agents and skills moved from `.claude/` to `agents/` and `skills/`, task prompts
 to `tasks/`, the Workshop pages into `docs/`, and the client-native folders into `clients/`. Applications now live in
-`%USERPROFILE%\workshop\applications\`. The old copy in `%USERPROFILE%\Repos\ai-infra` was left untouched.
+`%USERPROFILE%\workshop\applications\`. The old copy in `%USERPROFILE%\Repos\ai-infra` no longer exists (checked 2026-10-17).
 
 **Open items:**
-1. Install Codex CLI (needs authorization) and run the manual checks in the Codex client guide.
+1. Run the manual checks in the Codex client guide (Codex CLI is installed; checks not run yet).
 2. Confirm that Codex follows Windows directory junctions in `clients/.agents/skills/`.
 3. Push the commits when the user approves (committed locally 2026-10-17, not pushed).
 4. An untracked installer binary sits inside the Trading-app repository; reported to the owner, not touched.

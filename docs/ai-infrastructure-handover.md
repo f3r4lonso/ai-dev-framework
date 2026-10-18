@@ -3,6 +3,10 @@
 > **Note (2026-10-17, later the same day):** the repository root was then moved from `Repos/` to `Repos/ai-infra/`.
 > Paths in this report predate that move: drop the `ai-infra/` prefix, and `ai-infra/README.md` is now
 > `docs/inventory.md`. Links below were updated. The two commits listed as pending were made (`af78db2`, `384cffc`).
+>
+> **Note (2026-10-18):** the repository then moved again, to `%USERPROFILE%\workshop\infra`, with top-level
+> `agents/`, `skills/`, `tasks/` and `clients/` ([ai-architecture.md §10](ai-architecture.md#10-validation-status-2026-10-17)).
+> `Repos/` and `ai-infra/workshop/...` paths below are historical; this record is not rewritten.
 
 Task: [ai-infrastructure-unification-and-workshop](../tasks/ai-infrastructure-unification-and-workshop.md)
 (revision 2). Run on 2026-10-17 with Claude Code 2.1.302. Gates: A (checkpoint) declined by the maintainer, who

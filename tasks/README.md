@@ -21,7 +21,7 @@ Both clients read the same rules (`AGENTS.md`), skills and agents. Support statu
 1. Open the [task catalogue](../docs/catalogues/tasks.md) and pick an **active** task. Never run a superseded one.
 2. Read its scope and approval gates before starting: a task stops at each gate and waits for you.
 3. Start your client in the folder the task names (usually the repository root) and say:
-   "Run the task in `workshop/tasks/<file>.md`."
+   "Run the task in `tasks/<file>.md`."
 4. No task fits? Describe the goal in plain words. For non-trivial work the client follows the
    `engineering-lifecycle` skill (clarify → plan → build → verify → report).
 

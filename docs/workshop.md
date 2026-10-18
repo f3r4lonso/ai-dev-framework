@@ -12,6 +12,9 @@ their client to open a file here.
 | [manuals/](manuals/contributor-guide.md) | Contributor guide: add, change or retire resources, tasks, clients and projects |
 | [projects/](projects/README.md) | New-project convention and one entry page per project (e.g. the [Trading-app demonstration](projects/trading-app/README.md)) |
 
+**Workshop AI** is a separate application that consumes this layer and does not replace it:
+[product vision and requirements](workshop-ai-product-vision.md).
+
 ## Quick start
 
 1. Set up one client: [Claude Code CLI](../clients/claude-code-cli/README.md) or [Codex CLI](../clients/codex-cli/README.md).
