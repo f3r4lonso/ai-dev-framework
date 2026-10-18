@@ -16,6 +16,7 @@ or let the client load it by description.
 | Backend | [python-error-handling](../../skills/python-error-handling/SKILL.md) | Validation, exception hierarchies, partial failures |
 | Frontend | [vercel-react-best-practices](../../skills/vercel-react-best-practices/SKILL.md) | React/Next.js performance |
 | Frontend | [react-state-management](../../skills/react-state-management/SKILL.md) | Choosing or setting up React state management |
+| VS Code | [vscode-extension-development](../../skills/vscode-extension-development/SKILL.md) | Designing, implementing or reviewing TypeScript extensions with the VS Code API |
 | UI/UX | [ui-ux-pro-max](../../skills/ui-ux-pro-max/SKILL.md) | Designing, building or reviewing interfaces (searchable local design data) |
 | UI/UX | [frontend-design](../../skills/frontend-design/SKILL.md) | Giving a new UI a distinctive visual direction |
 | UI/UX | [web-design-guidelines](../../skills/web-design-guidelines/SKILL.md) | Reviewing UI code against interface guidelines |

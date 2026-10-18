@@ -98,6 +98,7 @@ Codex details: `clients/codex-cli/README.md`.
   `frontend-design`, `web-design-guidelines`, `interaction-design`, `design-system-patterns`,
   `responsive-design`, `wcag-audit-patterns`.
 - Frontend: `vercel-react-best-practices`, `react-state-management`.
+- VS Code extensions (own, 2026-10-18): `vscode-extension-development` — TypeScript and the VS Code Extension API, with Workshop AI boundaries and official documentation links. Microsoft’s sample repository was not copied; a local clone attempt was blocked by the session’s network restriction.
 - Engineering (own, 2026-10-17, portable to Codex): `engineering-lifecycle` — generic requirements, planning, ADR,
   security/threat-model, testing, CI/CD, observability and release gates (`references/templates.md`, `references/checklists.md`).
 - Backend: `api-design-principles`, `python-testing-patterns`, `python-error-handling`.
