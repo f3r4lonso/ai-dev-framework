@@ -13,7 +13,10 @@ All paths are relative to the repository root (`infra/`).
 - `workshop/` — client-neutral navigation layer: `tasks/` (task prompts and how to choose one), `catalogues/`
   (agents, skills, tasks; links only), `manuals/` (contributor guide), `projects/` (new-project convention and
   entry pages). Not loaded by any client; read by people or on request.
-- `agents/personal-assistants/` — system prompts for claude.ai Projects (Homero, Thor). Not loaded by Claude Code.
+- `agents/personal-assistants/` — the user's personal agents Homero (`homero-prompt-engineer`) and Thor (`thor-writer`), own,
+  read-only (Read, Grep, Glob). Claude Code loads them through the `.claude/agents` link; `codex-adapter.py personal`
+  generates Codex, Copilot CLI and Gemini CLI versions in `clients/personal/` and `install-personal` copies them to
+  `~/.codex/agents`, `~/.copilot/agents` and `~/.gemini/agents`. The body (below the frontmatter) still serves as a claude.ai Project prompt.
   Homero hands complex prompts to the `prompt-reviewer` agent (`agents/ai/`) for an independent review.
 - `scripts/codex-adapter.py` — builds the client adapters from the canonical `agents/` and `skills/`: `link-claude`
   (links `clients/.claude/agents` and `skills` for Claude Code), `agents`

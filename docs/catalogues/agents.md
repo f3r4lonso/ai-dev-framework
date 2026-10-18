@@ -38,3 +38,15 @@ plus trading checks in Trading-app; read-only). Retired agents and why: [invento
 
 **Built into Claude Code** (not part of this repo): `Explore` (fast read-only search), `Plan` (implementation
 plans), `general-purpose` (multi-step research), `claude-code-guide` (questions about Claude Code).
+
+## Personal agents
+
+Installed at user level, so they are available in every folder. Claude Code: by name; Codex: "use the `<name>` agent";
+Copilot CLI: `/agent` or `copilot --agent=<name>`; Gemini CLI: `@<name>`. After editing one, run
+`python scripts/codex-adapter.py personal` and `install-personal`. Observed 2026-10-18 in Claude Code, Codex and
+Copilot CLI; Gemini CLI unverified (daily quota exhausted during the test).
+
+| Agent | Use it to | Access |
+|---|---|---|
+| [homero-prompt-engineer](../../agents/personal-assistants/homero-prompt-engineer.md) | Homero: turn ideas or specs into precise prompts, task briefs and agent definitions; revise prompts | RO |
+| [thor-writer](../../agents/personal-assistants/thor-writer.md) | Thor: proofread, translate (ES/EN), polish and draft replies, prepare input for Homero | RO |

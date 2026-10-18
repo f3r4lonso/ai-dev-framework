@@ -29,7 +29,8 @@ workspaces** (`..\applications\`, one public entry page each in `docs/projects/`
 | Client guides (start-up, discovery, permissions, limits) | `clients/<client-id>/README.md` | canonical; link to onboarding for install/auth | humans |
 | Claude Code links | `clients/.claude/agents` → `agents/`, `clients/.claude/skills` → `skills/` | **generated locally** (`link-claude`), not versioned | Claude Code (`--add-dir clients`) |
 | Workshop: task prompts, catalogues, manuals, project entries | `tasks/`, `docs/catalogues/`, `docs/manuals/`, `docs/projects/` | catalogues **link to** canonical files; no copied bodies | humans; clients on request |
-| claude.ai Project prompts | `agents/personal-assistants/` | canonical | pasted into claude.ai Projects |
+| Personal agents (Homero, Thor) | `agents/personal-assistants/` | canonical | Claude Code natively; body pasted into claude.ai Projects |
+| Personal agent wrappers | `clients/personal/{codex,copilot,gemini}/` | **generated** (`personal`), versioned; copied to `~/.codex/agents`, `~/.copilot/agents`, `~/.gemini/agents` by `install-personal` | Codex, Copilot CLI, Gemini CLI |
 
 Nothing is copied by hand: a Codex wrapper is a short pointer to the canonical agent file plus a translation of
 its Claude-only fields, and a Codex skill is a link to the canonical folder.
@@ -43,7 +44,7 @@ workshop/                       workspace folder (not a repository)
 │   ├── CLAUDE.md               @AGENTS.md + Claude-only notes
 │   ├── README.md  SECURITY.md  THIRD_PARTY_NOTICES.md
 │   ├── agents/<area>/          20 canonical agents
-│   ├── agents/personal-assistants/   claude.ai Project prompts (no frontmatter; not loaded by any CLI)
+│   ├── agents/personal-assistants/   personal agents Homero and Thor (all CLIs + claude.ai Projects)
 │   ├── skills/<name>/          24 canonical skills
 │   ├── tasks/                  task prompts
 │   ├── clients/                claude-code-cli/README.md, codex-cli/README.md

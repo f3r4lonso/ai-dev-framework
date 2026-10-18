@@ -1,5 +1,6 @@
-# Fails when the generated Codex agent wrappers (clients/.codex/agents/) drift from the canonical
-# agents (agents/). Fix locally: python scripts/codex-adapter.py agents
+# Fails when the generated Codex agent wrappers (clients/.codex/agents/) or the personal-assistant agents
+# (clients/personal/) drift from the canonical agents (agents/).
+# Fix locally: python scripts/codex-adapter.py agents; python scripts/codex-adapter.py personal
 name: adapter-check
 
 on:
@@ -21,3 +22,6 @@ jobs:
 
       - name: Check generated Codex agents
         run: python3 -I scripts/codex-adapter.py agents --check
+
+      - name: Check generated personal-assistant agents (Codex, Copilot, Gemini)
+        run: python3 -I scripts/codex-adapter.py personal --check
