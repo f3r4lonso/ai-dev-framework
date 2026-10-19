@@ -7,7 +7,10 @@ is one public entry page per project, here.
 | Project | Role | Entry |
 |---|---|---|
 | Trading-app (AutoTrade) | Demonstration project: verifies that the shared infrastructure works on a real codebase | [trading-app/](trading-app/README.md) |
+| Workshop Infrastructure UI | Local, read-only Windows utility for browsing shared tasks, agents, skills, client guides, and help documents | [workshop-infrastructure-ui/](workshop-infrastructure-ui/README.md) |
 | Workshop AI | Product: local tool (`wai`) for single-client tasks with saved state and manual handoff (Stage 1), with a planned VS Code extension hub (Stage 2), plus its pilot sandbox | [workshop-ai/](workshop-ai/README.md) |
+| AI Reading Assistant | Local MVP: prepares text, translates it into Spanish when needed and reads it aloud | [ai-reading-assistant/](ai-reading-assistant/README.md) |
+| AbletonMCP | Third-party MCP integration under evaluation for AI-assisted composition and production in Ableton Live | [ableton-mcp/](ableton-mcp/README.md) |
 
 ## Start a new project
 
