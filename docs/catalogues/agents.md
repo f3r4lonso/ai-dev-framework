@@ -3,7 +3,7 @@
 One row per shared agent. The canonical definition is the linked file; this page copies no bodies. Sources,
 licenses and local modifications: [inventory](../../docs/inventory.md#installed-agents).
 
-**Clients:** every agent works in Claude Code (Observed: all 20 listed by `/agents`, 2026-10-17). In Codex CLI each
+**Clients:** 20 agents were observed in Claude Code on 2026-10-17; `product-idea-excavator` and `music-composer` were added on 2026-10-18 and require a Claude discovery re-check. In Codex CLI each
 has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool limits not enforced, see the
 [Codex guide](../../clients/codex-cli/README.md#7-limitations)). **Access:** RO = read-only; Edit = can change files.
 
@@ -11,6 +11,7 @@ has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool li
 |---|---|---|---|
 | AI | [ai-environment-auditor](../../agents/ai/ai-environment-auditor.md) | Audit agents, skills, rules, prompts and the client adapters; plan changes (apply mode edits infrastructure files only) | RO audit / Edit apply |
 | AI | [prompt-reviewer](../../agents/ai/prompt-reviewer.md) | Score and harden one prompt or agent/skill instruction | RO |
+| AI | [product-idea-excavator](../../agents/ai/product-idea-excavator.md) | Explore vague ideas through discovery questions, identify user and business or human value, and define an evidence-based MVP | RO + web |
 | DevOps | [git-workflow-manager](../../agents/devops/git-workflow-manager.md) | Plan clean commits and branches; pre-push safety checks; pushes only after confirmation | Edit (git) |
 | Backend | [backend-architect](../../agents/backend/backend-architect.md) | Design APIs, service boundaries, resilience, observability | Edit |
 | Backend | [python-pro](../../agents/backend/python-pro.md) | Write or optimize modern Python | Edit |
@@ -29,6 +30,7 @@ has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool li
 | Trading | [qa-test-engineer](../../agents/trading/qa-test-engineer.md) | Unit, integration and regression tests | Edit (tests) |
 | Trading | [exchange-integration-engineer](../../agents/trading/exchange-integration-engineer.md) | Exchange data and demo-execution adapters; never production trading | Edit |
 | Trading | [repo-researcher](../../agents/trading/repo-researcher.md) | Vet an external repo or package | RO |
+| Creative | [music-composer](../../agents/creative/music-composer.md) | Compose, remix or arrange a track as a reproducible Python script that writes MIDI plus a WAV preview to `projects/music/` | Edit (track folder) |
 
 Trading agents assume the Trading-app root as the working directory (see
 [Trading-app entry](../projects/trading-app/README.md)).
