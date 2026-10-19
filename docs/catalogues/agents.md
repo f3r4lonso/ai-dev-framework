@@ -51,4 +51,5 @@ Copilot CLI; Gemini CLI unverified (daily quota exhausted during the test).
 | Agent | Use it to | Access |
 |---|---|---|
 | [homero-prompt-engineer](../../agents/personal-assistants/homero-prompt-engineer.md) | Homero: turn ideas or specs into precise prompts, task briefs and agent definitions; revise prompts | RO |
+| [atlas-project-planner](../../agents/personal-assistants/atlas-project-planner.md) | Atlas: turn an idea into a reviewed, ready-to-start project plan (Homero drafts, prompt-reviewer reviews, one question at a time); registers it and pushes after your OK. Claude Code: run as main session `claude --agent atlas-project-planner` from the workshop root | Edit + shell + web; orchestrator |
 | [thor-writer](../../agents/personal-assistants/thor-writer.md) | Thor: proofread, translate (ES/EN), polish and draft replies, prepare input for Homero | RO |

@@ -18,6 +18,9 @@ All paths are relative to the repository root (`infra/`).
   generates Codex, Copilot CLI and Gemini CLI versions in `clients/personal/` and `install-personal` copies them to
   `~/.codex/agents`, `~/.copilot/agents` and `~/.gemini/agents`. The body (below the frontmatter) still serves as a claude.ai Project prompt.
   Homero hands complex prompts to the `prompt-reviewer` agent (`agents/ai/`) for an independent review.
+  Atlas (`atlas-project-planner`, own, 2026-10-19) is the exception to read-only: an orchestrator with Edit, shell, web,
+  Agent and AskUserQuestion that turns an idea into a reviewed task brief via Homero and `prompt-reviewer`, and commits
+  and pushes only after the user approves. It must run as the main Claude Code session; other clients use a fallback.
 - `scripts/codex-adapter.py` — builds the client adapters from the canonical `agents/` and `skills/`: `link-claude`
   (links `clients/.claude/agents` and `skills` for Claude Code), `agents`
   (generates `clients/.codex/agents/*.toml`, `--check` for drift; CI: `.github/workflows/adapter-check.yml`) and
