@@ -99,8 +99,7 @@ Keep them out of the repository:
 
 ### Load this framework's agents and skills
 
-Start Claude Code in the repository root (`infra`, the folder you cloned) with `claude --add-dir clients`, or from an
-application repository with `claude --add-dir %USERPROFILE%\workshop\infra\clients`. Discovery, permissions and limits:
+Install the `workshop` plugin once (`clients/claude-code-cli/README.md` §2); then start Claude Code in any folder. Discovery, permissions and limits:
 [Claude Code client guide](../clients/claude-code-cli/README.md).
 
 ## 2. Codex CLI
@@ -263,7 +262,7 @@ uses it automatically. Users of the pre-commit framework can run `pre-commit ins
 |---|---|
 | Claude Code uses the wrong account or an API key | `/status`; remove stray `ANTHROPIC_API_KEY`; `/logout` then log in |
 | `Login expired · Please run /login` | Run `/login` |
-| Agents or skills from this repository not available | Run `python scripts/codex-adapter.py link-claude`, then start Claude Code with `--add-dir` pointing at `clients` |
+| Agents or skills from this repository not available | `claude plugin list` must show `workshop@workshop-local` enabled; if not, follow `clients/claude-code-cli/README.md` §2 and restart |
 | Codex: shared skills missing in `/skills` | Run `python scripts/codex-adapter.py link-skills` (or `--user`), restart Codex |
 | Codex: shared agents not used | Trust the project; start Codex in the repository root (agents load from its `clients/.codex/agents/`) |
 | Codex uses an API key instead of your ChatGPT plan | `codex login status`; `codex logout`, then `codex login` |

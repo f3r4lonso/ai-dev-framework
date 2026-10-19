@@ -1,0 +1,14 @@
+{
+  "name": "workshop-local",
+  "owner": {
+    "name": "Workshop"
+  },
+  "description": "Local marketplace for the Workshop infra repository. Add it from a local path so Claude Code reads the files in place.",
+  "plugins": [
+    {
+      "name": "workshop",
+      "source": "./",
+      "description": "The user's shared Workshop AI infrastructure: every agent and skill in infra, loaded in place from this repository."
+    }
+  ]
+}

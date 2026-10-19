@@ -14,7 +14,7 @@ with a native adapter for each client. Architecture, compatibility matrix and ma
 3. **Find what to use:** the [Workshop](docs/workshop.md) lists every agent, skill and task prompt and
    explains how to choose one.
 
-Clone into `C:\Users\<you>\workshop\infra` and start your client there (Claude Code: `claude --add-dir clients`), or from an application
+Clone into `C:\Users\<you>\workshop\infra` and start your client there (Claude Code loads everything from the `workshop` plugin: `clients/claude-code-cli/README.md`), or from an application
 repository as described in its client guide.
 
 ## Contents
@@ -25,8 +25,8 @@ repository as described in its client guide.
 - `clients/.codex/agents/` — Codex wrappers generated from `agents/` by `scripts/codex-adapter.py`. Do not edit.
 - `clients/` — one guide per AI client: start-up, discovery, permissions, limits.
 - `tasks/` — task prompts.
-- `clients/.claude/` — local links to `agents/` and `skills/` so Claude Code finds them with `--add-dir clients`
-  (created by `python scripts/codex-adapter.py link-claude`; not versioned).
+- `.claude-plugin/` — Claude Code plugin and local marketplace manifests; Claude reads `agents/` and `skills/` in
+  place from this folder.
 - `docs/workshop.md`, `docs/catalogues/`, `docs/manuals/`, `docs/projects/` — Workshop index, catalogues, manuals
   and the new-project convention.
 - `docs/inventory.md` — inventory: sources, commits, licenses, local modifications and conventions.

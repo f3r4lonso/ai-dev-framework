@@ -4,15 +4,15 @@
 Canonical sources (edit these, never the generated files):
   agents/<area>/<name>.md   -> clients/.codex/agents/<name>.toml  (generated, versioned)
   skills/<name>/SKILL.md    -> clients/.agents/skills/<name>      (local link, not versioned)
-  agents/, skills/          -> clients/.claude/agents, skills     (local links, not versioned)
   agents/personal-assistants/<name>.md -> clients/personal/{codex,copilot,gemini}/  (generated, versioned)
 Files under agents/ without frontmatter are not subagents and are skipped. Personal assistants are installed at
 user level (available in every folder), so their wrappers embed the canonical body instead of pointing to it.
 
 Commands:
-  agents [--check]       Generate Codex custom-agent wrappers; --check only reports drift (exit 1).
-  link-claude            Link clients/.claude/agents and clients/.claude/skills to the canonical folders,
-                         so `claude --add-dir <infra>/clients` loads them.
+  agents [--check]       Generate Codex custom-agent wrappers and the `agents` list of the Claude Code
+                         plugin (.claude-plugin/plugin.json); --check only reports drift (exit 1).
+  link-claude            Retired: Claude Code loads agents and skills from the `workshop` plugin
+                         (.claude-plugin/); see clients/claude-code-cli/README.md.
   link-skills [--user]   Link every canonical skill into clients/.agents/skills/, or into
                          ~/.agents/skills/ with --user (for Codex sessions started in other repos).
                          Existing entries that are not links are never touched.
@@ -39,7 +39,7 @@ SKILLS_SRC = ROOT / "skills"
 CLIENTS = ROOT / "clients"
 AGENTS_OUT = CLIENTS / ".codex" / "agents"
 REPO_SKILLS_LINKS = CLIENTS / ".agents" / "skills"
-CLAUDE_LINKS = CLIENTS / ".claude"
+PLUGIN_MANIFEST = ROOT / ".claude-plugin" / "plugin.json"
 USER_SKILLS_LINKS = Path.home() / ".agents" / "skills"
 PERSONAL_SRC = AGENTS_SRC / "personal-assistants"
 PERSONAL_OUT = CLIENTS / "personal"
@@ -262,8 +262,16 @@ def cmd_install_personal() -> int:
     return 0
 
 
+def render_plugin_manifest() -> str:
+    """plugin.json with its `agents` list rebuilt: every agent file, personal assistants included."""
+    manifest = json.loads(PLUGIN_MANIFEST.read_text(encoding="utf-8"))
+    manifest["agents"] = ["./" + p.relative_to(ROOT).as_posix() for p in sorted(AGENTS_SRC.rglob("*.md"))
+                          if p.read_text(encoding="utf-8").startswith("---")]
+    return json.dumps(manifest, indent=2) + "\n"
+
+
 def cmd_agents(check: bool) -> int:
-    expected: dict[Path, str] = {}
+    expected: dict[Path, str] = {PLUGIN_MANIFEST: render_plugin_manifest()}
     for src in agent_sources():
         name, text = render_agent(src)
         out = AGENTS_OUT / f"{name}.toml"
@@ -280,14 +288,14 @@ def cmd_agents(check: bool) -> int:
             print(f"out of date: {p.relative_to(ROOT).as_posix()}")
         for p in stale:
             print(f"stale: {p.relative_to(ROOT).as_posix()}")
-        print(f"{len(expected)} agents, {len(changed)} out of date, {len(stale)} stale")
+        print(f"{len(expected) - 1} agents + plugin manifest, {len(changed)} out of date, {len(stale)} stale")
         return 1 if changed or stale else 0
     AGENTS_OUT.mkdir(parents=True, exist_ok=True)
     for p in changed:
         p.write_text(expected[p], encoding="utf-8", newline="\n")
     for p in stale:
         p.unlink()
-    print(f"{len(expected)} agents: {len(changed)} written, {len(stale)} stale removed")
+    print(f"{len(expected) - 1} agents + plugin manifest: {len(changed)} written, {len(stale)} stale removed")
     return 0
 
 
@@ -328,17 +336,9 @@ def cmd_link_skills(user: bool) -> int:
 
 
 def cmd_link_claude() -> int:
-    CLAUDE_LINKS.mkdir(parents=True, exist_ok=True)
-    for name, target in (("agents", AGENTS_SRC), ("skills", SKILLS_SRC)):
-        link = CLAUDE_LINKS / name
-        if is_link(link):
-            print(f"{link}: already linked ({link.resolve()})")
-        elif link.exists():
-            print(f"skipped {link}: exists and is not a link")
-        else:
-            make_link(link, target)
-            print(f"{link}: linked to {target}")
-    return 0
+    print("link-claude is retired: Claude Code loads agents and skills from the workshop plugin "
+          "(.claude-plugin/). See clients/claude-code-cli/README.md.", file=sys.stderr)
+    return 1
 
 
 def cmd_status() -> int:

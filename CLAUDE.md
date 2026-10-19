@@ -2,8 +2,8 @@
 
 ## Claude Code only
 
-- Claude Code discovers the shared agents and skills through the links in `clients/.claude/` (create them with
-  `python scripts/codex-adapter.py link-claude`). In this repository start Claude with `claude --add-dir clients`;
-  inside a project repo they load only when Claude is started with
-  `claude --add-dir %USERPROFILE%\workshop\infra\clients` (Trading-app: its `start-claude.bat`).
-- `clients/.codex/agents/` and `clients/.agents/skills/` are generated Codex adapters: never edit them by hand.
+- Claude Code loads every shared agent and skill from the `workshop` plugin (`.claude-plugin/`), read in place from
+  this repository in every folder, no links and no `--add-dir`. Names carry the prefix: `workshop:<name>`. Setup:
+  `clients/claude-code-cli/README.md`. After adding or renaming an agent run
+  `python scripts/codex-adapter.py agents` (it also rebuilds the plugin's `agents` list) and `claude plugin validate .`.
+- `clients/.codex/agents/` and `clients/personal/` are generated adapters: never edit them by hand.

@@ -1,0 +1,37 @@
+{
+  "name": "workshop",
+  "version": "0.1.0",
+  "description": "The user's shared Workshop AI infrastructure: every agent and skill in infra, loaded in place from this repository.",
+  "author": {
+    "name": "Workshop"
+  },
+  "license": "See THIRD_PARTY_NOTICES.md",
+  "skills": "./skills/",
+  "agents": [
+    "./agents/ai/ai-environment-auditor.md",
+    "./agents/ai/product-idea-excavator.md",
+    "./agents/ai/prompt-reviewer.md",
+    "./agents/backend/backend-architect.md",
+    "./agents/backend/python-pro.md",
+    "./agents/creative/music-composer.md",
+    "./agents/devops/git-workflow-manager.md",
+    "./agents/frontend/frontend-developer.md",
+    "./agents/personal-assistants/atlas-project-planner.md",
+    "./agents/personal-assistants/homero-prompt-engineer.md",
+    "./agents/personal-assistants/thor-writer.md",
+    "./agents/quality/code-reviewer.md",
+    "./agents/quality/debugger.md",
+    "./agents/quality/security-reviewer.md",
+    "./agents/trading/backtesting-auditor.md",
+    "./agents/trading/exchange-integration-engineer.md",
+    "./agents/trading/qa-test-engineer.md",
+    "./agents/trading/quant-researcher.md",
+    "./agents/trading/repo-researcher.md",
+    "./agents/trading/risk-engineer.md",
+    "./agents/trading/strategy-engineer.md",
+    "./agents/ui/accessibility-expert.md",
+    "./agents/ui/ui-designer.md",
+    "./agents/ux/ui-ux-tester.md",
+    "./agents/ux/ux-researcher.md"
+  ]
+}

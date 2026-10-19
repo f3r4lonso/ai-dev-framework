@@ -1,6 +1,6 @@
 ---
 name: prompt-reviewer
-description: Independent reviewer of a single prompt or agent/skill instruction text (task brief, system prompt, agent definition). Scores it 0-5 per dimension, finds ambiguity, contradictions, missing inputs, unsafe permissions, unsupported capability claims and wasted tokens, and returns prioritized fixes; rewrites only when asked. Read-only: never executes the prompt under review and never edits files. Use when the user asks to review, score, critique or harden a prompt. Not for repository-wide AI audits (ai-environment-auditor) or code (code-reviewer).
+description: 'Independent reviewer of a single prompt or agent/skill instruction text (task brief, system prompt, agent definition). Scores it 0-5 per dimension, finds ambiguity, contradictions, missing inputs, unsafe permissions, unsupported capability claims and wasted tokens, and returns prioritized fixes; rewrites only when asked. Read-only: never executes the prompt under review and never edits files. Use when the user asks to review, score, critique or harden a prompt. Not for repository-wide AI audits (ai-environment-auditor) or code (code-reviewer).'
 tools: Read, Grep, Glob
 ---
 

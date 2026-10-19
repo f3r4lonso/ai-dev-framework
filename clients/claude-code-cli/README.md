@@ -18,25 +18,29 @@ Evidence labels: **Observed** (seen in the maintainer's environment, Claude Code
 3. Start Claude Code in the right folder (section 2).
 4. Verify with section 5.
 
-## 2. Start-up directory
+## 2. Install the `workshop` plugin (once per machine)
 
-| Where you work | Command | What loads |
-|---|---|---|
-| This repository (`%USERPROFILE%\workshop\infra`) | `claude --add-dir clients` | Shared rules, all agents and skills (Observed) |
-| An application repo, Windows PowerShell | `claude --add-dir "$env:USERPROFILE\workshop\infra\clients"` | Project rules + shared agents and skills (Documented) |
-| An application repo, Bash (Git Bash, macOS, Linux) | `claude --add-dir ~/workshop/infra/clients` | Same |
-| Trading-app | `start-claude.bat` in the project root | Same; it adds `..\..\infra\clients` |
+This repository is a Claude Code plugin and a local marketplace (`.claude-plugin/`). Claude reads the plugin in
+place from this folder: no copies, no links, edits apply at the next session start or `/reload-plugins`
+(Observed, Claude Code 2.1.303, 2026-10-19).
 
-Without `--add-dir`, Claude Code inside a project repo stops at that repo's root and sees none of the shared
-resources (Documented).
+```text
+claude plugin marketplace add "%USERPROFILE%\workshop\infra"
+claude plugin install workshop@workshop-local --scope user
+```
+
+After that, every shared agent and skill loads in **every folder** (workshop root, `infra`, any application) with a
+plain `claude`. Names carry the plugin prefix: agents `workshop:<name>`, skills `/workshop:<name>`. Atlas:
+`claude --agent workshop:atlas-project-planner`. If you move `infra`, remove and re-add the marketplace.
+Project rules still come from each folder's `CLAUDE.md`.
 
 ## 3. Discovery
 
 | Resource | Where Claude Code looks | When | Status |
 |---|---|---|---|
 | Rules | `CLAUDE.md` from the working directory up to the repo root; this repo's `CLAUDE.md` imports `AGENTS.md` | session start | Observed |
-| Agents | `.claude/agents/**` in the working directory tree, `~/.claude/agents/`, and `--add-dir` folders | **session start only** | 20 existing agents observed (including `prompt-reviewer`); new agent requires manual re-check |
-| Skills | `.claude/skills/<name>/SKILL.md`, same locations | session start; new skills can appear live | Observed |
+| Agents | `workshop` plugin: the files listed in `.claude-plugin/plugin.json` (rebuilt by `python scripts/codex-adapter.py agents`) | session start or `/reload-plugins` | 25 agents observed from `applications\Trading-app` and the workshop root |
+| Skills | `workshop` plugin: `skills/<name>/SKILL.md` | session start or `/reload-plugins` | 29 skills observed |
 | Task prompts | not discovered; open them by path from [the Workshop](../../tasks/README.md) | on request | n/a |
 | Catalogues, manuals | not discovered; read on request | on request | n/a |
 | Hooks, commands, MCP | none are shipped by this repo | — | — |
@@ -57,8 +61,9 @@ required (Documented).
 
 1. `/status`: your own account and the expected login method.
 2. `/memory`: lists the workspace `CLAUDE.md` (and through it `AGENTS.md`).
-3. `/agents`: lists the shared agents (for example `code-reviewer`, `prompt-reviewer`, `product-idea-excavator`).
-4. Ask: "Use the prompt-reviewer agent in quick mode on `tasks/README.md`." It should return a
+3. `claude plugin list` shows `workshop@workshop-local` enabled and read from this folder; `/agents` lists
+   `workshop:code-reviewer`, `workshop:prompt-reviewer`, and so on.
+4. Ask: "Use the workshop:prompt-reviewer agent in quick mode on `tasks/README.md`." It should return a
    scored review and change no file.
 
 ## 6. Permissions
@@ -77,5 +82,7 @@ required (Documented).
 
 ## 8. Troubleshooting
 
-[Onboarding troubleshooting](../../docs/onboarding.md#troubleshooting). Most common: agents missing → you started
-outside the repository root without `--add-dir`, or the agent was added after the session started.
+[Onboarding troubleshooting](../../docs/onboarding.md#troubleshooting). Most common: agents missing → the `workshop`
+plugin is not installed or is disabled (`claude plugin list`), the agent is not in the plugin's `agents` list (run
+`python scripts/codex-adapter.py agents`), its frontmatter does not parse (`claude plugin validate .`), or it was
+added after the session started (`/reload-plugins`).

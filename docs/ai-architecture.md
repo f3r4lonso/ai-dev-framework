@@ -9,7 +9,7 @@ locally), **Inference** (reasoned from evidence), **Proposed** (designed here, n
 **Unsupported/Unverified**.
 
 The infrastructure separates four concerns: **AI clients** (`clients/`), **client-native resources**
-(canonical `agents/` and `skills/`, linked into `clients/.claude/`; generated `clients/.codex/agents/`,
+(canonical `agents/` and `skills/`, loaded in place by Claude Code as the `workshop` plugin; generated `clients/.codex/agents/`,
 `clients/.agents/skills/`), the shared **Workshop** (`tasks/`, `docs/`) and **project
 workspaces** (`..\applications\`, one public entry page each in `docs/projects/`).
 
@@ -27,7 +27,7 @@ workspaces** (`..\applications\`, one public entry page each in `docs/projects/`
 | Inventory, licenses | `docs/inventory.md`, `THIRD_PARTY_NOTICES.md` | canonical | humans, auditor agent |
 | Security, onboarding (install, auth, troubleshooting for every client) | `SECURITY.md`, `docs/onboarding.md` | canonical | humans |
 | Client guides (start-up, discovery, permissions, limits) | `clients/<client-id>/README.md` | canonical; link to onboarding for install/auth | humans |
-| Claude Code links | `clients/.claude/agents` → `agents/`, `clients/.claude/skills` → `skills/` | **generated locally** (`link-claude`), not versioned | Claude Code (`--add-dir clients`) |
+| Claude Code plugin | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` (local marketplace `workshop-local`) | canonical; read in place, no copies or links | Claude Code, every folder (`workshop:<name>`) |
 | Workshop: task prompts, catalogues, manuals, project entries | `tasks/`, `docs/catalogues/`, `docs/manuals/`, `docs/projects/` | catalogues **link to** canonical files; no copied bodies | humans; clients on request |
 | Personal agents (Homero, Thor, Atlas) | `agents/personal-assistants/` | canonical | Claude Code natively; body pasted into claude.ai Projects |
 | Personal agent wrappers | `clients/personal/{codex,copilot,gemini}/` | **generated** (`personal`), versioned; copied to `~/.codex/agents`, `~/.copilot/agents`, `~/.gemini/agents` by `install-personal` | Codex, Copilot CLI, Gemini CLI |
@@ -83,10 +83,10 @@ Claude without `--add-dir` does the same, so workspace rules do not leak into a 
 | Resource | Claude Code: discovery / invocation | Status | Codex CLI: discovery / invocation | Status |
 |---|---|---|---|---|
 | Shared rules | `CLAUDE.md` + `@AGENTS.md` import at session start | Observed | `AGENTS.md` at session start | Documented |
-| 29 skills | `.claude/skills/` from cwd up to repo root, or `--add-dir`; `/skill-name` or automatic by description | Observed (new `engineering-lifecycle` picked up live) | `.agents/skills/` from cwd up to repo root, or `~/.agents/skills/`; `$skill-name`, `/skills`, or automatic | Documented; links Proposed (junctions on Windows not yet seen by Codex) |
+| 29 skills | `workshop` plugin, every folder (`/workshop:<name>`); `/skill-name` or automatic by description | Observed (new `engineering-lifecycle` picked up live) | `.agents/skills/` from cwd up to repo root, or `~/.agents/skills/`; `$skill-name`, `/skills`, or automatic | Documented; links Proposed (junctions on Windows not yet seen by Codex) |
 | `ui-ux-pro-max` scripts | `${CLAUDE_SKILL_DIR}` expanded | Observed (variable documented) | variable not expanded; SKILL.md tells the model to substitute the skill folder | Proposed |
 | Skill frontmatter extras (`allowed-tools`, `metadata`) | honored | Documented | `name`, `description` required; extras not documented | Unverified (expected to be ignored) |
-| 21 agents | `.claude/agents/**` (and `--add-dir`); by name, `@agent-<name>`, automatic, `/agents` | Existing agents observed; new agent requires manual re-check | `clients/.codex/agents/*.toml` in a **trusted** project; ask "use the `<name>` agent"; `/subagents` to switch threads | Documented format; wrappers Proposed (TOML parses, not run in Codex) |
+| 25 agents | `workshop` plugin, every folder (`workshop:<name>`); by name, `@agent-<name>`, automatic, `/agents` | Existing agents observed; new agent requires manual re-check | `clients/.codex/agents/*.toml` in a **trusted** project; ask "use the `<name>` agent"; `/subagents` to switch threads | Documented format; wrappers Proposed (TOML parses, not run in Codex) |
 | Agent tool limits (`tools`, `disallowedTools`) | enforced | Documented | **not enforceable per agent**; subagents inherit the parent sandbox and approvals; wrappers state the limit as an instruction | Unsupported → mitigated by instruction; run read-only roles with `--sandbox read-only` |
 | Agent `model:` | honored | Documented | omitted; inherits parent model (or `[agents].default_subagent_model`) | Documented |
 | Agent `skills:` preload | honored | Documented | wrapper tells the agent to read those skills | Proposed |

@@ -19,6 +19,7 @@
 !/.github/
 !/docs/
 !/clients/
+!/.claude-plugin/
 /clients/.claude/
 /clients/.agents/
 !/scripts/
