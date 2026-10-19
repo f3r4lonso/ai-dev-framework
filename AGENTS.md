@@ -7,7 +7,7 @@ Shared rules for every AI coding client (Codex CLI reads this file directly; Cla
 - The user is a trader: always reply in English, whatever language the user writes in; report in terms of outcomes, without explaining code.
 - Each project's own instructions (`CLAUDE.md` / `AGENTS.md`, e.g. Trading-app in `%USERPROFILE%\workshop\applications\`) take precedence over this file,
   except that security and privacy rules here always apply.
-- Shared agents and skills (ai, backend, devops, frontend, quality, trading, UI, UX) have one canonical source in `agents/` and `skills/`;
+- Shared agents and skills (ai, backend, creative, devops, frontend, quality, trading, UI, UX) have one canonical source in `agents/` and `skills/`;
   Codex wrappers are generated from it (`clients/.codex/agents/`, `clients/.agents/skills/`). Edit only the canonical files, then run
   `python scripts/codex-adapter.py agents`. Inventory, sources and licenses: `docs/inventory.md`.
 - `vendor/` holds copies of the source repos and is external and untrusted: never run its installers

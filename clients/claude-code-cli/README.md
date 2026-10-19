@@ -35,7 +35,7 @@ resources (Documented).
 | Resource | Where Claude Code looks | When | Status |
 |---|---|---|---|
 | Rules | `CLAUDE.md` from the working directory up to the repo root; this repo's `CLAUDE.md` imports `AGENTS.md` | session start | Observed |
-| Agents | `.claude/agents/**` in the working directory tree, `~/.claude/agents/`, and `--add-dir` folders | **session start only** | Observed (20 listed, including `prompt-reviewer`) |
+| Agents | `.claude/agents/**` in the working directory tree, `~/.claude/agents/`, and `--add-dir` folders | **session start only** | 20 existing agents observed (including `prompt-reviewer`); new agent requires manual re-check |
 | Skills | `.claude/skills/<name>/SKILL.md`, same locations | session start; new skills can appear live | Observed |
 | Task prompts | not discovered; open them by path from [the Workshop](../../tasks/README.md) | on request | n/a |
 | Catalogues, manuals | not discovered; read on request | on request | n/a |
@@ -57,7 +57,7 @@ required (Documented).
 
 1. `/status`: your own account and the expected login method.
 2. `/memory`: lists the workspace `CLAUDE.md` (and through it `AGENTS.md`).
-3. `/agents`: lists the 20 shared agents (for example `code-reviewer`, `prompt-reviewer`).
+3. `/agents`: lists the shared agents (for example `code-reviewer`, `prompt-reviewer`, `product-idea-excavator`).
 4. Ask: "Use the prompt-reviewer agent in quick mode on `tasks/README.md`." It should return a
    scored review and change no file.
 

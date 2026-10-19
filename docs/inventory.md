@@ -94,7 +94,9 @@ Codex details: `clients/codex-cli/README.md`.
 | Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
 | AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `clients/`, `tasks/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
 | AI | prompt-reviewer | own (2026-10-17) | Read, Grep, Glob (read-only); reviews and scores one prompt, never executes it; companion of the Homero prompt (`agents/personal-assistants/`); example path updated to `tasks/` |
+| AI | product-idea-excavator | Original Workshop agent informed by [derrickgong87/product-idea-excavator](https://github.com/derrickgong87/product-idea-excavator) (MIT; reviewed 2026-10-18) | Read, Grep, Glob, WebSearch, WebFetch (read-only); Spanish-language discovery interview, user/problem/value framing, feasibility, and MVP validation; original supports English/Chinese, Workshop agent is adapted for Spanish |
 | DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 (paths updated to `applications/` and the new `infra/` folders the same day) | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
+| Creative | music-composer | Original Workshop agent written 2026-10-18 (no external source) | Read, Write, Edit, Bash, Glob, Grep; writes only to `projects/music/<track-id>/`; Python stdlib only (MIDI + WAV render); flags copyright of reworked melodies |
 
 ## Installed skills
 - UI/UX: `ui-ux-pro-max` (Python search scripts over local CSVs, standard library only, no network),
@@ -105,6 +107,14 @@ Codex details: `clients/codex-cli/README.md`.
 - Engineering (own, 2026-10-17, portable to Codex): `engineering-lifecycle` — generic requirements, planning, ADR,
   security/threat-model, testing, CI/CD, observability and release gates (`references/templates.md`, `references/checklists.md`).
 - Backend: `api-design-principles`, `python-testing-patterns`, `python-error-handling`.
+- Language and data (own, 2026-10-18, from the language coverage review): `javascript-typescript-development`,
+  `javascript-testing-patterns`, `python-resilience`, `sqlite-data-safety`, `risk-metrics-calculation`
+  (`references/formulas.md`). Written from official documentation. The wshobson skills of the same or similar name
+  (`044b4b2`, MIT: `javascript-testing-patterns`, `modern-javascript-patterns`, `typescript-advanced-types`,
+  `python-resilience`, `risk-metrics-calculation`) were reviewed as reference only and not copied: their examples
+  depend on packages the projects have not approved (`tenacity`, `httpx`, Jest/supertest). Review found no
+  installers, network fetches at run time or rule-bypass instructions. The last three carry short Trading-app notes;
+  `python-resilience` defers to `order-lifecycle-safety` for any order call.
 - Trading (own, from Trading-app; no `allowed-tools`): `strategy-specification`, `backtesting-audit`,
   `risk-management`, `market-data-quality`, `exchange-integration`, `order-lifecycle-safety`,
   `paper-trading-lifecycle`, `trading-test-review`, `repo-research`, `dependency-license-review`.
@@ -128,6 +138,10 @@ Codex details: `clients/codex-cli/README.md`.
   replace `${CLAUDE_SKILL_DIR}` with the skill folder path.
 
 ## Rejected / pending
+- wshobson `quant-analyst` and `risk-manager` agents (quantitative-trading, 2026-10-18): duplicate `quant-researcher`
+  and `risk-engineer`, and their proactive auto-delegation could take trading work from the scoped agents. Not installed.
+- C, C++, Rust, Go and .NET language skills or agents (VoltAgent, wshobson; 2026-10-18): no Workshop project uses these
+  languages; revisit when one does (see `docs/language-skills-and-agents-roadmap.md`).
 - `anthropics/skills/webapp-testing`: requires installing Playwright and browsers (new dependency) and asks
   not to read its code. Downloaded to `vendor/`, not installed.
 - `obra/superpowers` (300k★) and `affaan-m/ECC` (282k★): general frameworks with hooks and their own methodology

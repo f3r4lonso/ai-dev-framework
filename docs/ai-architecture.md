@@ -45,7 +45,7 @@ workshop/                       workspace folder (not a repository)
 │   ├── README.md  SECURITY.md  THIRD_PARTY_NOTICES.md
 │   ├── agents/<area>/          20 canonical agents
 │   ├── agents/personal-assistants/   personal agents Homero and Thor (all CLIs + claude.ai Projects)
-│   ├── skills/<name>/          24 canonical skills
+│   ├── skills/<name>/          29 canonical skills
 │   ├── tasks/                  task prompts
 │   ├── clients/                claude-code-cli/README.md, codex-cli/README.md
 │   │   ├── .claude/            local links agents → ../../agents, skills → ../../skills (ignored by git)
@@ -83,10 +83,10 @@ Claude without `--add-dir` does the same, so workspace rules do not leak into a 
 | Resource | Claude Code: discovery / invocation | Status | Codex CLI: discovery / invocation | Status |
 |---|---|---|---|---|
 | Shared rules | `CLAUDE.md` + `@AGENTS.md` import at session start | Observed | `AGENTS.md` at session start | Documented |
-| 24 skills | `.claude/skills/` from cwd up to repo root, or `--add-dir`; `/skill-name` or automatic by description | Observed (new `engineering-lifecycle` picked up live) | `.agents/skills/` from cwd up to repo root, or `~/.agents/skills/`; `$skill-name`, `/skills`, or automatic | Documented; links Proposed (junctions on Windows not yet seen by Codex) |
+| 29 skills | `.claude/skills/` from cwd up to repo root, or `--add-dir`; `/skill-name` or automatic by description | Observed (new `engineering-lifecycle` picked up live) | `.agents/skills/` from cwd up to repo root, or `~/.agents/skills/`; `$skill-name`, `/skills`, or automatic | Documented; links Proposed (junctions on Windows not yet seen by Codex) |
 | `ui-ux-pro-max` scripts | `${CLAUDE_SKILL_DIR}` expanded | Observed (variable documented) | variable not expanded; SKILL.md tells the model to substitute the skill folder | Proposed |
 | Skill frontmatter extras (`allowed-tools`, `metadata`) | honored | Documented | `name`, `description` required; extras not documented | Unverified (expected to be ignored) |
-| 20 agents | `.claude/agents/**` (and `--add-dir`); by name, `@agent-<name>`, automatic, `/agents` | Observed | `clients/.codex/agents/*.toml` in a **trusted** project; ask "use the `<name>` agent"; `/subagents` to switch threads | Documented format; wrappers Proposed (TOML parses, not run in Codex) |
+| 21 agents | `.claude/agents/**` (and `--add-dir`); by name, `@agent-<name>`, automatic, `/agents` | Existing agents observed; new agent requires manual re-check | `clients/.codex/agents/*.toml` in a **trusted** project; ask "use the `<name>` agent"; `/subagents` to switch threads | Documented format; wrappers Proposed (TOML parses, not run in Codex) |
 | Agent tool limits (`tools`, `disallowedTools`) | enforced | Documented | **not enforceable per agent**; subagents inherit the parent sandbox and approvals; wrappers state the limit as an instruction | Unsupported → mitigated by instruction; run read-only roles with `--sandbox read-only` |
 | Agent `model:` | honored | Documented | omitted; inherits parent model (or `[agents].default_subagent_model`) | Documented |
 | Agent `skills:` preload | honored | Documented | wrapper tells the agent to read those skills | Proposed |

@@ -29,7 +29,7 @@ Everything below is **Documented** (official docs checked 2026-10-17, e.g.
 
 | Where you work | What loads (Documented) |
 |---|---|
-| Repository root, trusted | `AGENTS.md`, skills in `clients/.agents/skills/`, the 20 agents in `clients/.codex/agents/` |
+| Repository root, trusted | `AGENTS.md`, skills in `clients/.agents/skills/`, the 21 agents in `clients/.codex/agents/` |
 | Repository root, not trusted | `AGENTS.md` and skills; **no** project `.codex/` config, so no shared agents |
 | An application repo | that repo's own `AGENTS.md` only (Codex stops at its git root); shared skills only if linked with `--user`; shared agents **not** available |
 

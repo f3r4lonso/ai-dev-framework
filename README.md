@@ -20,8 +20,8 @@ repository as described in its client guide.
 ## Contents
 - `AGENTS.md` — rules shared by all clients (Codex reads it; `CLAUDE.md` imports it).
 - `CLAUDE.md` — `@AGENTS.md` plus Claude-only notes.
-- `agents/` — 20 subagents by area: `ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`.
-- `skills/` — 24 on-demand skills. Canonical for both clients.
+- `agents/` — 21 subagents by area: `ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`.
+- `skills/` — 29 on-demand skills. Canonical for both clients.
 - `clients/.codex/agents/` — Codex wrappers generated from `agents/` by `scripts/codex-adapter.py`. Do not edit.
 - `clients/` — one guide per AI client: start-up, discovery, permissions, limits.
 - `tasks/` — task prompts.
