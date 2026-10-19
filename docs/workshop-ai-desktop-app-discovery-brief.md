@@ -6,7 +6,7 @@ Status: active (discovery, 2026-10-18). For the `product-idea-excavator` agent. 
 
 Start Claude Code in `%USERPROFILE%\workshop` (the shared agents load from there) and say:
 
-> "Usa el agente product-idea-excavator con el brief `documents/workshop-ai-desktop-app-discovery-brief.md`."
+> "Usa el agente product-idea-excavator con el brief `infra/docs/workshop-ai-desktop-app-discovery-brief.md`."
 
 The agent interviews the user, then delivers the idea brief described in §6. It reads files and may search the web;
 it changes nothing.
