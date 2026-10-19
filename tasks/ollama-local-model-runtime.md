@@ -55,8 +55,8 @@ mechanism that needs one.
   - Private data goes only to local models: no `:cloud` models, no `ollama signin`, no web search.
   - Never set `OLLAMA_HOST` to `0.0.0.0` or any non-loopback address, and never open port 11434: the API has no
     authentication.
-  - Any `OLLAMA_API_KEY` appears only as an environment-variable name and is added to `SECURITY.md` and to the
-    gitleaks review.
+  - Any `OLLAMA_API_KEY` appears only as an environment-variable name, is added to `SECURITY.md` and is considered
+    in the gitleaks review (a rule only if the key format is documented).
   - Ollama is **never** used in the trading path of Trading-app (signals, orders, risk).
 - **Requires verification in Phase 1:**
   - whether the Windows app autostarts at login and auto-updates;
@@ -95,10 +95,10 @@ mechanism that needs one.
 
 | Gate | When | What the user approves |
 |---|---|---|
-| **A — Install plan** | after Phase 1 | Ollama version and install method (user-level `OllamaSetup.exe` from the official site); the exact models and tags to pull, with download size and free disk space; any user-level environment variables to set (`OLLAMA_CONTEXT_LENGTH`, optionally `OLLAMA_MODELS`); the autostart and auto-update settings to keep or turn off. |
+| **A — Install plan** | after Phase 1 | Ollama version and install method (user-level `OllamaSetup.exe` from the official site); the exact models and tags to pull, with download size and free disk space; any user-level environment variables to set (`OLLAMA_CONTEXT_LENGTH` as a target value plus an allowed lower range, optionally `OLLAMA_MODELS`); the autostart and auto-update settings to keep or turn off. |
 | **B — Documentation plan** | after Phase 3 | The exact list of infrastructure files to create or edit in Phase 4, the compatibility-matrix layout, and any `.gitignore` / `.gitleaks.toml` / `SECURITY.md` change. |
-| **C — Client-backend evaluation (optional)** | any time after Phase 2 | Running `ollama launch claude` and/or `ollama launch codex` (or the manual env-var setup) on 2–3 small tasks, which client configuration may change, and how it is restored. Without it, mark the evaluation **Not run**. |
-| **D — Commits** | after Phase 7 | A commit plan (number of commits and messages) on `main`. No earlier gate authorizes commits. Never push without separate approval. |
+| **C — Client-backend evaluation (optional)** | any time after Phase 2 | Running `ollama launch claude` and/or `ollama launch codex` (or the manual env-var setup), and whether `codex --oss` is used, on 2–3 small tasks; the temporary context length for the evaluation (coding tools need at least 64k) and how it is reverted; which client configuration may change, and how it is restored. Without it, mark the evaluation **Not run**. |
+| **D — Commits** | after Phase 7 | A commit plan (number of commits, messages and the named files in each) on `main`. Stage named files only; never `git add -A` or `git add .`. No earlier gate authorizes commits. Never push without separate approval. |
 
 Approval of one gate is not approval of another. Do not install, pull models, change environment variables, change
 client settings, commit or push outside the gate that covers it.
@@ -127,25 +127,32 @@ client settings, commit or push outside the gate that covers it.
 
 ## 6. Workflow
 
-Follow the `engineering-lifecycle` skill. Use the `dependency-license-review` skill for Ollama and each model. Use:
+Follow the `engineering-lifecycle` skill. Use the `dependency-license-review` skill for Ollama and each model,
+applying only its steps 2, 3, 4, 6 and 7 (the others are written for pip/npm packages). Record the results in
+`docs/inventory.md`, not in `docs/REFERENCE_REPOS.md`. A model under a custom license (for example terms with use
+restrictions) is neither accepted nor rejected by you: quote its restrictions and ask the user. Use:
 - `security-reviewer` on the final diff and on the localhost-only evidence;
 - `code-reviewer` only if a script is added;
-- `ai-environment-auditor` (audit mode) to cross-check the registration against §8;
-- `prompt-reviewer` on the new client guide.
+- `ai-environment-auditor` in focused mode (area: Ollama provider registration) to cross-check the registration
+  against §8 and to review `clients/ollama/README.md`;
+- `prompt-reviewer` only if the client guide contains instructions meant for AI agents.
 
 If an agent cannot be invoked, say so and run a clearly labelled fallback yourself.
 
 **Phase 0 — Re-verify (read-only).** Confirm:
 - `ollama` is not on PATH;
 - GPU, driver version (`nvidia-smi`) and free disk space;
-- `git status` is clean or its existing changes are recorded and preserved;
+- record `git status --short` and `git diff --stat`; existing changes are preserved, never reverted or committed
+  by this task. If a file Phase 4 will edit already has uncommitted changes, list it at Gate B and ask whether to
+  commit those first, exclude the file, or accept a mixed commit;
 - no `OLLAMA_*` variables are set (names only).
 
 Read `docs/ai-architecture.md` §4, §7, §8; `docs/onboarding.md`; one existing `clients/*/README.md` as a pattern;
 `docs/inventory.md`; `SECURITY.md`; `docs/manuals/contributor-guide.md` §5 and §7.
 
 **Phase 1 — Docs and license review (read-only).**
-- Re-check the §2 facts against official docs and resolve the "requires verification" items. Label each one.
+- Re-check the §2 facts against official docs and resolve the "requires verification" items. Label each one,
+  recording the exact page URL and date for every **Documented** fact.
 - Run `dependency-license-review` for Ollama and each candidate model. Record its license, its source URL and any
   use restrictions. Drop a model whose license is missing or incompatible with personal use, or ask about it.
 - Draft the Gate A plan.
@@ -156,7 +163,7 @@ Read `docs/ai-architecture.md` §4, §7, §8; `docs/onboarding.md`; one existing
 1. Install as approved. Record `ollama --version`.
 2. Pull the approved models. Record tags, sizes and digests from `ollama list`.
 3. Set the approved context length. Load the default model and confirm with `ollama ps` that PROCESSOR shows
-   **100% GPU** at that context. If not, lower the context or report the split; never claim 100% GPU without the
+   **100% GPU** at that context. If not, lower the context within the range approved at Gate A or report the split; never claim 100% GPU without the
    output.
 4. Smoke test the CLI (`ollama run <model> "<generic prompt>"`).
 5. Smoke test the native API (`POST /api/chat`) and the OpenAI-compatible API (`POST /v1/chat/completions` with a
@@ -172,7 +179,8 @@ how the compatibility matrix will show a runtime that has no rules, skills or ag
   use;
 - a column.
 
-Recommend one.
+Recommend one. Record any deviation from `docs/manuals/contributor-guide.md` §5 (no generated adapter; a table
+instead of a column, if chosen) in the matrix and in the report.
 
 **→ Gate B. STOP and wait.**
 
@@ -184,16 +192,21 @@ Recommend one.
 - `docs/onboarding.md`: a new numbered section for Ollama: install, verify, environment variables (names and purpose
   only), where it stores data, troubleshooting.
 - `docs/ai-architecture.md`: the compatibility row(s) or table approved at Gate B with evidence labels; update the
-  §7 sentence "local models are not configured" (no saving claimed); update §2's tree and §8's "not implemented"
-  wording only as far as now true.
+  §7 sentence "local models are not configured" (no saving claimed); update §2's tree (including its `clients`
+  line) and §8's "not implemented" wording only as far as now true. If the §8 heading changes, update its three
+  inbound anchors: `docs/manuals/contributor-guide.md` §5 and `docs/workshop-ai-product-vision.md` (two links).
 - `docs/inventory.md`: Ollama version and each model (tag, digest, size, license, source URL, review date).
-- `SECURITY.md`: `~/.ollama/` as a never-read location if Phase 1 confirms it holds identity data; `OLLAMA_API_KEY`
-  as a name-only variable; the loopback-only and no-cloud rules.
+- `SECURITY.md`: `~/.ollama/` as a never-read location, unconditionally (cite the documentation if Phase 1 finds
+  it holds identity data; otherwise label the entry **Inference**; confirm only from documentation or a names-only
+  listing, never by opening its files); `OLLAMA_API_KEY` as a name-only variable; the loopback-only and no-cloud
+  rules.
 - `.gitignore` / `.gitleaks.toml`: change only if Phase 1 finds a config file that could enter the repository or a
   documented key format. Otherwise record "no change needed" with the reason.
-- `README.md`, `docs/catalogues/tasks.md` (this task's row), the `clients` line in `docs/ai-architecture.md` §2, and
-  `%USERPROFILE%\workshop\WORKSHOP-CONTEXT.md` (§3 reference docs or a new local-models line; §4 client table row;
-  "Last checked" date), as its §7 requires.
+- `README.md` and `docs/catalogues/tasks.md` (this task's row).
+- `%USERPROFILE%\workshop\WORKSHOP-CONTEXT.md`, as its §7 requires: update the existing Ollama row in §2 "External
+  integrations under evaluation" (status, link to `infra/clients/ollama/README.md`) instead of adding a new entry;
+  add a §4 client table row only if Gate B approves one; update "Last checked". This file is outside the git
+  repository: say so in the report; it is not part of the Gate D commit.
 
 **Exit condition:** every Gate B item is done or deferred with a reason.
 
@@ -231,7 +244,7 @@ only questions that change scope, privacy or architecture. Use labelled defaults
 3. CLI, `/api/chat` and `/v1/chat/completions` smoke tests: **Observed**, with a summary of their output.
 4. The server listens on loopback only: **Observed**. No `:cloud` model, `ollama signin` or web search was used.
 5. `clients/ollama/README.md` exists and covers install pointer, models, start-up, context length, limits and
-   privacy, and `prompt-reviewer` found no High finding.
+   privacy, and the `ai-environment-auditor` focused review found no High finding.
 6. Onboarding, matrix, §7 wording, inventory with a license per item, `SECURITY.md`, `README.md`, task catalogue
    and `WORKSHOP-CONTEXT.md` are updated as approved at Gate B. Every `.gitignore` / `.gitleaks.toml` decision is
    recorded.
@@ -239,7 +252,7 @@ only questions that change scope, privacy or architecture. Use labelled defaults
    confirmed. If Gate C was not approved, the evaluation is **Not run**.
 8. No token or cost saving is claimed without a measured baseline.
 9. The user-path grep finds nothing. Gitleaks (or the stated manual review) finds nothing. `git status` shows only
-   Gate B files. Generated folders and `vendor/` are untouched.
+   Gate B files plus the paths recorded in Phase 0. Generated folders and `vendor/` are untouched.
 10. The three follow-up tasks are listed with their preconditions.
 11. This task's `Status:` line reads `completed (<date>)` and its catalogue row matches (as part of the Gate D
     commit).
@@ -248,17 +261,19 @@ Do not weaken constraints, security rules or acceptance criteria to save tokens.
 
 ## 8. Final report
 
-Reply to the user with the six fields of the `engineering-lifecycle` work-report template, one plain-language line
-each (the user is a trader: outcomes and decisions, no code). Put the durable evidence in
-`clients/ollama/README.md` (validation section); do not create a separate handover file unless the user asks. The
-reply includes:
+Reply to the user with the six fields of the `engineering-lifecycle` work-report template (Outcome, Changed,
+Verified, Not verified, Risks / open decisions, Next step), in plain language (the user is a trader: outcomes and
+decisions, no code). Put the durable evidence in `clients/ollama/README.md` (validation section); do not create a
+separate handover file unless the user asks. Fill the fields with:
 
-1. Decisions taken at each gate, with dates.
-2. What is installed (version, models, context, GPU fit) and how to start, stop and uninstall it.
-3. The §7 checklist results with evidence labels.
-4. The client-backend evaluation result, or Not run.
-5. The security and privacy review, including every `.gitignore`, `.gitleaks.toml` and `SECURITY.md` change.
-6. Open items and the recommended next follow-up task, with its preconditions.
+- **Outcome:** decisions taken at each gate, with dates; what is installed (version, models, context, GPU fit) and
+  how to start, stop and uninstall it.
+- **Changed:** the files created or edited, including `WORKSHOP-CONTEXT.md` (outside git).
+- **Verified / Not verified:** the §7 checklist results with evidence labels; the client-backend evaluation result,
+  or Not run.
+- **Risks / open decisions:** the security and privacy review, including every `.gitignore`, `.gitleaks.toml` and
+  `SECURITY.md` change.
+- **Next step:** the recommended next follow-up task, with its preconditions.
 
 **The deliverable is a verified, documented local model runtime for private text work. It is not a replacement for
 cloud coding agents and not a claim of savings.**
