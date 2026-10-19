@@ -14,8 +14,12 @@ or let the client load it by description.
 | Backend | [api-design-principles](../../skills/api-design-principles/SKILL.md) | Designing or reviewing REST/GraphQL APIs |
 | Backend | [python-testing-patterns](../../skills/python-testing-patterns/SKILL.md) | Writing pytest suites, fixtures, mocks |
 | Backend | [python-error-handling](../../skills/python-error-handling/SKILL.md) | Validation, exception hierarchies, partial failures |
+| Backend | [python-resilience](../../skills/python-resilience/SKILL.md) | Timeouts, retries with backoff, rate limits, failure isolation for external calls |
+| Backend | [sqlite-data-safety](../../skills/sqlite-data-safety/SKILL.md) | SQLite schema changes, transactions, thread safety, backups |
 | Frontend | [vercel-react-best-practices](../../skills/vercel-react-best-practices/SKILL.md) | React/Next.js performance |
 | Frontend | [react-state-management](../../skills/react-state-management/SKILL.md) | Choosing or setting up React state management |
+| Frontend | [javascript-typescript-development](../../skills/javascript-typescript-development/SKILL.md) | General JavaScript/TypeScript: modules, async, types, tsconfig, project tooling |
+| Frontend | [javascript-testing-patterns](../../skills/javascript-testing-patterns/SKILL.md) | Writing or reviewing JS/TS and React component tests |
 | VS Code | [vscode-extension-development](../../skills/vscode-extension-development/SKILL.md) | Designing, implementing or reviewing TypeScript extensions with the VS Code API |
 | UI/UX | [ui-ux-pro-max](../../skills/ui-ux-pro-max/SKILL.md) | Designing, building or reviewing interfaces (searchable local design data) |
 | UI/UX | [frontend-design](../../skills/frontend-design/SKILL.md) | Giving a new UI a distinctive visual direction |
@@ -26,6 +30,7 @@ or let the client load it by description.
 | UI/UX | [wcag-audit-patterns](../../skills/wcag-audit-patterns/SKILL.md) | WCAG 2.2 audits and remediation |
 | Trading | [strategy-specification](../../skills/strategy-specification/SKILL.md) | Defining a deterministic strategy before coding it |
 | Trading | [backtesting-audit](../../skills/backtesting-audit/SKILL.md) | Checking a backtest before trusting it |
+| Trading | [risk-metrics-calculation](../../skills/risk-metrics-calculation/SKILL.md) | Computing or checking Sharpe, Sortino, drawdown, VaR/CVaR, profit factor, expectancy |
 | Trading | [risk-management](../../skills/risk-management/SKILL.md) | Touching sizing, leverage, limits, kill switch |
 | Trading | [market-data-quality](../../skills/market-data-quality/SKILL.md) | Adding or debugging a data provider or instrument |
 | Trading | [exchange-integration](../../skills/exchange-integration/SKILL.md) | Adding exchange endpoints, connectors or a demo environment |
