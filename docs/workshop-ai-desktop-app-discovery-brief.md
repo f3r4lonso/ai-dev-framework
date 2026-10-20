@@ -1,5 +1,7 @@
 # Discovery brief — Workshop AI as a Windows desktop app
 
+> **v2 note (2026-10-20):** the question this brief reopens (one app for all clients) is answered by the proposed [Workshop AI v2](workshop-ai-v2/README.md): a local browser app, not a desktop app (decision D-V2-01, awaiting approval).
+
 Status: active (discovery, 2026-10-18). For the `product-idea-excavator` agent. No implementation.
 
 ## 1. How to use this brief
@@ -29,12 +31,12 @@ Read these instead of asking the user to repeat them. Paths are relative to `%US
 
 | Document | What it is | Status |
 |---|---|---|
-| `infra/tasks/unified-ai-engineering-infrastructure-prompt.md` | First brief for shared Claude/Codex infrastructure | superseded |
-| `infra/tasks/unified-ai-client-workshop-reorganization.md` | Early draft of the same reorganization | superseded |
-| `infra/tasks/ai-infrastructure-unification-and-workshop.md` | Built the shared infrastructure (agents, skills, client guides, catalogues) | completed 2026-10-17 |
-| `infra/tasks/homero-self-improvement-and-prompt-reviewer-task.md` | Improved the Homero prompt; added `prompt-reviewer` | completed 2026-10-17 |
-| `infra/tasks/workshop-ai-product-foundation.md` | Product baseline and Stage 1 (`wai` CLI) | active: built, pilot not run, not closed |
-| `infra/tasks/workshop-ai-token-optimization-integration.md` | Stage 2 POC: knowledge store, output compression, switch recap | active, blocked until the foundation task completes |
+| `infra/tasks/projects/ai-infrastructure/unified-ai-engineering-infrastructure-prompt.md` | First brief for shared Claude/Codex infrastructure | superseded |
+| `infra/tasks/projects/ai-infrastructure/unified-ai-client-workshop-reorganization.md` | Early draft of the same reorganization | superseded |
+| `infra/tasks/projects/ai-infrastructure/ai-infrastructure-unification-and-workshop.md` | Built the shared infrastructure (agents, skills, client guides, catalogues) | completed 2026-10-17 |
+| `infra/tasks/common/agents-and-prompts/homero-self-improvement-and-prompt-reviewer-task.md` | Improved the Homero prompt; added `prompt-reviewer` | completed 2026-10-17 |
+| `infra/tasks/projects/workshop-ai/workshop-ai-product-foundation.md` | Product baseline and Stage 1 (`wai` CLI) | active: built, pilot not run, not closed |
+| `infra/tasks/projects/workshop-ai/workshop-ai-token-optimization-integration.md` | Stage 2 POC: knowledge store, output compression, switch recap | active, blocked until the foundation task completes |
 | `infra/docs/workshop-ai-product-vision.md` (v1.2) | **Governing vision**: requirements, roadmap §16, decisions §17, open decisions §17.11 | current |
 | `applications/workshop-ai/` | Product repository: `wai` (Python stdlib), docs, tests, `vscode-extension/` | Stage 1 committed; extension E1 uncommitted |
 | `applications/workshop-ai/docs/vscode-extension-spec.md`, `copilot-and-console-buttons-plan.md` | VS Code hub specification; Copilot CLI and per-client console buttons plan | proposed / owner decisions 2026-10-18 |

@@ -11,6 +11,7 @@ is one public entry page per project, here.
 | Workshop AI | Product: local tool (`wai`) for single-client tasks with saved state and manual handoff (Stage 1), with a planned VS Code extension hub (Stage 2), plus its pilot sandbox | [workshop-ai/](workshop-ai/README.md) |
 | AI Reading Assistant | Local MVP: prepares text, translates it into Spanish when needed and reads it aloud | [ai-reading-assistant/](ai-reading-assistant/README.md) |
 | AbletonMCP | Third-party MCP integration under evaluation for AI-assisted composition and production in Ableton Live | [ableton-mcp/](ableton-mcp/README.md) |
+| Persistent Castle Strategy MMO | Original mobile strategy MMO in design and planning; repository not yet created | [persistent-castle-mmo/](persistent-castle-mmo/README.md) |
 
 ## Start a new project
 

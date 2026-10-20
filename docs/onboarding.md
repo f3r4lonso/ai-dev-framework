@@ -8,14 +8,16 @@ Checklist:
 1. [Claude Code CLI](#1-claude-code-cli) signed in with your account, verified with `/status`.
 2. [Codex CLI](#2-codex-cli) (optional, if you use OpenAI) signed in with your account, verified with `codex login status`.
 3. [Claude Desktop](#3-claude-desktop) (optional) signed in with your account.
-4. [Git identity](#4-git-identity) set to your name and a private (noreply) email.
-5. [GitHub authentication](#5-github-authentication) over SSH or HTTPS with your own credentials.
-6. [Secret guard](#6-enable-the-secret-guard) enabled in your clone.
+4. [DeepSeek Harness](#4-deepseek-harness) (optional) installed and configured with your own DeepSeek API key.
+5. [Git identity](#5-git-identity) set to your name and a private (noreply) email.
+6. [GitHub authentication](#6-github-authentication) over SSH or HTTPS with your own credentials.
+7. [Secret guard](#7-enable-the-secret-guard) enabled in your clone.
+8. [Copilot CLI and Gemini CLI](#8-copilot-and-gemini-cli) (optional) installed and signed in with your own accounts.
 
-You need at least one of the two CLIs. Which shared resources each one supports:
+You need at least one coding client. Which shared resources each one supports:
 [compatibility matrix](ai-architecture.md#4-compatibility-matrix).
 
-Statements below come from official documentation, linked in each section (checked 2026-10-17).
+Statements below come from official documentation linked in each section; each section records its evidence date.
 
 ## 1. Claude Code CLI
 
@@ -169,7 +171,49 @@ Source: [Install Claude Desktop](https://support.claude.com/en/articles/10065433
 - Where Desktop stores its own session is not documented on these pages; treat the app's data folder as
   personal and never copy it into a repository. Sign out from the app's account menu to remove access.
 
-## 4. Git identity
+## 4. DeepSeek Harness
+
+Sources: [DeepSeek Harness README](https://github.com/deepseek-ai/deepseek-harness),
+[quickstart](https://deepseek-harness.github.io/deepseek-harness/en/guide/quickstart),
+[model configuration](https://deepseek-harness.github.io/deepseek-harness/en/guide/providers),
+[safety notice](https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md)
+(checked 2026-10-19).
+
+DeepSeek Harness is an open-source, MIT-licensed coding agent in **experimental developer preview**.
+The upstream project warns of breaking changes and says it has not undergone a security audit. It can
+execute model-generated code and commands, access workspace files and the network, and load plugins.
+Do not treat it as production-ready or rely on it as the sole security boundary.
+
+### Install
+
+Node.js and npm are required. On Windows PowerShell:
+
+```powershell
+npm install --global @deepseek-ai/dsh
+dsh --version
+```
+
+The locally installed version on this machine is `0.2.1-rc.2`.
+
+### Configure and start
+
+1. Create your own [DeepSeek API key](https://platform.deepseek.com/api_keys); API usage is billed by DeepSeek.
+2. Start `dsh web` from the project directory you intend to use, then add and select that workspace in
+   the local Web UI. The default listener is `http://127.0.0.1:3080`.
+3. In **Settings → Models**, enter the key in the DeepSeek provider card and save.
+
+The UI stores the key in `$DSH_HOME/.credentials.yaml` and returns only a redacted descriptor. Do not
+set `$DSH_HOME` to a repository folder or copy its credentials into the Workshop. See the
+[DeepSeek Harness client guide](../clients/deepseek-harness/README.md) for workspace and safety limits.
+
+### Shared Workshop resources
+
+Harness's upstream instruction loader lists `AGENTS.md` and `CLAUDE.md` as default candidates, plus
+`AGENTS.local.md` and `CLAUDE.local.md` overlays. This is documented from upstream source; local
+loading and precedence have not been verified. Workshop agents, skills, and Claude plugin support are
+not integrated or verified. See the [compatibility matrix](ai-architecture.md#4-compatibility-matrix).
+
+## 5. Git identity
 
 Source: [Setting your commit email address](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address),
 [Email addresses reference](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference),
@@ -192,7 +236,7 @@ git config user.email "ID+USERNAME@users.noreply.github.com"
 
 Check with `git config user.name` and `git config user.email`.
 
-## 5. GitHub authentication
+## 6. GitHub authentication
 
 Never share a token or private key, never paste one into a prompt, issue or file, and never put one in a
 remote URL. Pick one method:
@@ -244,7 +288,7 @@ git config --global commit.gpgsign true
 
 Also add the public key to GitHub as a signing key so commits show as verified.
 
-## 6. Enable the secret guard
+## 7. Enable the secret guard
 
 Run once in your clone:
 
@@ -262,11 +306,47 @@ uses it automatically. Users of the pre-commit framework can run `pre-commit ins
 |---|---|
 | Claude Code uses the wrong account or an API key | `/status`; remove stray `ANTHROPIC_API_KEY`; `/logout` then log in |
 | `Login expired · Please run /login` | Run `/login` |
+| DeepSeek Harness does not start | Check `node --version`, `npm --version`, then `dsh --version`; reinstall with `npm install --global @deepseek-ai/dsh` if needed |
+| DeepSeek API requests fail | Check the provider key in Harness **Settings → Models**; never paste the key into a prompt or repository |
 | Agents or skills from this repository not available | `claude plugin list` must show `workshop@workshop-local` enabled; if not, follow `clients/claude-code-cli/README.md` §2 and restart |
 | Codex: shared skills missing in `/skills` | Run `python scripts/codex-adapter.py link-skills` (or `--user`), restart Codex |
 | Codex: shared agents not used | Trust the project; start Codex in the repository root (agents load from its `clients/.codex/agents/`) |
 | Codex uses an API key instead of your ChatGPT plan | `codex login status`; `codex logout`, then `codex login` |
 | `Permission denied (publickey)` | `ssh-add` your key, check it is on GitHub, retest `ssh -T git@github.com` |
-| Push rejected for exposing your email | Set the noreply email (section 4) and amend the commit author |
+| Push rejected for exposing your email | Set the noreply email (section 5) and amend the commit author |
 | Commit blocked by the hook | Remove the secret; for a confirmed false positive add `gitleaks:allow` on that line |
 | Hook fails with `\r` errors | Re-checkout the hook: `git checkout -- .githooks/pre-commit` (it must have LF line endings) |
+
+## 8. Copilot and Gemini CLI
+
+Optional coding clients; install and authenticate only the ones you intend to use. Their client-specific Workshop
+setup and discovery notes are in the [Copilot CLI guide](../clients/copilot-cli/README.md) and
+[Gemini CLI guide](../clients/gemini-cli/README.md).
+
+### GitHub Copilot CLI
+
+Source: [Install Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli)
+and [Using Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview)
+(checked 2026-10-20).
+
+GitHub currently documents WinGet and npm installation on Windows. The CLI requires an active Copilot subscription;
+an organization administrator may disable access. Follow the official installation guide, then run `copilot` and
+use `/login` to authenticate with your GitHub account. Review the trusted-directory prompt before allowing access
+to a project. Copilot CLI can read, modify, and execute files within trusted directories and requests approval for
+tools that may modify or execute files.
+
+### Gemini CLI
+
+Source: [Installation](https://geminicli.com/docs/get-started/installation/) and
+[Authentication](https://geminicli.com/docs/get-started/authentication/) (checked 2026-10-20).
+
+The documented npm installation requires Node.js 20 or later:
+
+```powershell
+npm install -g @google/gemini-cli
+gemini
+```
+
+Follow the sign-in prompts with your Google account. Organization accounts may require a Google Cloud project.
+Gemini API key and Vertex AI methods have separate configuration and billing; check the official authentication
+guide before choosing one. Keep credentials outside repositories and never paste keys into prompts.

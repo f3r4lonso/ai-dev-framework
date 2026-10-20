@@ -1,10 +1,12 @@
 # Workshop AI — Product Vision and Requirements
 
+> **v2 note (2026-10-20):** a unified Workshop AI v2 is proposed in [workshop-ai-v2/](workshop-ai-v2/README.md). Once its decisions are approved, the sections listed in [v2 product-vision §7](workshop-ai-v2/product-vision.md#7-what-changes-in-the-v12-vision-once-approved) are superseded; the rest of this vision stays in force.
+
 **Document type:** Product vision and requirements baseline  
 **Status:** Baseline for Stage 1. Development is governed by the gates of
-[workshop-ai-product-foundation](../tasks/workshop-ai-product-foundation.md) (Gate B approves the Stage 1 build).
+[workshop-ai-product-foundation](../tasks/projects/workshop-ai/workshop-ai-product-foundation.md) (Gate B approves the Stage 1 build).
 Version 1.2 adds the VS Code extension direction, decided at Gate A of
-[workshop-ai-vscode-extension-specification](../tasks/workshop-ai-vscode-extension-specification.md); its
+[workshop-ai-vscode-extension-specification](../tasks/projects/workshop-ai/workshop-ai-vscode-extension-specification.md); its
 specification (proposed) lives in the product repository.  
 **Version:** 1.2 (2026-10-18); 1.1 (2026-10-17) was the Stage 1 baseline; 1.0 was the unreviewed proposal  
 **Language:** English
@@ -549,9 +551,9 @@ Each stage has one exit criterion and one gate. A stage starts only after the pr
 
 ## 17. Decisions
 
-Items 1–9 were decided at Gate A of [workshop-ai-product-foundation](../tasks/workshop-ai-product-foundation.md) on
+Items 1–9 were decided at Gate A of [workshop-ai-product-foundation](../tasks/projects/workshop-ai/workshop-ai-product-foundation.md) on
 **2026-10-17** by the product owner (the maintainer). Items 1 and 8 were rewritten, and item 10 added, at Gate A of
-[workshop-ai-vscode-extension-specification](../tasks/workshop-ai-vscode-extension-specification.md) on
+[workshop-ai-vscode-extension-specification](../tasks/projects/workshop-ai/workshop-ai-vscode-extension-specification.md) on
 **2026-10-18**. Each decision may be reopened by a later gate. Open decisions are listed only in §17.11.
 
 1. **Product boundary** (rewritten 2026-10-18): a local tool in two parts over the installed CLIs. The `wai`
@@ -660,6 +662,9 @@ Items 1–9 were decided at Gate A of [workshop-ai-product-foundation](../tasks/
     | R7 | §17.2 hard gate: re-confirmation per provider and plan for any automated or scripted run | product owner | not met | Stage 3 task prompt approval |
     | R8 | When Codex becomes a supported executing client that the extension or `wai` may launch, and the documented form of its start command with a first message | product owner | after the start form is Documented and the [Codex client guide §5](../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support) checks pass and are recorded | foundation Gate C results, then the build task |
     | R9 | Whether Claude Code launched in a VS Code integrated terminal connects to its IDE integration and shares editor state beyond the selected context (FR-07), and how to turn that off for Workshop AI sessions | product owner | treat as on; state it as a residual risk to the user; verify before the launch feature ships | build task Gate A |
+    | R10 | Documented form of starting Copilot CLI interactively with a first message (added 2026-10-20 from `applications/workshop-ai/docs/copilot-and-console-buttons-plan.md`) | product owner | Copilot stays a console/handoff engine until checked | v2 V1 engine registry |
+    | R11 | GitHub terms for launching the unmodified Copilot CLI under the user's own sign-in (as R4/R7 for Anthropic/OpenAI) | product owner | handled per engine by D-V2-06 (v2 `engines.md`) | before Copilot level 2 |
+    | R12 | Copilot agent mode can run commands in integrated terminals and could answer a `wai` prompt | product owner | approvals stay at a person's terminal; state it in the first-run notice | before any Copilot level 2+ |
 
 ## 18. Acceptance Criteria for This Baseline
 

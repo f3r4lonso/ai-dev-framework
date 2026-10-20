@@ -1,6 +1,6 @@
 # Agent catalogue
 
-One row per shared agent. The canonical definition is the linked file; this page copies no bodies. Sources,
+26 shared agents and 3 personal agents, one row each. The canonical definition is the linked file; this page copies no bodies. Sources,
 licenses and local modifications: [inventory](../../docs/inventory.md#installed-agents).
 
 **Clients:** 20 agents were observed in Claude Code on 2026-10-17; `product-idea-excavator` and `music-composer` were added on 2026-10-18 and require a Claude discovery re-check. In Codex CLI each
@@ -10,6 +10,7 @@ has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool li
 | Area | Agent | Use it to | Access |
 |---|---|---|---|
 | AI | [ai-environment-auditor](../../agents/ai/ai-environment-auditor.md) | Audit agents, skills, rules, prompts and the client adapters; plan changes (apply mode edits infrastructure files only) | RO audit / Edit apply |
+| AI | [task-resource-scout](../../agents/ai/task-resource-scout.md) | Research a task broadly, compare and vet Workshop or public agents/skills, install or improve useful shared resources, and update registries and adapters | Edit + web + shell + agent review (bounded to shared AI infrastructure; Claude/Codex adapters, other clients by supported path access) |
 | AI | [prompt-reviewer](../../agents/ai/prompt-reviewer.md) | Score and harden one prompt or agent/skill instruction | RO |
 | AI | [product-idea-excavator](../../agents/ai/product-idea-excavator.md) | Explore vague ideas through discovery questions, identify user and business or human value, and define an evidence-based MVP | RO + web |
 | DevOps | [git-workflow-manager](../../agents/devops/git-workflow-manager.md) | Plan clean commits and branches; pre-push safety checks; pushes only after confirmation | Edit (git) |
@@ -30,10 +31,30 @@ has a generated wrapper in `clients/.codex/agents/` (loading Unverified; tool li
 | Trading | [qa-test-engineer](../../agents/trading/qa-test-engineer.md) | Unit, integration and regression tests | Edit (tests) |
 | Trading | [exchange-integration-engineer](../../agents/trading/exchange-integration-engineer.md) | Exchange data and demo-execution adapters; never production trading | Edit |
 | Trading | [repo-researcher](../../agents/trading/repo-researcher.md) | Vet an external repo or package | RO |
+| Game development | [game-developer](../../agents/game-development/game-developer.md) | Read-only game architecture, engine/platform research, persistence and future device validation; no implementation | RO + web |
+| Creative | [game-designer](../../agents/creative/game-designer.md) | Develop a basic videogame idea into original concepts, cohesive play/systems, narrative/art/audio direction and a concrete design brief; no implementation | RO + web |
+| Creative | [game-art-music-director](../../agents/creative/game-art-music-director.md) | Cohesive art/music direction, bibles, asset/cue briefs, adaptive music behavior and creative reviews; no asset production | RO + web |
 | Creative | [music-composer](../../agents/creative/music-composer.md) | Compose, remix or arrange a track as a reproducible Python script that writes MIDI plus a WAV preview to `projects/music/` | Edit (track folder) |
 
 Trading agents assume the Trading-app root as the working directory (see
 [Trading-app entry](../projects/trading-app/README.md)).
+
+## Game design and planning
+
+Start with `workshop:game-designer` to expand a basic idea into original concepts, a worked play example and
+a focused design brief. Use `workshop:game-developer` for engine/platform research, technical feasibility and
+architecture. Both roles are read-only; programming and asset production need a separately scoped task.
+
+Supporting skills: [game-ui-ux](../../skills/game-ui-ux/SKILL.md) for game interfaces and
+[save-systems](../../skills/save-systems/SKILL.md) for persistence and recovery. For the persistent castle MMO
+planning scope and approval gates, see the [task brief](../../tasks/projects/persistent-castle-mmo/persistent-castle-mmo-planning.md).
+
+Use `workshop:game-art-music-director` to deepen approved creative pillars into visual/musical production
+briefs and review criteria. It directs; `music-composer` and other production roles execute separately.
+Added 2026-10-19 following focused auditor review; live client discovery remains unverified.
+
+Both game agents were added on 2026-10-19. Generated registrations are checked; live Claude/Codex discovery
+requires a fresh-session manual check. The creative agent has not yet been trialled with a real game idea.
 
 Known overlap, kept on purpose: `code-reviewer` (general code quality) and `security-reviewer` (workshop security rules,
 plus trading checks in Trading-app; read-only). Retired agents and why: [inventory](../../docs/inventory.md#retired-2026-10-17-audit).

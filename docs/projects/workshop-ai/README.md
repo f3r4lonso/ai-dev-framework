@@ -1,5 +1,9 @@
 # Workshop AI
 
+> **v2 approved (2026-10-20):** one browser app over the `wai` core, merging the Workshop Infrastructure UI; the
+> VS Code extension is paused. See [workshop-ai-v2/](../../workshop-ai-v2/README.md) and the task
+> [workshop-ai-v2-unified-app](../../../tasks/projects/workshop-ai/workshop-ai-v2-unified-app.md).
+
 - **Purpose:** a local tool for working with AI clients, in two parts. The `wai` command-line tool runs a task with one
   AI client, keeps the task's verified state in the project's own repository so a new session can resume it, and
   builds a reviewed, secret-checked handoff package for another client. A VS Code extension (specified, not built) is
@@ -16,5 +20,5 @@
 - **Shared resources it uses:** reads the [agent](../../catalogues/agents.md), [skill](../../catalogues/skills.md)
   and [task](../../catalogues/tasks.md) catalogues through the contracts in
   [ai-architecture.md §9](../../ai-architecture.md#9-workshop-ai-consumer-of-these-contracts); built under
-  the [workshop-ai-product-foundation](../../../tasks/workshop-ai-product-foundation.md) task.
+  the [workshop-ai-product-foundation](../../../tasks/projects/workshop-ai/workshop-ai-product-foundation.md) task.
 - **Project-specific resources:** in the project repositories.

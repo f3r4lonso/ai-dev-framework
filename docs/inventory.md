@@ -1,15 +1,16 @@
 # AI infrastructure inventory — %USERPROFILE%\workshop\infra
 
-Date: 2026-10-17. Shared third-party agents and skills for backend, frontend, UI, UX and quality work,
-plus own trading agents and skills (moved from the Trading-app project).
+Agents and skills last reviewed: 2026-10-19 (`task-resource-scout` added; existing external resources unchanged). Client software updated: 2026-10-19. Shared third-party
+agents and skills for backend, frontend, UI, UX and quality work, plus own trading agents and skills
+(moved from the Trading-app project).
 All external content is treated as **untrusted**: it was reviewed before copying and no installer was run
 (`install.sh`, `npx skills add`, plugin scripts).
 
 ## Layout
 All paths are relative to the repository root (`infra/`).
 - `vendor/` — full copies (`git clone --depth 1`) of the source repositories. Read-only, untrusted, not versioned.
-- `clients/` — one guide per AI client (`claude-code-cli/`, `codex-cli/`): start-up directory, discovery,
-  permissions and limits; links to `docs/onboarding.md` for install and authentication.
+- `clients/` — one guide per AI client (`claude-code-cli/`, `codex-cli/`, `deepseek-harness/`): start-up
+  directory, discovery, permissions and limits; links to `docs/onboarding.md` for install and authentication.
 - `workshop/` — client-neutral navigation layer: `tasks/` (task prompts and how to choose one), `catalogues/`
   (agents, skills, tasks; links only), `manuals/` (contributor guide), `projects/` (new-project convention and
   entry pages). Not loaded by any client; read by people or on request.
@@ -37,15 +38,27 @@ All paths are relative to the repository root (`infra/`).
   `.gitattributes` — secret scanning: local hook (gitleaks if installed, built-in fallback; enable per clone with
   `git config core.hooksPath .githooks`), optional pre-commit framework config, CI scan, LF endings for hooks.
 
+## Registered client software
+
+| Client | Source / version | License | Status and notes |
+|---|---|---|---|
+| Claude Code | Anthropic CLI, `2.1.304` (version checked 2026-10-20) | Proprietary (Anthropic terms) | Main executing client; loads Workshop resources through the `workshop` plugin. [Client guide](../clients/claude-code-cli/README.md) |
+| Codex CLI | OpenAI, `0.163.0` (version checked 2026-10-20) | Apache-2.0 | Agents via generated `clients/.codex/agents/`; skills via `link-skills`. [Client guide](../clients/codex-cli/README.md) |
+| Gemini CLI | Google, `0.64.0` (version checked 2026-10-20) | Apache-2.0 | Personal assistants and linked skills only; not validated live. [Client guide](../clients/gemini-cli/README.md) |
+| GitHub Copilot CLI | GitHub, `1.0.100` (version checked 2026-10-20) | Proprietary (GitHub terms) | Personal assistants and linked skills only; not validated live. [Client guide](../clients/copilot-cli/README.md) |
+| Ollama | Local model runtime | MIT | **Not installed.** Planned private local engine (task `ollama-install`, decision D-V2-09); loopback only, no cloud models. No client guide yet |
+| Claude Desktop | Anthropic desktop app | Proprietary (Anthropic terms) | Install *unverified*; reads the CLI settings and user skills (onboarding §3). No client guide yet |
+| claude.ai Projects | Anthropic web app | Proprietary (Anthropic terms) | Personal assistants pasted by hand; no automation. Level 0 (link) in Workshop AI v2 |
+| DeepSeek Harness (`@deepseek-ai/dsh`) | [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness), npm `0.2.1-rc.2` (installed 2026-10-19) | MIT | Official open-source client, experimental developer preview. Upstream safety notice says it is unaudited and can execute generated code, commands, and plugins; see [client guide](../clients/deepseek-harness/README.md). No third-party source code copied into this repository. |
+
 The repository (public on GitHub) has a whitelist `.gitignore`: only `README.md`, `AGENTS.md`, `CLAUDE.md`, `SECURITY.md`,
 `THIRD_PARTY_NOTICES.md`, `agents/`, `skills/`, `tasks/`, `docs/`, `clients/` (without the local links), `scripts/`,
 `.githooks/`, `.github/`, `.gitattributes`, `.gitleaks.toml` and `.pre-commit-config.yaml` are versioned, and a deny
 block after the whitelist keeps secret and personal files out even inside those folders. A new top-level folder stays
 ignored until it is added to the whitelist. `vendor/` is not versioned.
 
-Shared agents and skills load when Claude Code starts in `%USERPROFILE%\workshop\infra` with `--add-dir clients`. Inside a project repo
-(e.g. Trading-app) Claude only walks up to that repo's root, so start it with
-`claude --add-dir %USERPROFILE%\workshop\infra\clients` (Trading-app ships `start-claude.bat` for this).
+Claude Code loads the shared agents and skills from the `workshop` plugin (`.claude-plugin/`) in every folder,
+read in place from this repository; no `--add-dir` is needed (setup: `clients/claude-code-cli/README.md` §2).
 Codex details: `clients/codex-cli/README.md`.
 
 ## Conventions
@@ -96,9 +109,12 @@ Codex details: `clients/codex-cli/README.md`.
 | Trading | exchange-integration-engineer | own (Trading-app) | Read, Grep, Glob, Edit, Write, PowerShell, WebFetch; no real orders |
 | Trading | backtesting-auditor | own (Trading-app) | Read, Grep, Glob, PowerShell; Edit/Write disallowed |
 | AI | ai-environment-auditor | own (2026-10-17; updated same day for Claude Code + Codex: rules in `AGENTS.md`, editable scope adds `AGENTS.md`, `clients/`, `tasks/`, AI-only `docs/` sections; never edits the generated Codex adapter) | read-only audits + apply mode that edits infrastructure files only (never code, settings or vendor); self-audit; opus model |
+| AI | task-resource-scout | own (2026-10-19; created for task-based research and curation of shared AI agents and skills) | Read, Grep, Glob, WebSearch, WebFetch, Bash, Write, Edit, Agent; bounded to shared infrastructure; never runs third-party code or installers |
 | AI | prompt-reviewer | own (2026-10-17) | Read, Grep, Glob (read-only); reviews and scores one prompt, never executes it; companion of the Homero prompt (`agents/personal-assistants/`); example path updated to `tasks/` |
 | AI | product-idea-excavator | Original Workshop agent informed by [derrickgong87/product-idea-excavator](https://github.com/derrickgong87/product-idea-excavator) (MIT; reviewed 2026-10-18) | Read, Grep, Glob, WebSearch, WebFetch (read-only); Spanish-language discovery interview, user/problem/value framing, feasibility, and MVP validation; original supports English/Chinese, Workshop agent is adapted for Spanish |
 | DevOps | git-workflow-manager | adapted from VoltAgent `git-workflow-manager` (MIT, `408d3c9`), rewritten 2026-10-17 (paths updated to `applications/` and the new `infra/` folders the same day) | Read, Grep, Glob, Bash; commits freely, pushes/remotes only after user confirmation, never force-push; mandatory pre-push checklist; sonnet model |
+| Creative | game-designer | Original Workshop definition (2026-10-19); public alternatives reviewed as research only, no text/code copied | Read, Grep, Glob, WebSearch, WebFetch; read-only creative design, no implementation or asset production |
+| Creative | game-art-music-director | Original Workshop definition (2026-10-19), explicitly requested by user; focused ai-environment-auditor review confirmed distinct ongoing visual/music direction and review responsibilities | Read, Grep, Glob, WebSearch, WebFetch; read-only art/music bibles, asset/cue briefs, transition intent and creative reviews; no production or automatic delegation |
 | Creative | music-composer | Original Workshop agent written 2026-10-18 (no external source) | Read, Write, Edit, Bash, Glob, Grep; writes only to `projects/music/<track-id>/`; Python stdlib only (MIDI + WAV render); flags copyright of reworked melodies |
 
 ## Installed skills
@@ -167,3 +183,56 @@ Removed from `agents/` and `skills/` (vendor copies remain for reference); resto
 ## Updating
 `git -C vendor/<repo> pull`, review the diff (`git diff HEAD@{1}`), copy back only what was reviewed,
 re-apply the local modifications above and update this file.
+
+## Game planning resources (approved and reviewed 2026-10-19)
+
+| Resource | Reviewed source | License | Scope and modifications |
+|---|---|---|---|
+| [game-developer](../agents/game-development/game-developer.md) | [VoltAgent definition](https://github.com/VoltAgent/awesome-claude-code-subagents/blob/408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e/categories/07-specialized-domains/game-developer.md), local git snapshot inspected read-only | MIT, copyright 2025 VoltAgent; root notice retained | Rewritten read-only research role; removes shell/write, context manager, implementation/prototyping, arbitrary performance targets and monetization defaults. |
+| [game-ui-ux](../skills/game-ui-ux/SKILL.md) | [upstream skill](https://github.com/gamedev-skills/awesome-gamedev-agent-skills/blob/cf44d99a0315dabff6ac6f407c6ccc026190f16c/skills/disciplines/game-ui-ux/SKILL.md) | Apache-2.0, copyright 2026 Abhishek Barali and contributors; local LICENSE.txt and NOTICE.txt | Concise adaptation; original local review checklist; no engine code or sibling dependency. |
+| [save-systems](../skills/save-systems/SKILL.md) | [upstream skill](https://github.com/gamedev-skills/awesome-gamedev-agent-skills/blob/cf44d99a0315dabff6ac6f407c6ccc026190f16c/skills/disciplines/save-systems/SKILL.md) | Apache-2.0; same notices as above | Concise adaptation; original failure matrix, bounded parsing, known-good backup preservation, future-version protection, RNG/content compatibility. |
+
+Reviewed both complete upstream skill bodies and their linked layout/flow and versioning/migration references;
+references informed review but are replaced by local checklists. Verified Apache LICENSE and NOTICE at the pinned
+revision. Reviewed the entire VoltAgent definition and MIT license at the pinned local git revision.
+Sources are revision-pinned snapshots, not claims that those revisions are latest. No source scripts were run.
+No installers, credentials, runtime network fetches, permission escalation or destructive actions are required by
+adopted files. Upstream write/shell scope was removed; no runtime dependencies were added.
+Focused ai-environment-auditor review approved distinct coverage subject to final provenance/scope/link checks.
+Existing web UI and SQLite/trading resources do not supply these engine-neutral game workflows.
+
+User authorization covers these shared definitions, not game development. The agent remains read-only even for
+future implementation requests; use a separately authorized implementation task. Codex tool limits are instructions,
+not enforced per-agent permissions. Claude/Codex live discovery is unverified until tested in a fresh session.
+
+## Creative videogame design selection (2026-10-19)
+
+Installed [game-designer](../agents/creative/game-designer.md), an original Workshop definition.
+The user authorized creating creative game agents. Focused ai-environment-auditor review approved one role:
+seed-to-concept creative authorship is distinct from product-idea-excavator (problem/value discovery),
+game-developer (technical feasibility/platform research), and music-composer (producing audio).
+One role covers creative direction, systems, narrative and textual presentation proposals; no separate
+narrative/art/economy agents or new skill are justified yet. No external prompt/code was copied or adapted,
+so no new third-party license notice is required. Prior notices remain unchanged.
+
+Public research used generic queries; sources checked 2026-10-19:
+
+| Alternative | Verified evidence and limitations | Decision |
+|---|---|---|
+| [BMad game designer](https://github.com/bmad-code-org/bmad-module-game-dev-studio/blob/main/src/agents/gds-agent-game-designer/SKILL.md) | Full definition and [MIT license](https://github.com/bmad-code-org/bmad-module-game-dev-studio/blob/main/LICENSE) read. Definition invokes uv/customization resolver, project configuration and persona/menu activation. [Releases](https://github.com/bmad-code-org/bmad-module-game-dev-studio/releases) show v0.7.2 and active resolver maintenance. | Useful domain match; framework/dependencies unnecessary for one conversational role; no adoption. |
+| [gamestack](https://github.com/rondorkerin/gamestack) | Reviewed design-process and fundamentals definitions and fundamentals checklist; [MIT license](https://github.com/rondorkerin/gamestack/blob/main/LICENSE) checked. Design-process includes shell preamble, persistent bible writes and references other workflows. README labels design skills v0.1; no quality claim inferred. | Broad design coverage; procedural/content workflow exceeds required lightweight scope; no adoption. |
+| [Game Doc Forge](https://github.com/MisterVitoPro/gdd) | README describes a multi-agent interview/GDD pipeline, persistent session files and long interview depth settings. Repository shows eight commits and advertises MIT. Raw agent definitions and full license could not be retrieved: requires verification; maintenance maturity unknown. | No adoption: partially inspected and unnecessarily heavy for creative seed expansion. |
+| [GameDev Claude Plugins](https://github.com/sponticelli/gamedev-claude-plugins) | README maps creative, mechanics, systems, narrative and presentation roles; [MIT license](https://github.com/sponticelli/gamedev-claude-plugins/blob/main/LICENSE) read. Detailed candidate agent files were unavailable; no comprehensive safety/maintenance audit performed. | Role splitting adds context/coordination without demonstrated benefit; no adoption. |
+
+The installed original definition requires no scripts, installers, network-at-use fetches, engine or package.
+Web research is optional and limited to generic public queries; private creative seeds are not shared externally.
+Tools are limited to read/search/web; no writes, shell, delegation, assets or automatic framework activation.
+It supplies real creative design with labelled assumptions, bounded examples and an engineering handoff;
+implementation and asset production are separate work. Codex does not enforce per-agent tool lists.
+All numerical balance examples remain provisional; no fun, IP clearance or playtest results are guaranteed.
+
+Validation: focused auditor approved the final creative definition with no blockers. Adapter generation and
+`python scripts/codex-adapter.py agents --check` passed (25 shared wrappers, zero drift/stale entries).
+Checked local links, identity/tool scope, registry coverage, wrapper TOML and plugin registration; actual totals
+are 28 agents including three personal agents and 31 skills. `git diff --check` passed.
+Fresh-session live Claude/Codex discovery and behavioral testing on a real game seed were not run.

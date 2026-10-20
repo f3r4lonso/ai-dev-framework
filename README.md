@@ -1,14 +1,17 @@
 # AI development framework
 
-Personal, reusable setup for AI-assisted development with [Claude Code](https://code.claude.com/docs) and
-[OpenAI Codex CLI](https://developers.openai.com/codex/cli): one set of shared agents, skills and instructions,
-with a native adapter for each client. Architecture, compatibility matrix and maintenance:
+Personal, reusable setup for AI-assisted development with [Claude Code](https://code.claude.com/docs),
+[OpenAI Codex CLI](https://developers.openai.com/codex/cli), and
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): one set of shared agents, skills and instructions,
+with client-specific support documented for each. DeepSeek Harness is an experimental, unaudited developer preview.
+Architecture, compatibility matrix and maintenance:
 [docs/ai-architecture.md](docs/ai-architecture.md).
 
 ## Start here
 
-1. **Pick a client and sign in with your own account:** [Claude Code CLI](clients/claude-code-cli/README.md)
-   or [Codex CLI](clients/codex-cli/README.md). Install, authentication and troubleshooting for both:
+1. **Pick a client and use your own account:** [Claude Code CLI](clients/claude-code-cli/README.md),
+   [Codex CLI](clients/codex-cli/README.md), or [DeepSeek Harness](clients/deepseek-harness/README.md).
+   Install, authentication and troubleshooting:
    [docs/onboarding.md](docs/onboarding.md).
 2. **Enable the secret guard once per clone:** `git config core.hooksPath .githooks` ([SECURITY.md](SECURITY.md)).
 3. **Find what to use:** the [Workshop](docs/workshop.md) lists every agent, skill and task prompt and
@@ -20,8 +23,8 @@ repository as described in its client guide.
 ## Contents
 - `AGENTS.md` — rules shared by all clients (Codex reads it; `CLAUDE.md` imports it).
 - `CLAUDE.md` — `@AGENTS.md` plus Claude-only notes.
-- `agents/` — 21 subagents by area: `ai`, `backend`, `devops`, `frontend`, `quality`, `trading`, `ui`, `ux`.
-- `skills/` — 29 on-demand skills. Canonical for both clients.
+- `agents/` — 26 shared subagents by area: `ai`, `backend`, `creative` (including game art/music direction), `devops`, `frontend`, `game-development`, `quality`, `trading`, `ui`, `ux`.
+- `skills/` — 31 on-demand skills. Canonical for Claude Code and Codex CLI; Harness interoperability is not verified.
 - `clients/.codex/agents/` — Codex wrappers generated from `agents/` by `scripts/codex-adapter.py`. Do not edit.
 - `clients/` — one guide per AI client: start-up, discovery, permissions, limits.
 - `tasks/` — task prompts.
@@ -38,8 +41,9 @@ repository as described in its client guide.
 Application projects live next to this folder, in `%USERPROFILE%\workshop\applications\`, as separate repositories; they are not part of this repo.
 
 ## Security
-This repository holds no credentials: each contributor signs in with their own Claude, OpenAI, Git and GitHub
-accounts. What must never be committed and what to do if a secret leaks: [SECURITY.md](SECURITY.md).
+This repository holds no credentials: each contributor authenticates to their chosen AI clients, Git and
+GitHub with their own accounts. What must never be committed and what to do if a secret leaks:
+[SECURITY.md](SECURITY.md).
 
 ## Conventions
 kebab-case, lowercase, English names for files and folders; technical content in English.

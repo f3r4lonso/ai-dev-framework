@@ -3,7 +3,7 @@
 Checked 2026-10-18 by reading the source of a shallow clone of each default branch (commit below) and the GitHub
 API metadata. **Nothing was installed, built or run.** Labels: **Verified** (read in source at that commit),
 **Inferred** (from naming, comments or docs, not traced end to end), **Requires verification** (not checked).
-Used by [workshop-ai-token-optimization-integration](../tasks/workshop-ai-token-optimization-integration.md).
+Used by [workshop-ai-token-optimization-integration](../tasks/projects/workshop-ai/workshop-ai-token-optimization-integration.md).
 
 Workshop AI constraints applied (vision §17): Python standard library only for the `wai` core (§17.8; since
 2026-10-18 the VS Code extension is TypeScript with no runtime npm dependencies, which these packages would also

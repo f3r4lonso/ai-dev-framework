@@ -1,6 +1,6 @@
 # Third-party notices
 
-This repository redistributes agents and skills copied (and in some cases locally modified, see `docs/inventory.md` § Local modifications) from the projects below. Their original licenses apply to those files.
+This file records license notices for third-party agent and skill material adopted into this repository, including copied or adapted content (see `docs/inventory.md`, Local modifications). Researching or rejecting a candidate does not require adding its notice here. The original licenses apply to adopted files.
 
 ## wshobson/agents
 
@@ -111,3 +111,16 @@ Apache License 2.0. Full text in `skills/frontend-design/LICENSE.txt`.
 ## vercel-labs/agent-skills (vercel-react-best-practices)
 
 MIT, as declared in the upstream README and SKILL.md (commit `063bee9`); the upstream repository ships no separate LICENSE file.
+
+## gamedev-skills/awesome-gamedev-agent-skills
+
+Adapted `game-ui-ux` and `save-systems` from revision
+`cf44d99a0315dabff6ac6f407c6ccc026190f16c` (2026-10-19 review).
+Copyright 2026 Abhishek Barali and the awesome-gamedev-agent-skills contributors.
+Apache License 2.0: full terms in `skills/game-ui-ux/LICENSE.txt` and
+`skills/save-systems/LICENSE.txt`; upstream attribution/trademark notices in each `NOTICE.txt`.
+Workshop rewrote instructions and added local checklists; no scripts or packages adopted.
+
+The VoltAgent MIT notice above also covers the adapted
+`agents/game-development/game-developer.md`, reviewed at
+`408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e`.

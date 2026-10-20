@@ -13,14 +13,17 @@ these rules: [ai-architecture.md](../../docs/ai-architecture.md). Security rules
 3. **Public repository.** No credentials, absolute user paths, usernames, account names or private URLs in any
    versioned file. Write `%USERPROFILE%` or `<you>`.
 4. **Register.** Every added, changed or retired agent or skill gets a line in [docs/inventory.md](../../docs/inventory.md)
-   (and third-party licenses in `THIRD_PARTY_NOTICES.md`) and a row in the matching
-   [catalogue](../catalogues/agents.md).
-5. **Third-party content** is untrusted: review it before copying; never run its installers.
-6. **Keep `AGENTS.md` short**: it is loaded into every session of both clients.
+   and a row in the matching [catalogue](../catalogues/agents.md). When adopted content is copied or adapted
+   from a third party, also record its license and required notice in the root `THIRD_PARTY_NOTICES.md`.
+5. **Third-party content** is untrusted: research is allowed, but review source, license, security, and fit before adopting it; never run its installers.
+6. **Keep `AGENTS.md` short**: it is loaded into every supported client session.
 
 ## 2. Add or change an agent or skill
 
-Create one only for a material, repeatable gap (check the catalogues and ask `ai-environment-auditor` first).
+Create one only for a material, repeatable benefit. Research may compare broadly with public alternatives,
+including where Workshop resources already exist; existing coverage is a baseline, not a search limit.
+Check both catalogues and ask `ai-environment-auditor` to confirm the need and overlap before adding a shared resource.
+When orchestrating this work, `task-resource-scout` must consult the auditor before installing a new shared agent or skill.
 Document these fields in the definition or its proposal:
 
 | Field | Content |
@@ -53,9 +56,10 @@ Regenerate the Codex adapter, and record the reason under "Retired" in [docs/inv
 
 ## 4. Add a task prompt
 
-Put it in [`../tasks/`](../../tasks/README.md) following the task file convention there, add a row to the
-[task catalogue](../catalogues/tasks.md), and have `prompt-reviewer` review it before the first run. When a task is
-replaced, mark the old one `Status: superseded by <file>` instead of deleting it.
+Put it under [`../tasks/`](../../tasks/README.md): use `projects/<project-id>/` for project work or
+`common/<category>/` for reusable work such as agents and prompts. Follow the task file convention, add a row to
+the [task catalogue](../catalogues/tasks.md), and have `prompt-reviewer` review it before the first run. When a
+task is replaced, mark the old one `Status: superseded by <file>` instead of deleting it.
 
 ## 5. Add a client or provider
 

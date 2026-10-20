@@ -29,7 +29,7 @@ bad_files=$(printf '%s\n' "$files" | grep -E \
   -e '(^|/)\.env\.[^/]+$' \
   -e '\.(pem|key|p12|pfx|jks|keystore|ppk|kdbx|token)$' \
   -e '(^|/)id_(rsa|dsa|ecdsa|ed25519)$' \
-  -e '(^|/)(\.credentials\.json|credentials[^/]*\.json|[^/]*service-account[^/]*\.json)$' \
+  -e '(^|/)(\.credentials\.(json|yaml)|credentials[^/]*\.(json|yaml)|[^/]*service-account[^/]*\.json)$' \
   -e '(^|/)(\.git-credentials|\.netrc|_netrc|\.npmrc|\.pypirc|\.pgpass|\.claude\.json|settings\.local\.json)$' \
   -e '(^|/)\.(ssh|aws)/' \
   | grep -v -E '(^|/)\.env\.(example|sample|template)$')

@@ -1,7 +1,8 @@
 # Workshop
 
 The client-neutral navigation layer of this framework: what exists, how to choose it and how to add to it. It holds
-indexes, catalogues, task prompts and manuals only. Agent and skill bodies stay in `agents/` and `skills/`; task prompts in `tasks/`;
+indexes, catalogues, task prompts and manuals only. Agent and skill bodies stay in `agents/` and `skills/`; task prompts are
+grouped in `tasks/projects/` and `tasks/common/`;
 architecture, security and onboarding in `docs/`. No AI client loads this folder automatically: people read it, or ask
 their client to open a file here.
 
@@ -19,10 +20,16 @@ Language coverage review and proposed expansion: [current assessment](language-c
 
 Research proposal for adding music creation with Suno: [Suno Workshop integration](suno-workshop-integration-research.md).
 
+For videogames, start with the [game design and planning resources](catalogues/agents.md#game-design-and-planning):
+`game-designer` develops the creative concept, `game-developer` researches technical choices, and the
+`game-ui-ux` and `save-systems` skills support interface and persistence planning.
+
 ## Quick start
 
-1. Set up one client: [Claude Code CLI](../clients/claude-code-cli/README.md) or [Codex CLI](../clients/codex-cli/README.md).
-2. Start it in the repository root and run the client guide's verification steps.
+1. Set up one client: [Claude Code CLI](../clients/claude-code-cli/README.md),
+   [Codex CLI](../clients/codex-cli/README.md), or
+   [DeepSeek Harness](../clients/deepseek-harness/README.md) (experimental developer preview).
+2. Start it in the intended repository or project directory and follow the client guide's verification steps.
 3. Pick a task, agent or skill: [tasks/README.md](../tasks/README.md).
 4. Work on a project through its entry page in [projects/](projects/README.md).
 5. Add something new: [contributor guide](manuals/contributor-guide.md).

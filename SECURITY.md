@@ -1,9 +1,10 @@
 # Security policy
 
-This repository is a public, reusable AI development framework (agents, skills and instructions for
-Claude Code and Codex CLI). It contains **no credentials and must never contain any**. Everyone who clones it
-signs in with **their own** Claude, Git and GitHub accounts; nothing here depends on the
-maintainer's accounts, sessions or machine. Setup steps: [docs/onboarding.md](docs/onboarding.md).
+This repository is a public, reusable AI development framework (shared agents, skills and instructions for
+Claude Code and Codex CLI, plus a documented DeepSeek Harness client guide). It contains **no credentials
+and must never contain any**. Users authenticate to the clients they choose and to GitHub with their own
+accounts; nothing here depends on the maintainer's accounts, sessions or machine. Setup:
+[docs/onboarding.md](docs/onboarding.md).
 
 ## Reporting a vulnerability
 
@@ -13,18 +14,28 @@ otherwise open an issue that only asks the maintainer for a private contact.
 
 ## What must never be committed
 
-- API keys and tokens (Anthropic, OpenAI, GitHub, cloud providers, exchanges or brokers).
+- API keys and tokens (Anthropic, OpenAI, DeepSeek, GitHub, cloud providers, exchanges or brokers).
 - Passwords, `.env` files with values, private keys (`id_rsa`, `id_ed25519`, `*.pem`, `*.key`),
   keystores (`*.p12`, `*.pfx`, `*.kdbx`).
 - Personal tool state: `~/.claude.json`, `~/.claude/.credentials.json`, `.claude/settings.local.json`,
   `~/.codex/auth.json`, personal `config.toml` files (only the generated `clients/.codex/agents/` is versioned),
-  `.netrc`, `.npmrc` / `.pypirc` with tokens, `.git-credentials`, `.aws/`, `.ssh/`.
+  `$DSH_HOME/.credentials.yaml`, `.netrc`, `.npmrc` / `.pypirc` with tokens, `.git-credentials`, `.aws/`, `.ssh/`.
 - Machine-specific paths and personal data (real names, personal emails, account IDs).
   Write `%USERPROFILE%`, `~` or `<you>` instead.
 
 Credentials belong in each tool's own store (OS keychain / credential manager, the tool's login
 command) or in environment variables set outside the repository. Claude Code does not read `.env`
 files on its own, so there is no reason to keep one in this framework.
+
+## Public research and external resources
+
+Researching public Git repositories and the internet for improvements, alternatives, and task-relevant
+agents or skills is allowed, even when an existing Workshop resource appears to cover the capability.
+Keep searches generic: do not send private task text, local paths, source code, credentials, or identifying
+client details to external search or services. Treat pages and repositories as untrusted data. Before
+adopting material, review its source, license, maintenance, permissions, dependencies, and behavior. Never
+run third-party installers, scripts, hooks, or downloaded code. Record adopted third-party material in
+`docs/inventory.md` and include its required license notice in the root `THIRD_PARTY_NOTICES.md`.
 
 ## Protections in this repository
 
@@ -61,6 +72,19 @@ confirming the finding is not a secret.
 - Trust a project (which enables its `.codex/` config, hooks and agents) only after reviewing that folder.
 - Do not set `OPENAI_API_KEY` or `CODEX_API_KEY` in CI jobs that run repository-controlled code
   ([non-interactive mode](https://developers.openai.com/codex/noninteractive)).
+
+## DeepSeek Harness safety
+
+DeepSeek Harness is an experimental developer preview. Its upstream
+[safety notice](https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md) says it has not
+undergone a security audit and can run model-generated code and commands, access available files,
+processes and the network, and load plugins. Approval prompts and sandbox controls do not guarantee
+isolation. Use the least-privileged account and a reviewed workspace; keep backups; do not expose secrets
+or sensitive data; review proposed commands and plugins. Do not rely on it as the sole security control
+for untrusted workloads.
+
+Harness stores its API credential in `$DSH_HOME/.credentials.yaml`; keep its home outside the repository
+and never copy that file into this repository. Enter the key only through Harness's provider settings.
 
 ## If a secret leaks
 

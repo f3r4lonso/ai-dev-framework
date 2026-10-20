@@ -28,6 +28,8 @@ or let the client load it by description.
 | UI/UX | [design-system-patterns](../../skills/design-system-patterns/SKILL.md) | Design tokens, theming, component architecture |
 | UI/UX | [responsive-design](../../skills/responsive-design/SKILL.md) | Container queries, fluid type, mobile-first layouts |
 | UI/UX | [wcag-audit-patterns](../../skills/wcag-audit-patterns/SKILL.md) | WCAG 2.2 audits and remediation |
+| Game development | [game-ui-ux](../../skills/game-ui-ux/SKILL.md) | Game HUD/menu flows, touch, safe areas, input ownership and device UI review |
+| Game development | [save-systems](../../skills/save-systems/SKILL.md) | Game save/load contracts, migration, recovery and interrupted sessions |
 | Trading | [strategy-specification](../../skills/strategy-specification/SKILL.md) | Defining a deterministic strategy before coding it |
 | Trading | [backtesting-audit](../../skills/backtesting-audit/SKILL.md) | Checking a backtest before trusting it |
 | Trading | [risk-metrics-calculation](../../skills/risk-metrics-calculation/SKILL.md) | Computing or checking Sharpe, Sortino, drawdown, VaR/CVaR, profit factor, expectancy |
@@ -41,3 +43,5 @@ or let the client load it by description.
 | Trading | [dependency-license-review](../../skills/dependency-license-review/SKILL.md) | Before adding a dependency (Trading-app specific content) |
 
 Trading skills assume the Trading-app root as the working directory.
+
+Game skills added 2026-10-19: text-only adaptations without dependencies; live client discovery remains unverified.

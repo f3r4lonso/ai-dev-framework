@@ -1,6 +1,6 @@
 # Prompt-engineering system review — 2026-10-17
 
-Scope: task brief `ai-infra/workshop/tasks/homero-self-improvement-and-prompt-reviewer-task.md` (moved and renamed 2026-10-17). Covers Homero v1.1,
+Scope: task brief `ai-infra/workshop/tasks/common/agents-and-prompts/homero-self-improvement-and-prompt-reviewer-task.md` (moved and renamed 2026-10-17). Covers Homero v1.1,
 the new `prompt-reviewer` agent, external research, integration, revision 2 of the unified infrastructure prompt, and validation.
 **The unified infrastructure prompt was revised only. It was not executed.**
 
@@ -16,7 +16,7 @@ Evidence labels: **Ran** (a check was executed), **Static** (files inspected), *
 | `.codex/agents/prompt-reviewer.toml` | **new, generated** | Codex wrapper from `codex-adapter.py agents` |
 | `.claude/agents/ai/ai-environment-auditor.md` | modified | description: one sentence that sends single-prompt reviews to `prompt-reviewer` (prevents overlap) |
 | `.codex/agents/ai-environment-auditor.toml` | regenerated | follows the description change |
-| `ai-infra/workshop/tasks/unified-ai-engineering-infrastructure-prompt.md` (now superseded) | rewritten | revision 2 (§5). Was untracked; the original is not in git |
+| `ai-infra/workshop/tasks/projects/ai-infrastructure/unified-ai-engineering-infrastructure-prompt.md` (now superseded) | rewritten | revision 2 (§5). Was untracked; the original is not in git |
 | `ai-infra/README.md` | modified | inventory row for `prompt-reviewer`; Homero → reviewer note in the layout |
 | `README.md` | modified | 19 → 20 agents; catalog row |
 | `docs/ai-architecture.md` | modified | counts 19 → 20; validation rows; open items moved out of the target prompt |

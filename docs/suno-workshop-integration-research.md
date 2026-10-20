@@ -41,7 +41,7 @@ Get legal advice before any commercial release.
 
 ### Stage 1 — Music brief and lyrics task
 
-Add a task such as `infra/tasks/music-creation-brief.md` (Suno as the first target) with `Status: active` on line 3,
+Add a task such as `infra/tasks/common/music/music-creation-brief.md` (Suno as the first target) with `Status: active` on line 3,
 add a row to `infra/docs/catalogues/tasks.md`, and have `prompt-reviewer` review it before the first run. The task file
 is in English; the brief the user reads is in Spanish; lyrics and the Suno prompt use the language the user chooses.
 It contains no example lyrics, prompts or account details taken from real use. No dependency or credential is needed.

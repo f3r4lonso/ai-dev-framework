@@ -1,7 +1,9 @@
 # Workshop AI VS Code extension — technology research for Gate A
 
+> **v2 note (2026-10-20):** the VS Code extension is paused and out of scope for the proposed [Workshop AI v2](workshop-ai-v2/README.md) (decision D-V2-03). Kept as a record.
+
 Checked 2026-10-18. Input for the Gate A decisions of
-[workshop-ai-vscode-extension-specification](../tasks/workshop-ai-vscode-extension-specification.md) (§6, D1–D11).
+[workshop-ai-vscode-extension-specification](../tasks/projects/workshop-ai/workshop-ai-vscode-extension-specification.md) (§6, D1–D11).
 Nothing was installed, built or run; package data comes from registry metadata only.
 
 Labels (from `docs/ai-architecture.md`, plus Requires verification): **Observed** (seen on the maintainer's machine),

@@ -52,6 +52,7 @@ id_ed25519
 # Tokens and credential files of common tools
 *.token
 .credentials.json
+.credentials.yaml
 credentials*.json
 *service-account*.json
 .git-credentials
