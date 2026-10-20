@@ -9,7 +9,7 @@ and the owner's answers of 2026-10-18 on client choice (D9) and terminal approva
 from a retired brief: a capability assessment table and an open-decisions register.
 
 **Launch:** start Claude Code in the infra root with `claude --add-dir clients`, so the shared agents and skills
-load. Then say: "Run the task in `tasks/workshop-ai-vscode-extension-specification.md`."
+load. Then say: "Run the task in `tasks/projects/workshop-ai/workshop-ai-vscode-extension-specification.md`."
 
 **This is a documentation and specification task.** No extension code, no build files, no installs. The user who
 launches this prompt approves Phase 0 and Phase 1 only (both read-only). Every later step needs the gates in §5.
@@ -100,7 +100,7 @@ not override the rule. Record the conflict and take it to Gate A.
 ## 4. Rules
 
 - **Coordination with the foundation task:**
-  - Never edit `tasks/workshop-ai-product-foundation.md`.
+  - Never edit `tasks/projects/workshop-ai/workshop-ai-product-foundation.md`.
   - Never edit, move or stage that task's uncommitted files (the Stage 1 code, tests, `docs/stage-1-spec.md`, sandbox
     files), except where Gate A explicitly approves an edit. The deferral rule in Phase 2 still applies.
   - Before the first edit in each repository, run `git status` and record which uncommitted files are not yours.
@@ -247,7 +247,7 @@ Do not change a default without reporting why.
     - Option (c): the extension starts only after Stage 2 is complete.
     - Trade-off: (a) delivers the hub soonest but enlarges Stage 2. (b) keeps Stage 2 focused but adds a stage. (c) is
       the most cautious and the slowest.
-    - Documents it changes: vision §16 and §2.1, `tasks/workshop-ai-token-optimization-integration.md` §1 and §3, and
+    - Documents it changes: vision §16 and §2.1, `tasks/projects/workshop-ai/workshop-ai-token-optimization-integration.md` §1 and §3, and
       `docs/catalogues/tasks.md`.
 11. **D11 — Language of the extension's user-facing strings.**
     - **Default: Spanish UI strings; technical documentation, specification and code comments in English (infra
@@ -358,9 +358,9 @@ Expected edits, adjusted to the Gate A answers:
 | infra `docs/ai-architecture.md` §9 | Point to the extension as the consumer of the contracts; keep the unknowns list current. | The section title and text match the vision. |
 | infra `docs/projects/workshop-ai/README.md` and the row in `docs/projects/README.md` | Purpose and Stage reflect the extension direction. | The wording matches vision §17.1. |
 | infra `docs/token-optimization-candidate-review.md` | Update the constraint line for the new §17.8; verdicts unchanged. | It cites the new §17.8 correctly; no verdict changed. |
-| infra `tasks/workshop-ai-token-optimization-integration.md` | §1 and §3 describe the store as the extension's context storage. Add the recap to the deliverables if D6 is approved. Apply D10. Precondition unchanged. | Still consistent with §17.2, §17.4 and §17.5 as decided. |
+| infra `tasks/projects/workshop-ai/workshop-ai-token-optimization-integration.md` | §1 and §3 describe the store as the extension's context storage. Add the recap to the deliverables if D6 is approved. Apply D10. Precondition unchanged. | Still consistent with §17.2, §17.4 and §17.5 as decided. |
 | infra `docs/catalogues/tasks.md` | This task's row, and the token-optimization row if its purpose changed. | The rows match the `Status:` lines. |
-| infra `tasks/workshop-ai-vscode-extension-specification.md` (this file) | `Status:` line only (Phase 4). | It matches the catalogue row. |
+| infra `tasks/projects/workshop-ai/workshop-ai-vscode-extension-specification.md` (this file) | `Status:` line only (Phase 4). | It matches the catalogue row. |
 | product `README.md`, `AGENTS.md` | Purpose and constraints mention the extension, the D2 language rule and the D4 rule changes. Apply or defer per the deferral rule. | No Stage 1 rule is weakened except as recorded at Gate A. |
 | product `docs/stage-1-spec.md` | Only a dated note pointing to the new specification, if Gate A approves. Stage 1 content untouched. Apply or defer per the deferral rule. | The note is the only change. |
 | product `docs/vscode-extension-spec.md` | New (Phase 3). | §7 complete. |

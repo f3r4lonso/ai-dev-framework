@@ -21,7 +21,8 @@ Both clients read the same rules (`AGENTS.md`), skills and agents. Support statu
 1. Open the [task catalogue](../docs/catalogues/tasks.md) and pick an **active** task. Never run a superseded one.
 2. Read its scope and approval gates before starting: a task stops at each gate and waits for you.
 3. Start your client in the folder the task names (usually the repository root) and say:
-   "Run the task in `tasks/<file>.md`."
+   "Run the task in `tasks/projects/<project>/<file>.md`" or
+   "`tasks/common/<category>/<file>.md`."
 4. No task fits? Describe the goal in plain words. For non-trivial work the client follows the
    `engineering-lifecycle` skill (clarify → plan → build → verify → report).
 
@@ -38,10 +39,14 @@ Both clients read the same rules (`AGENTS.md`), skills and agents. Support statu
 2. Ask the `ai-environment-auditor` agent (audit mode): "Is there a gap for <need>? Recommend keep, extend or new."
 3. Propose a new one only for a material, repeatable gap. Write the proposal with the fields in the
    [contributor guide](../docs/manuals/contributor-guide.md#2-add-or-change-an-agent-or-skill).
-4. A new task prompt goes in this folder with a `Status:` line (see the contributor guide) and a catalogue row.
+4. Put a project-specific prompt in `projects/<project-id>/`; put reusable work shared across projects in
+   `common/<category>/` (for example `common/agents-and-prompts/`). Add a `Status:` line (see the contributor
+   guide) and a catalogue row.
 
 ## 5. Task file convention
 
-- Name: kebab-case, English, `.md`. Line 3 (after the title) states `Status: active | completed (<date>) |
-  superseded by <file>`.
+- Use `projects/<project-id>/<task-name>.md` for work belonging to one project and
+  `common/<category>/<task-name>.md` for reusable or cross-project work. Keep this root for `README.md`.
+- Folder and file names: kebab-case, English, `.md`. Line 3 (after the title) states
+  `Status: active | completed (<date>) | superseded by <file>`.
 - No absolute user paths, account names or private URLs (write `%USERPROFILE%` or `<you>`): this folder is public.

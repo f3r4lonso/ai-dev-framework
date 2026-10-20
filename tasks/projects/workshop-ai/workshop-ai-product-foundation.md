@@ -1,6 +1,7 @@
 # TASK PROMPT — Workshop AI: Settle the Product Baseline and Build the First Single-Client Path
 
-Status: active.
+Status: active until its sandbox pilot runs; the pilot is now part of Workshop AI v2 increment V1
+(`docs/workshop-ai-v2/roadmap.md`), after which this task is completed.
 
 Revision 2 (2026-10-17). Built from two sources and their `prompt-reviewer` reviews; revised after a review of
 revision 1.
@@ -33,6 +34,12 @@ use is the default and must stay simple. Stages 3–5 of the vision's roadmap (a
 further providers) are **out of scope**. They become future tasks once this one has produced evidence.
 
 ## 2. Current state (verified 2026-10-17; re-check before acting)
+
+> **Update 2026-10-20:** Codex CLI 0.163.0 is installed. The `clients/.claude` junctions and `link-claude` are
+> retired: Claude Code now loads shared agents and skills from the `workshop` plugin (`.claude-plugin/`), so the
+> junction precondition below no longer applies; check `claude plugin list` instead. Gitleaks 8.30.1 is installed.
+> The handover file `docs/workshop-ai-stage-1-handover.md` was never written; the v2 progress file
+> (`applications/workshop-ai/docs/v2-progress.md`) records the state instead.
 
 - **Repository:** `%USERPROFILE%\workshop\infra`. It is one git repository, **public** on GitHub, and everything
   committed is published (see `SECURITY.md`). The `.gitignore` is a whitelist. Confirm the root with

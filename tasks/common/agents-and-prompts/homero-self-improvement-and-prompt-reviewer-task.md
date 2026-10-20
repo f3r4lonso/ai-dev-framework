@@ -206,7 +206,7 @@ Consult current official documentation for each supported client when adapter be
 
 Source file:
 
-`workshop/tasks/unified-ai-engineering-infrastructure-prompt.md`
+`workshop/tasks/projects/ai-infrastructure/unified-ai-engineering-infrastructure-prompt.md`
 
 Expected absolute path:
 
@@ -275,7 +275,7 @@ Update applicable registries, indexes, documentation, adapters, or discovery mec
 
 ### Deliverable 5 — Optimized Target Task Prompt
 
-Review and update `workshop/tasks/unified-ai-engineering-infrastructure-prompt.md` using the enhanced Homero + Prompt Reviewer process. Preserve the underlying requirements and constraints, improve execution-readiness and efficiency, and leave it ready for user review. **Do not execute the contents of this prompt.**
+Review and update `workshop/tasks/projects/ai-infrastructure/unified-ai-engineering-infrastructure-prompt.md` using the enhanced Homero + Prompt Reviewer process. Preserve the underlying requirements and constraints, improve execution-readiness and efficiency, and leave it ready for user review. **Do not execute the contents of this prompt.**
 
 ### Deliverable 6 — Validation Report
 
