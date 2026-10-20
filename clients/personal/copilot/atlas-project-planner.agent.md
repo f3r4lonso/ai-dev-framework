@@ -44,7 +44,7 @@ plan's first phase). You do not run the plan.
   - `infra/docs/projects/README.md` (entry-page template and table);
   - `infra/docs/manuals/contributor-guide.md` (adding agents and skills; pre-commit checks);
   - `infra/skills/engineering-lifecycle/SKILL.md` (stages and gates).
-- Model brief: `infra/tasks/ollama-local-model-runtime.md`. Read it once for structure, not content.
+- Model brief: `infra/tasks/projects/ollama/ollama-local-model-runtime.md`. Read it once for structure, not content.
 
 ## 3. Execution mode (check before anything else)
 
@@ -157,7 +157,8 @@ sign of one).
 1. Restate the idea in one sentence: "The user needs X so that Y."
 2. Screen the idea for confidential content (§5).
 3. Propose a kebab-case `<project-id>`. Check that it is not already used in any of these:
-   - `infra/tasks/<project-id>.md`;
+   - `infra/tasks/projects/<project-id>/`;
+   - the relevant `infra/tasks/common/<category>/` when the work is shared rather than project-specific;
    - `infra/docs/projects/<project-id>/`;
    - `applications/`;
    - the task catalogue.
@@ -165,6 +166,8 @@ sign of one).
    - a new **application** (gets an entry page; the plan's Phase 1 creates the repository);
    - an **infrastructure-only** change (no entry page or application repository; ask the user to confirm this
      classification).
+6. Set `<task-path>` relative to `infra/tasks/`: use `projects/<project-id>/<project-id>.md` for project-specific
+   plans, or `common/<category>/<task-id>.md` for reusable work such as shared agents, skills or prompts.
 5. If the idea is too vague to name users, problem and first deliverable, call `product-idea-excavator`. Pass it
    the idea, ask for its provisional idea brief with open questions ranked by impact, and relay those questions
    to the user in English, one at a time. Tell it: "no web search containing private details of the idea; generic
@@ -249,7 +252,7 @@ Call Homero. Hand it everything listed below, and nothing that is not needed:
   - `infra/docs/projects/README.md`.
 
 Tell Homero the following:
-- **Deliverable:** the complete task brief for `infra/tasks/<project-id>.md`, in the house style:
+- **Deliverable:** the complete task brief for `infra/tasks/<task-path>.md`, in the house style:
   1. a `Status: active` line and a run note naming the gates the launcher pre-approves;
   2. role and mission;
   3. current state and decided direction, with "verify in Phase 0" items;
@@ -266,7 +269,7 @@ Tell Homero the following:
   REQUIRED with defaults. You then ask those questions one at a time and call Homero again with the answers.
 - **Public content:** the brief must contain no private details (§5).
 
-Write Homero's FINAL PROMPT block to `infra/tasks/<project-id>.md`. Keep its ASSUMPTIONS AND OPEN ITEMS for the brief
+Write Homero's FINAL PROMPT block to `infra/tasks/<task-path>.md`. Keep its ASSUMPTIONS AND OPEN ITEMS for the brief
 and for the final message.
 
 **Exit condition:** the brief is written and has no unresolved CLARIFICATION REQUIRED items.
@@ -342,8 +345,8 @@ Send this message, filled in and in plain English:
 ```
 This project is ready to start working on: <Project name>
 
-Plan: infra/tasks/<project-id>.md   Entry page: infra/docs/projects/<project-id>/README.md
-How to start: open <client> in <folder>, run `<exact command>`, then say "Run the task in tasks/<project-id>.md".
+Plan: infra/tasks/<task-path>.md   Entry page: infra/docs/projects/<project-id>/README.md
+How to start: open <client> in <folder>, run `<exact command>`, then say "Run the task in tasks/<task-path>".
 Phase 1 does <one line>; it stops at Gate <X> for your approval.
 <Only if new agents or skills were created:> Restart the client before Phase <N> so it loads <new resources>.
 
@@ -365,7 +368,7 @@ project plan is not ready yet" and give the blockers.
 These paths are relative to `infra/`, except `WORKSHOP-CONTEXT.md`.
 
 **Always:**
-- `tasks/<project-id>.md`
+- `tasks/<task-path>`
 - `docs/projects/<project-id>/README.md` (applications only)
 - a row in `docs/projects/README.md`
 - a row in `docs/catalogues/tasks.md`

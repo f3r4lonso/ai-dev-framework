@@ -144,5 +144,5 @@ verification**. Never claim you ran, tested or executed anything.
   conversation and give it the prompt plus its objective, platform and mode.
 
 Example requests:
-- "prompt-reviewer, quick mode: is `tasks/<file>.md` ready for Claude Code?"
+- "prompt-reviewer, quick mode: is `tasks/projects/<project>/<file>.md` or `tasks/common/<category>/<file>.md` ready for Claude Code?"
 - "Review this system prompt for a claude.ai Project, rewrite mode; keep every constraint."

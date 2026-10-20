@@ -39,8 +39,8 @@ Project rules still come from each folder's `CLAUDE.md`.
 | Resource | Where Claude Code looks | When | Status |
 |---|---|---|---|
 | Rules | `CLAUDE.md` from the working directory up to the repo root; this repo's `CLAUDE.md` imports `AGENTS.md` | session start | Observed |
-| Agents | `workshop` plugin: the files listed in `.claude-plugin/plugin.json` (rebuilt by `python scripts/codex-adapter.py agents`) | session start or `/reload-plugins` | 25 agents observed from `applications\Trading-app` and the workshop root |
-| Skills | `workshop` plugin: `skills/<name>/SKILL.md` | session start or `/reload-plugins` | 29 skills observed |
+| Agents | `workshop` plugin: the files listed in `.claude-plugin/plugin.json` (rebuilt by `python scripts/codex-adapter.py agents`) | session start or `/reload-plugins` | 25 agents observed (2026-10-19; 26 shared exist on 2026-10-20) from `applications\Trading-app` and the workshop root |
+| Skills | `workshop` plugin: `skills/<name>/SKILL.md` | session start or `/reload-plugins` | 29 skills observed (2026-10-19; 31 exist on 2026-10-20) |
 | Task prompts | not discovered; open them by path from [the Workshop](../../tasks/README.md) | on request | n/a |
 | Catalogues, manuals | not discovered; read on request | on request | n/a |
 | Hooks, commands, MCP | none are shipped by this repo | — | — |
@@ -53,7 +53,8 @@ required (Documented).
 - **Agent:** ask by name ("Use the code-reviewer agent to review this branch"), type `@agent-<name>` to force it,
   or let Claude delegate when a request matches the description. `/agents` lists and manages them.
 - **Skill:** type `/<skill-name>` or let Claude load it when the request matches its description.
-- **Task prompt:** "Run the task in `tasks/<file>.md`" (check its status in the
+- **Task prompt:** "Run the task in `tasks/projects/<project>/<file>.md`" or
+  "`tasks/common/<category>/<file>.md`" (check its status in the
   [task catalogue](../../docs/catalogues/tasks.md) first).
 - Built-in agents (`Explore`, `Plan`, `general-purpose`, `claude-code-guide`) are always available.
 

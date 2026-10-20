@@ -29,7 +29,7 @@ Everything below is **Documented** (official docs checked 2026-10-17, e.g.
 
 | Where you work | What loads (Documented) |
 |---|---|
-| Repository root, trusted | `AGENTS.md`, skills in `clients/.agents/skills/`, the 21 agents in `clients/.codex/agents/` |
+| Repository root, trusted | `AGENTS.md`, skills in `clients/.agents/skills/`, the shared agents in `clients/.codex/agents/` (26 wrappers on 2026-10-20) |
 | Repository root, not trusted | `AGENTS.md` and skills; **no** project `.codex/` config, so no shared agents |
 | An application repo | that repo's own `AGENTS.md` only (Codex stops at its git root); shared skills only if linked with `--user`; shared agents **not** available |
 
@@ -50,7 +50,8 @@ from the documented discovery rule; Unverified).
 
 - **Skill:** `/skills` to list, `$skill-name` to call, or automatic by description.
 - **Agent:** ask "Use the `<name>` agent to …"; `/subagents` shows and switches agent threads.
-- **Task prompt:** "Run the task in `tasks/<file>.md`".
+- **Task prompt:** "Run the task in `tasks/projects/<project>/<file>.md`" or
+  "`tasks/common/<category>/<file>.md`".
 - **Non-interactive:** `codex exec "<prompt>"` (read-only sandbox by default; `--json` for events).
 
 ## 5. Verify (manual; required before claiming support)
