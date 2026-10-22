@@ -1,6 +1,6 @@
 # Agent catalogue
 
-26 shared agents and 3 personal agents, one row each. The canonical definition is the linked file; this page copies no bodies. Sources,
+26 shared agents and 3 personal agents, one row each. All 29 have native generated copies for Claude/Codex/Copilot/Gemini via the [shared installation standard](../manuals/shared-resource-installation.md), plus explicit canonical-file access for manual-use clients. Live discovery is tracked separately from copied-file validation. The canonical definition is the linked file; this page copies no bodies. Sources,
 licenses and local modifications: [inventory](../../docs/inventory.md#installed-agents).
 
 **Clients:** 20 agents were observed in Claude Code on 2026-10-17; `product-idea-excavator` and `music-composer` were added on 2026-10-18 and require a Claude discovery re-check. In Codex CLI each

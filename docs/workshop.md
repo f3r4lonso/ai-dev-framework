@@ -20,6 +20,10 @@ Language coverage review and proposed expansion: [current assessment](language-c
 
 Research proposal for adding music creation with Suno: [Suno Workshop integration](suno-workshop-integration-research.md).
 
+For client-specific lifecycle automation, see [AI hooks recommendations](skill-agents-hooks/hooks-recommendations.md). They are patterns to evaluate, not installed scripts or a portable runtime.
+
+For external resources to consider adding, see [skills, agents and tools recommendations](skill-agents-hooks/skills-and-agents-recommendations.md). Candidates are recommendations only; none are installed by that document.
+
 For videogames, start with the [game design and planning resources](catalogues/agents.md#game-design-and-planning):
 `game-designer` develops the creative concept, `game-developer` researches technical choices, and the
 `game-ui-ux` and `save-systems` skills support interface and persistence planning.

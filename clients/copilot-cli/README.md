@@ -1,5 +1,7 @@
 # Client guide: GitHub Copilot CLI
 
+**Shared installation standard (2026-10-21):** [all-client installation](../../docs/manuals/shared-resource-installation.md) supersedes older link-only/personal-only setup below. Run `python scripts/sync-resources.py --user` from `infra/` for user-wide copies, or `--project <root>` for one project. Shared and personal agents are included. DeepSeek remains an explicit canonical-file/manual-use path; native discovery and delegation are unverified. No client setting or credential is changed.
+
 This guide covers GitHub Copilot CLI alongside the Workshop. Copilot CLI is a coding agent that can read and modify
 files and run commands; it is not a read-only assistant by default.
 

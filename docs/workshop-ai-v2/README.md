@@ -1,7 +1,10 @@
 # Workshop AI v2: unified product documents
 
-Status: **approved** (decisions D-V2-01…09 approved by the owner on 2026-10-20); V0 done, V1 next. The decisions are
-listed in [product-vision.md §6](product-vision.md#6-decisions-to-approve).
+Status: **approved** (decisions D-V2-01…09 approved by the owner on 2026-10-20); V1 remains paused and unaccepted,
+V2 is owner-accepted as working acceptably, V3–V6 are authorized in order, and V7's initial global-search slice
+was authorized on 2026-10-22 and is in progress. V7's Stage 2 store/recap/compression design and benchmark gates
+remain pending; no increment beyond V2 is accepted. See the [roadmap](roadmap.md) and application
+[progress record](../../../applications/workshop-ai/docs/v2-progress.md).
 
 Workshop AI v2 merges two things that grew apart into **one local app**:
 

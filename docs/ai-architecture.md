@@ -1,6 +1,6 @@
 # AI engineering infrastructure: architecture and client compatibility
 
-Principle: **share what is common; separate what is platform-specific.** This repository is the shared
+Principle: **share what is common; adapt what is platform-specific.** Every installation serves all clients by default; generated copies are explicitly approved for ease of use. Use the [shared installation standard](manuals/shared-resource-installation.md) and `scripts/sync-resources.py`; native support, manual-use access, and runtime verification are distinct. This repository is the shared
 infrastructure; application projects in `%USERPROFILE%\workshop\applications\` (next to this repository) are separate repositories and are never changed by it.
 
 Vendor facts below were checked against official documentation; DeepSeek Harness sources were checked
@@ -46,7 +46,7 @@ workshop/                       workspace folder (not a repository)
 │   ├── README.md  SECURITY.md  THIRD_PARTY_NOTICES.md
 │   ├── agents/<area>/          26 canonical shared agents
 │   ├── agents/personal-assistants/   personal agents Homero, Thor and Atlas (all CLIs + claude.ai Projects)
-│   ├── skills/<name>/          31 canonical skills
+│   ├── skills/<name>/          33 canonical skills
 │   ├── tasks/                  task prompts
 │   ├── clients/                claude-code-cli/, codex-cli/, copilot-cli/, gemini-cli/, suno/, deepseek-harness/
 │   │   ├── .claude/            local links agents → ../../agents, skills → ../../skills (ignored by git)
@@ -84,7 +84,7 @@ Claude without `--add-dir` does the same, so workspace rules do not leak into a 
 | Resource | Claude Code: discovery / invocation | Status | Codex CLI: discovery / invocation | Status | DeepSeek Harness: discovery / invocation | Status |
 |---|---|---|---|---|---|---|
 | Shared rules | `CLAUDE.md` + `@AGENTS.md` import at session start | Observed | `AGENTS.md` at session start | Documented | Upstream instruction loader candidates include `AGENTS.md` and `CLAUDE.md` | Documented in upstream source; local behavior unverified |
-| 31 skills | `workshop` plugin, every folder (`/workshop:<name>`); `/skill-name` or automatic by description | Observed (new `engineering-lifecycle` picked up live) | `.agents/skills/` from cwd up to repo root, or `~/.agents/skills/`; `$skill-name`, `/skills`, or automatic | Documented; links Proposed (junctions on Windows not yet seen by Codex) | Workshop skills are not integrated; Harness skill discovery not validated | Unverified |
+| 33 skills | `workshop` plugin, every folder (`/workshop:<name>`); `/skill-name` or automatic by description | Observed (new `engineering-lifecycle` picked up live) | `.agents/skills/` from cwd up to repo root, or `~/.agents/skills/`; `$skill-name`, `/skills`, or automatic | Documented; links Proposed (junctions on Windows not yet seen by Codex) | Workshop skills are not integrated; Harness skill discovery not validated | Unverified |
 | `ui-ux-pro-max` scripts | `${CLAUDE_SKILL_DIR}` expanded | Observed (variable documented) | variable not expanded; SKILL.md tells the model to substitute the skill folder | Proposed | No Workshop skill script adapter | Unverified |
 | Skill frontmatter extras (`allowed-tools`, `metadata`) | honored | Documented | `name`, `description` required; extras not documented | Unverified (expected to be ignored) | No Workshop skill-frontmatter mapping | Unverified |
 | 29 agents (26 shared + 3 personal) | `workshop` plugin, every folder (`workshop:<name>`); by name, `@agent-<name>`, automatic, `/agents` | Existing agents observed; new agent requires manual re-check | `clients/.codex/agents/*.toml` in a **trusted** project; ask "use the `<name>` agent"; `/subagents` to switch threads | Documented format; wrappers Proposed (TOML parses, not run in Codex) | No Workshop agent registry or adapter | Unverified |
@@ -102,8 +102,8 @@ Claude without `--add-dir` does the same, so workspace rules do not leak into a 
 | Resource | Copilot CLI: discovery / invocation | Status | Gemini CLI: discovery / invocation | Status |
 |---|---|---|---|---|
 | Shared rules | `AGENTS.md` among supported instruction files; check with `/instructions` | Documented | `GEMINI.md` context files; check with `/memory show` | Documented |
-| 31 skills | `link-skills --user` → `%USERPROFILE%\.agents\skills` | Documented; not validated | same `~/.agents/skills` alias | Documented; not validated |
-| 29 agents | only the 3 personal assistants, installed to `%USERPROFILE%\.copilot\agents` | Documented; not validated | only the 3 personal assistants, installed to `%USERPROFILE%\.gemini\agents` | Documented; not validated |
+| 33 skills | `link-skills --user` → `%USERPROFILE%\.agents\skills` | Documented; not validated | same `~/.agents/skills` alias | Documented; not validated |
+| 29 agents | all 29 agents via `sync-resources.py`: project `.github/agents` or user `.copilot/agents` | Documented; not validated | all 29 agents via `sync-resources.py`: project/user `.gemini/agents` | Documented; not validated |
 | Agent tool limits | not mapped from Workshop agents | Unverified | not mapped from Workshop agents | Unverified |
 | Non-interactive | `copilot -p -s --no-ask-user --output-format=json`; empty `--available-tools` must be proven to disable tools | Documented; not run | `gemini -p --output-format json`; `--approval-mode plan` is not isolation | Documented; not run |
 | Permissions | never `--allow-all` / `--yolo` | Documented | approval modes; `plan` is read-only by intent only | Documented |
@@ -184,7 +184,7 @@ contributor guide is followed):
 | Skill catalogue | frontmatter of `skills/<name>/SKILL.md` | `name`, `description` |
 | Codex availability | `clients/.codex/agents/<name>.toml` exists and `codex-adapter.py agents --check` passes | boolean per agent |
 | Task catalogue | `tasks/projects/<project>/*.md` and `tasks/common/<category>/*.md` | title = first `# ` line; `Status:` line (active / completed / superseded by) |
-| Client list | `clients/<client-id>/README.md`, excluding `suno` (a human-operated service) and treating `personal/` as generated personal-assistant adapters, not a client | client id = folder name; the v2 engine registry (`workshop-ai-v2/engines.md`) is the full engine list |
+| Client list | `clients/<client-id>/README.md`, excluding `suno` (human-operated service) and `creative-media` (guide to multiple third-party creative services); treating `personal/` as generated personal-assistant adapters, not a client | client id = folder name; the v2 engine registry (`workshop-ai-v2/engines.md`) is the full engine list |
 | Project list | `docs/projects/<project-id>/README.md` | Purpose, Stage, Repository bullets |
 | Support status | §4 matrix | evidence label per resource and client |
 

@@ -7,7 +7,7 @@ these rules: [ai-architecture.md](../../docs/ai-architecture.md). Security rules
 
 1. **One canonical location.** Edit only canonical files: `AGENTS.md`, `CLAUDE.md`, `agents/`,
    `skills/`, `docs/`, and this Workshop. Never edit `clients/.codex/agents/` or `clients/.agents/skills/` by hand
-   (they are generated), and never copy an agent or skill body anywhere else.
+   (they are generated). Generated client copies are explicitly allowed and required where they make resources easy to use across clients; use `scripts/sync-resources.py`, not independently maintained copies.
 2. **Whitelist.** `.gitignore` versions only listed paths. A new top-level folder is silently ignored until you add a `!/<path>/` line. Check with `git status` and
    `git check-ignore -v <path>`.
 3. **Public repository.** No credentials, absolute user paths, usernames, account names or private URLs in any
@@ -19,6 +19,8 @@ these rules: [ai-architecture.md](../../docs/ai-architecture.md). Security rules
 6. **Keep `AGENTS.md` short**: it is loaded into every supported client session.
 
 ## 2. Add or change an agent or skill
+
+**Owner's standing instruction (2026-10-21): every installation serves all clients.** Use the [shared installation standard](shared-resource-installation.md). Adapt Claude-specific behavior before exposing it elsewhere. Run `python scripts/sync-resources.py` and `--check`; use `--project <root>` for another project or `--user` for all folders of the current OS user when writable. Preserve unowned/modified files. A protected target is an incomplete installation: prepare the command and report it, never claim global availability. Clients without equivalent native features get a documented manual-use path and honest limits. No new permission is needed just because generated copies are required.
 
 Create one only for a material, repeatable benefit. Research may compare broadly with public alternatives,
 including where Workshop resources already exist; existing coverage is a baseline, not a search limit.
@@ -43,8 +45,7 @@ Steps:
    Skill: `skills/<name>/SKILL.md` with `name`, `description`; long material in `references/`.
 2. Agent added, renamed or frontmatter edited: `python scripts/codex-adapter.py agents`, then
    `python scripts/codex-adapter.py agents --check` (CI fails on drift). Use `python3` in Bash.
-3. Skill added: `python scripts/codex-adapter.py link-skills` (and `--user` if you use it). A removed skill
-   leaves a dangling link: delete it from `clients/.agents/skills/`.
+3. Install all agent and skill formats with `python scripts/sync-resources.py`; then `python scripts/sync-resources.py --check`. For machine-wide use across folders, run with `--user` and check the same scope. Legacy `link-skills` remains available, but copies are the default; linked destinations must be explicitly migrated rather than overwritten.
 4. Register (rule 4) and update counts in `README.md` and `docs/ai-architecture.md` if they changed.
 5. Verify in Claude Code: restart `claude` in the repository root, run `/agents` (agents load only at session start).
    Verify in Codex if available: [codex-cli §5](../../clients/codex-cli/README.md#5-verify-manual-required-before-claiming-support).

@@ -22,6 +22,12 @@
 !/.claude-plugin/
 /clients/.claude/
 /clients/.agents/
+/.agents/
+/.claude/
+/.codex/
+/.gemini/
+/.github/agents/
+/.workshop/
 !/scripts/
 
 # --- Defense in depth: secrets and machine-specific files -------------------
@@ -75,3 +81,6 @@ auth.json
 
 # Python bytecode from scripts/
 __pycache__/
+
+# Owner-only ideas, opened through the app's fixed Notepad shortcut.
+/docs/notes/my-notes.txt

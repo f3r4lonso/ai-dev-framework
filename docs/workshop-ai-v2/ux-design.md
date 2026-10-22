@@ -26,8 +26,10 @@ A left sidebar with seven sections, a global search bar on top (Ctrl+K or `/`), 
 | **Motores** | One card per engine ([engines.md](engines.md)): level, status, "Probar", "Abrir consola", good-for line | Clientes IA section + sidebar launch buttons |
 | **Historial** | Timeline of saves, runs, checkpoints and handoffs, searchable; restore from here | nothing |
 
-The **Lector** (clean, translate with local Ollama, read aloud) stays as a side panel available on any document or
-answer, not a section.
+Owner update (2026-10-21): the right-hand **Lector** is to be replaced by an editor for the selected document.
+Remove its reading, translation and audio controls from that panel. Add personal TXT/Notepad and active Workshop
+folder shortcuts. This V2 change is built locally and awaiting owner acceptance; the concrete layout, privacy
+requirements and acceptance checks are in the [editor and notes plan](../../../applications/workshop-ai/docs/v2-editor-and-notes-plan.md).
 
 ## 3. Screens
 

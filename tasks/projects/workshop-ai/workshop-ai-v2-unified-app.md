@@ -1,6 +1,6 @@
 # Workshop AI v2: unified app
 
-Status: active (decisions D-V2-01…09 approved by the owner on 2026-10-20; each increment still needs its Gate A and Gate B)
+Status: active (decisions D-V2-01…09 approved 2026-10-20; V1 paused, V2 owner-accepted, V3–V6 authorized; V7 global-search slice authorized and in progress as of 2026-10-22; remaining increment gates still apply)
 
 Reviewed by `prompt-reviewer` on 2026-10-20 (3.0/5, ready with revisions; fixes F1–F10 applied).
 

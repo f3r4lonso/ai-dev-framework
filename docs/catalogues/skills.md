@@ -3,6 +3,8 @@
 One row per shared skill. The canonical definition is the linked `SKILL.md`; this page copies no bodies. Sources,
 licenses and local modifications: [inventory](../../docs/inventory.md#installed-skills).
 
+**Installation:** all 33 skills have canonical folders and generated copies for Claude/Codex/Copilot/Gemini via the [shared installation standard](../manuals/shared-resource-installation.md). DeepSeek and web clients have explicit manual-use access, not claimed native discovery. Copies inside `infra/` and at user scope pass drift checks; the three existing Atlas agent profiles remain owner-managed exceptions. Shared skills, including Arena, appear in the current Codex skill catalogue. Other clients' live discovery is unverified; older project copies can override user-wide ones. Older link-based evidence follows.
+
 **Clients:** Claude Code loads every skill from `skills/` (Observed). Codex CLI reads the same folders
 through local links in `clients/.agents/skills/` (Documented format; Unverified, see the
 [Codex guide](../../clients/codex-cli/README.md#3-discovery)). Invoke with `/<name>` (Claude) or `$<name>` (Codex),
@@ -11,6 +13,8 @@ or let the client load it by description.
 | Area | Skill | Use it when |
 |---|---|---|
 | Engineering | [engineering-lifecycle](../../skills/engineering-lifecycle/SKILL.md) | Starting any non-trivial change: requirements, plan, ADR, gates, report |
+| AI workflow | [arena](../../skills/arena/SKILL.md) | Independent competing solutions, attacks, revisions and rubric judging; native capability limits apply |
+| Output accessibility | [i-have-adhd](../../skills/i-have-adhd/SKILL.md) | Owner-invoked ADHD-friendly output style, persistent until stopped |
 | Backend | [api-design-principles](../../skills/api-design-principles/SKILL.md) | Designing or reviewing REST/GraphQL APIs |
 | Backend | [python-testing-patterns](../../skills/python-testing-patterns/SKILL.md) | Writing pytest suites, fixtures, mocks |
 | Backend | [python-error-handling](../../skills/python-error-handling/SKILL.md) | Validation, exception hierarchies, partial failures |

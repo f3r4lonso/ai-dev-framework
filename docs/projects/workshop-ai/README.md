@@ -4,19 +4,21 @@
 > VS Code extension is paused. See [workshop-ai-v2/](../../workshop-ai-v2/README.md) and the task
 > [workshop-ai-v2-unified-app](../../../tasks/projects/workshop-ai/workshop-ai-v2-unified-app.md).
 
-- **Purpose:** a local tool for working with AI clients, in two parts. The `wai` command-line tool runs a task with one
-  AI client, keeps the task's verified state in the project's own repository so a new session can resume it, and
-  builds a reviewed, secret-checked handoff package for another client. A VS Code extension (specified, not built) is
-  the main hub: it detects the clients, sets up the shared infrastructure, opens and closes client sessions, and
-  switches to a client the user chooses with a saved recap. It consumes the [Workshop](../../workshop.md) layer and
-  does not replace it. Requirements: [product vision](../../workshop-ai-product-vision.md) (§17.1).
-- **Stage:** local POC (Stage 1 of the vision's roadmap); the extension is planned in Stage 2.
+- **Purpose:** one local Spanish browser app over the `wai` core. The app browses Workshop resources and engines;
+  its V2 editor provides review/save, versions/restore, templates and private notes/folder shortcuts. The CLI
+  preserves project task state, checkpoints and reviewed handoff packages. It consumes the
+  [Workshop](../../workshop.md) layer. Requirements: [v2 product vision](../../workshop-ai-v2/product-vision.md).
+- **Stage:** local POC; V1 built and committed, V2 built locally with automated checks and security review passed.
+  Owner V1 pilot/first-use and V2 browser/native-action acceptance remain pending. The extension stays paused.
+  [Current evidence and next work](../../../../applications/workshop-ai/docs/v2-progress.md).
 - **Repository:** private repository, on disk at `%USERPROFILE%\workshop\applications\workshop-ai\`; its pilot
   sandbox is a second private repository at `%USERPROFILE%\workshop\applications\workshop-ai-sandbox\`.
 - **Start a session:**
+  - Open the app: `applications/workshop-ai/INICIAR.cmd` from the Workshop folder.
   - Use the tool: PowerShell in a normal terminal, `Set-Alias wai "$env:USERPROFILE\workshop\applications\workshop-ai\wai.cmd"`,
     then `wai init` in a project repository.
-  - Work on the tool itself: Claude Code in its repository with `claude --add-dir "$env:USERPROFILE\workshop\infra\clients"`.
+  - Work on the app itself: open a coding client in its repository and follow `AGENTS.md`; shared Claude agents
+    load through the Workshop plugin.
 - **Shared resources it uses:** reads the [agent](../../catalogues/agents.md), [skill](../../catalogues/skills.md)
   and [task](../../catalogues/tasks.md) catalogues through the contracts in
   [ai-architecture.md §9](../../ai-architecture.md#9-workshop-ai-consumer-of-these-contracts); built under

@@ -14,7 +14,8 @@ Architecture, compatibility matrix and maintenance:
    Install, authentication and troubleshooting:
    [docs/onboarding.md](docs/onboarding.md).
 2. **Enable the secret guard once per clone:** `git config core.hooksPath .githooks` ([SECURITY.md](SECURITY.md)).
-3. **Find what to use:** the [Workshop](docs/workshop.md) lists every agent, skill and task prompt and
+3. **Install across clients:** follow the [shared installation standard](docs/manuals/shared-resource-installation.md); `python scripts/sync-resources.py --user` installs native copies for all supported coding clients. Review limits for manual-use clients.
+4. **Find what to use:** the [Workshop](docs/workshop.md) lists every agent, skill and task prompt and
    explains how to choose one.
 
 Clone into `C:\Users\<you>\workshop\infra` and start your client there (Claude Code loads everything from the `workshop` plugin: `clients/claude-code-cli/README.md`), or from an application
@@ -24,7 +25,7 @@ repository as described in its client guide.
 - `AGENTS.md` — rules shared by all clients (Codex reads it; `CLAUDE.md` imports it).
 - `CLAUDE.md` — `@AGENTS.md` plus Claude-only notes.
 - `agents/` — 26 shared subagents by area: `ai`, `backend`, `creative` (including game art/music direction), `devops`, `frontend`, `game-development`, `quality`, `trading`, `ui`, `ux`.
-- `skills/` — 31 on-demand skills. Canonical for Claude Code and Codex CLI; Harness interoperability is not verified.
+- `skills/` — 33 on-demand skills, including Arena and i-have-adhd. Canonical for all clients; native and manual-use paths are documented in the shared installation standard.
 - `clients/.codex/agents/` — Codex wrappers generated from `agents/` by `scripts/codex-adapter.py`. Do not edit.
 - `clients/` — one guide per AI client: start-up, discovery, permissions, limits.
 - `tasks/` — task prompts.

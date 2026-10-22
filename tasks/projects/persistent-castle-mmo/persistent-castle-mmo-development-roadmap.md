@@ -5,7 +5,7 @@ proposal, which no longer reflects the owner's direction. No engine, backend, re
 has been selected or approved. No implementation work has started.
 
 The current product requirements and design status are in the [design brief](persistent-castle-mmo-design-brief.md).
-Run the [planning task](../tasks/projects/persistent-castle-mmo/persistent-castle-mmo-planning.md) before authorizing development.
+Run the [planning task](persistent-castle-mmo-planning.md) before authorizing development.
 
 ## Roadmap
 

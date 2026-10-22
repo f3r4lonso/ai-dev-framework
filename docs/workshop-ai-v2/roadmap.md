@@ -19,6 +19,14 @@ owner's OK before the next starts. Commits only with the owner's approval. Run t
 Dependencies: V1 before everything; V2 before V5 (the wizard reuses the editor); V3 before V4's "Guardar como
 tarea"; Ollama installed before V3 closes; R7 per engine before that engine reaches level 2+.
 
+Owner continuation decision (latest): V1 is paused, V2 is owner-accepted as working acceptably, V3–V6 are
+authorized in roadmap order, and V7 implementation was subsequently authorized to start with global search
+(2026-10-22). V1's pilot and observed first-use acceptance remain incomplete and unaccepted; V2's separate
+browser/accessibility/native-launch observations are unrecorded. The V7 request authorizes this initial search
+slice only; the Stage 2 store, recap, compression, instruction-review and benchmark design gates remain pending.
+No engine capability level is raised, R7 is not satisfied, no increment is accepted, and commits or pushes are
+not authorized. Evidence: application `docs/v2-progress.md`.
+
 Agents and skills to use per increment (all exist; check the catalogues before proposing new ones):
 
 | Increment | Agents | Skills |

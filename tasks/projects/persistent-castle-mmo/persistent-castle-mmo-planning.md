@@ -5,14 +5,14 @@ No game implementation, repository initialization, service setup, purchases, pub
 
 ## 1. Role and mission
 
-Act as the project coordinator. Turn the approved seed and the [design brief](../docs/persistent-castle-mmo-design-brief.md)
+Act as the project coordinator. Turn the approved seed and the [design brief](persistent-castle-mmo-design-brief.md)
 into a coherent original mobile MMO concept, playable rules proposal, audiovisual production direction and
 decision-ready development plan with a technical feasibility assessment. Use the canonical Workshop roles in
-sequence: [Homero](../agents/personal-assistants/homero-prompt-engineer.md) for requirements and the handoff prompt,
-[game-designer](../agents/creative/game-designer.md) for player experience and systems,
-[game-art-music-director](../agents/creative/game-art-music-director.md) for visual/audio direction, then
-[game-developer](../agents/game-development/game-developer.md) for technical feasibility and architecture. Use
-[prompt-reviewer](../agents/ai/prompt-reviewer.md) for independent review of this task and the final design package.
+sequence: [Homero](../../../agents/personal-assistants/homero-prompt-engineer.md) for requirements and the handoff prompt,
+[game-designer](../../../agents/creative/game-designer.md) for player experience and systems,
+[game-art-music-director](../../../agents/creative/game-art-music-director.md) for visual/audio direction, then
+[game-developer](../../../agents/game-development/game-developer.md) for technical feasibility and architecture. Use
+[prompt-reviewer](../../../agents/ai/prompt-reviewer.md) for independent review of this task and the final design package.
 If a requested role is unavailable in the current client, record that, do not claim it ran, and identify any work
 as coordinator fallback.
 

@@ -11,10 +11,14 @@ user level (available in every folder), so their wrappers embed the canonical bo
 Commands:
   agents [--check]       Generate Codex custom-agent wrappers and the `agents` list of the Claude Code
                          plugin (.claude-plugin/plugin.json); --check only reports drift (exit 1).
+  render-agent --path PATH
+                         Render one Codex wrapper from Markdown supplied on stdin, without writing files.
   link-claude            Retired: Claude Code loads agents and skills from the `workshop` plugin
                          (.claude-plugin/); see clients/claude-code-cli/README.md.
-  link-skills [--user]   Link every canonical skill into clients/.agents/skills/, or into
+  link-skills [--user] [--name NAME]
+                         Link canonical skills into clients/.agents/skills/, or into
                          ~/.agents/skills/ with --user (for Codex sessions started in other repos).
+                         --name limits the write to one exact skill folder.
                          Existing entries that are not links are never touched.
   personal [--check]     Generate the personal-assistant agents for Codex, Copilot CLI and Gemini CLI.
   install-personal       Copy them into ~/.codex/agents, ~/.copilot/agents and ~/.gemini/agents
@@ -32,6 +36,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from resource_headers import parse_frontmatter
 
 ROOT = Path(__file__).resolve().parents[1]
 AGENTS_SRC = ROOT / "agents"
@@ -76,26 +81,11 @@ WRITE_TOOLS = {"Edit", "Write", "NotebookEdit", "Bash", "PowerShell"}
 
 
 def read_frontmatter(path: Path) -> dict[str, str]:
-    """Parse the flat `key: value` lines of a Markdown frontmatter block (lists are kept raw)."""
-    lines = path.read_text(encoding="utf-8").splitlines()
-    if not lines or lines[0].strip() != "---":
-        raise ValueError(f"{path}: missing frontmatter")
-    fields: dict[str, str] = {}
-    key = None
-    for line in lines[1:]:
-        if line.strip() == "---":
-            return fields
-        if line[:1] in (" ", "\t") or line.startswith("-"):
-            if key:
-                fields[key] += " " + line.strip()
-            continue
-        key, _, value = line.partition(":")
-        key = key.strip()
-        value = value.strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-            value = value[1:-1].replace('\\"', '"')
-        fields[key] = value
-    raise ValueError(f"{path}: unterminated frontmatter")
+    """Use the same strict, lossless parser as the resource editor."""
+    try:
+        return parse_frontmatter(path.read_text(encoding="utf-8")).fields
+    except ValueError as exc:
+        raise ValueError(f"{path}: {exc}") from exc
 
 
 def toml_str(value: str) -> str:
@@ -104,11 +94,23 @@ def toml_str(value: str) -> str:
 
 
 def render_agent(src: Path) -> tuple[str, str]:
-    fm = read_frontmatter(src)
+    rel = src.relative_to(ROOT).as_posix()
+    return render_agent_text(src.read_text(encoding="utf-8"), rel)
+
+
+def render_agent_text(content: str, relative_path: str) -> tuple[str, str]:
+    path = Path(relative_path)
+    if (path.is_absolute() or len(path.parts) != 3 or path.parts[0] != "agents"
+            or path.suffix.lower() != ".md" or any(part in ("", ".", "..") for part in path.parts)):
+        raise ValueError("render-agent requires a canonical agents/<area>/<name>.md path")
+    try:
+        fm = parse_frontmatter(content).fields
+    except ValueError as exc:
+        raise ValueError(f"agent frontmatter is invalid: {exc}") from exc
     name, description = fm.get("name"), fm.get("description")
     if not name or not description:
-        raise ValueError(f"{src}: name and description are required")
-    rel = src.relative_to(ROOT).as_posix()
+        raise ValueError("name and description are required")
+    rel = path.as_posix()
     tools = [t.strip() for t in fm.get("tools", "").split(",") if t.strip()]
     denied = {t.strip() for t in fm.get("disallowedTools", "").split(",") if t.strip()}
     allowed = set(tools) - denied
@@ -312,11 +314,17 @@ def make_link(link: Path, target: Path) -> None:
         link.symlink_to(target, target_is_directory=True)
 
 
-def cmd_link_skills(user: bool) -> int:
+def cmd_link_skills(user: bool, only_name: str | None = None) -> int:
     dest = USER_SKILLS_LINKS if user else REPO_SKILLS_LINKS
     dest.mkdir(parents=True, exist_ok=True)
     created = kept = skipped = 0
-    for skill in sorted(p.parent for p in SKILLS_SRC.glob("*/SKILL.md")):
+    skills = sorted(p.parent for p in SKILLS_SRC.glob("*/SKILL.md"))
+    if only_name is not None:
+        skills = [skill for skill in skills if skill.name == only_name]
+        if not skills:
+            print(f"unknown canonical skill: {only_name}", file=sys.stderr)
+            return 2
+    for skill in skills:
         link = dest / skill.name
         if is_link(link):
             if link.resolve() == skill.resolve():
@@ -359,14 +367,28 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     p_agents = sub.add_parser("agents")
     p_agents.add_argument("--check", action="store_true")
+    p_render = sub.add_parser("render-agent")
+    p_render.add_argument("--path", required=True)
     p_link = sub.add_parser("link-skills")
     p_link.add_argument("--user", action="store_true")
+    p_link.add_argument("--name", help="link only this exact canonical skill folder")
     sub.add_parser("link-claude")
     p_personal = sub.add_parser("personal")
     p_personal.add_argument("--check", action="store_true")
     sub.add_parser("install-personal")
     sub.add_parser("status")
     args = parser.parse_args()
+    if args.command == "render-agent":
+        try:
+            content = sys.stdin.read(256 * 1024 + 1)
+            if len(content.encode("utf-8")) > 256 * 1024:
+                raise ValueError("agent definition is too large")
+            _, rendered = render_agent_text(content, args.path)
+        except (UnicodeError, ValueError) as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        sys.stdout.write(rendered)
+        return 0
     if args.command == "agents":
         return cmd_agents(args.check)
     if args.command == "personal":
@@ -376,7 +398,7 @@ def main() -> int:
     if args.command == "link-claude":
         return cmd_link_claude()
     if args.command == "link-skills":
-        return cmd_link_skills(args.user)
+        return cmd_link_skills(args.user, args.name)
     return cmd_status()
 
 
